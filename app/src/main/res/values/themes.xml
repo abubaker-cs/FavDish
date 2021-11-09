@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- No ActionBar + No Title -->
     <style name="Theme.FavDish.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
