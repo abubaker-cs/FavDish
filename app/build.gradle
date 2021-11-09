@@ -34,6 +34,7 @@ android {
 
     compileSdkVersion 31
 
+    // Enable ViewBinding (there is no need to edit XML files)
     buildFeatures {
         viewBinding true
     }
