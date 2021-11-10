@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+    fillAfter:
+    =========
+    Default: False
+    True: The animation transformation is applied after the animation is over.
+    -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:fillAfter="true">
 
@@ -22,6 +27,6 @@
         android:duration="2000"
         android:fromAlpha="0.0"
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
-        android:toAlpha="0.5" />
+        android:toAlpha="1.0" />
 
 </set>
