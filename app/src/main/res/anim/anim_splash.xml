@@ -2,6 +2,10 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:fillAfter="true">
 
+    <!--
+        Move from 0 to 50% from TOP to the MIDDLE (50%) fo the screen
+        Interpolator: Accelerate (Start) | Decelerate (End)
+     -->
     <translate
         android:duration="2000"
         android:fromXDelta="0%p"
@@ -10,10 +14,14 @@
         android:toXDelta="0%p"
         android:toYDelta="50%p" />
 
+    <!--
+        Duration: 2sec
+        Opacity: 0 > 100%
+     -->
     <alpha
         android:duration="2000"
         android:fromAlpha="0.0"
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
-        android:toAlpha="1.0" />
+        android:toAlpha="0.5" />
 
 </set>

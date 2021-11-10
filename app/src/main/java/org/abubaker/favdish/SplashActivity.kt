@@ -22,6 +22,9 @@ class SplashActivity : AppCompatActivity() {
         val splashBinding: ActivitySplashBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(splashBinding.root)
 
+        /**
+         * Make the Splash Activity as a full screen view that means hide the Status Bar.
+         */
         // Full screen for newer versions SDK >= API 30
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -38,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         /**
-         * Animation
+         * Select the file which will be used to Animate the App's Name
          */
         val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_splash)
         splashBinding.tvAppName.animation = splashAnimation
