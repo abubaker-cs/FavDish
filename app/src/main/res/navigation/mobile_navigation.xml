@@ -8,21 +8,21 @@
     <!-- Home -->
     <fragment
         android:id="@+id/navigation_home"
-        android:name="org.abubaker.favdish.ui.home.HomeFragment"
+        android:name="org.abubaker.favdish.view.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <!-- Dashboard -->
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="org.abubaker.favdish.ui.dashboard.DashboardFragment"
+        android:name="org.abubaker.favdish.view.fragments.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <!-- Notifications -->
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="org.abubaker.favdish.ui.notifications.NotificationsFragment"
+        android:name="org.abubaker.favdish.view.fragments.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
