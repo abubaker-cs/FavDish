@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import org.abubaker.favdish.databinding.ActivitySplashBinding
 
@@ -32,8 +33,11 @@ class SplashActivity : AppCompatActivity() {
 
         }
 
-
-        splashBinding.tvAppName.text = "Hello World"
+        /**
+         * Animation
+         */
+        val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_splash)
+        splashBinding.tvAppName.animation = splashAnimation
 
     }
 }
