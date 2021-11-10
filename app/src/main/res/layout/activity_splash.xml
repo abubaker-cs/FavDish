@@ -7,6 +7,10 @@
     android:background="@color/primary_dark_color"
     tools:context=".SplashActivity">
 
+    <!--
+        Removed the constraintBottom to make it appear at top,
+        so the text can be animated to the middle fo the screen
+    -->
     <TextView
         android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
