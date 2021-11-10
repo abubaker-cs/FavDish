@@ -1,4 +1,4 @@
-package org.abubaker.favdish.ui.home
+package org.abubaker.favdish.viewModel.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
