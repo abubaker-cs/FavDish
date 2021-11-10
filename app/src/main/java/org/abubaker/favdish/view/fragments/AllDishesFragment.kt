@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import org.abubaker.favdish.databinding.FragmentHomeBinding
 import org.abubaker.favdish.viewModel.HomeViewModel
 
-class HomeFragment : Fragment() {
+class AllDishesFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null

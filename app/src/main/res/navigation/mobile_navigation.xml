@@ -8,9 +8,9 @@
     <!-- Home -->
     <fragment
         android:id="@+id/navigation_home"
-        android:name="org.abubaker.favdish.view.fragments.HomeFragment"
+        android:name="org.abubaker.favdish.view.fragments.AllDishesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_all_dishes" />
 
     <!-- Dashboard -->
     <fragment
