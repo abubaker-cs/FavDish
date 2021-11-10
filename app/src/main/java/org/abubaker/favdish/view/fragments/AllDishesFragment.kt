@@ -1,14 +1,15 @@
 package org.abubaker.favdish.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import org.abubaker.favdish.R
 import org.abubaker.favdish.databinding.FragmentAllDishesBinding
+import org.abubaker.favdish.view.activities.AddUpdateDishActivity
 import org.abubaker.favdish.viewModel.HomeViewModel
 
 class AllDishesFragment : Fragment() {
@@ -22,6 +23,8 @@ class AllDishesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Enable menu in the ActionBar
         setHasOptionsMenu(true)
     }
 
@@ -49,4 +52,28 @@ class AllDishesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    /**
+     * XML: menu_all_dishes
+     */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        // Inflate: menu_all_dishes.xml
+        inflater.inflate(R.menu.menu_all_dishes, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.action_add_dish -> {
+                startActivity(Intent(requireActivity(), AddUpdateDishActivity::class.java))
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 }
