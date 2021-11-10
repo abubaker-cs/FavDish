@@ -72,7 +72,7 @@ class AllDishesFragment : Fragment() {
             R.id.action_add_dish -> {
                 // Note: Inside the Fragment we cannot say "this", because the Fragment
                 // does not have a "context" by itself. So, we need to ge the "context" of the
-                // Activity in which it exists by using requireActivity()
+                // Activity in which it exists by using requireActivity() + Where we want to goto
                 startActivity(Intent(requireActivity(), AddUpdateDishActivity::class.java))
                 return true
             }
