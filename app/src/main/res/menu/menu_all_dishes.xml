@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Filter -->
     <item
         android:id="@+id/action_filter_dishes"
         android:icon="@drawable/ic_filter_list"
@@ -9,6 +10,7 @@
         android:title="@string/action_filter_dishes"
         app:showAsAction="ifRoom" />
 
+    <!-- Add Dish -->
     <item
         android:id="@+id/action_add_dish"
         android:icon="@drawable/ic_add"
