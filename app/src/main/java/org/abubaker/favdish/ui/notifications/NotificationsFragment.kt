@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import org.abubaker.favdish.databinding.FragmentNotificationsBinding
+import org.abubaker.favdish.viewModel.NotificationsViewModel
 
 class NotificationsFragment : Fragment() {
 
