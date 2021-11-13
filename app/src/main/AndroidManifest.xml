@@ -29,7 +29,7 @@
 
         <!--
             Tip: configChanges
-            It will prevent restart when the screen app's orientation changes
+            It will prevent restarts when the screen app's orientation changes
          -->
         <activity
             android:name=".view.activities.AddUpdateDishActivity"
