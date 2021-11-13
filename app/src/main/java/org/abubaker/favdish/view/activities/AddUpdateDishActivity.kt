@@ -39,15 +39,12 @@ class AddUpdateDishActivity : AppCompatActivity(),
         // If the view is not NULL
         if (v != null) {
 
-
             when (v.id) {
 
                 // When id = Add image icon: #iv_add_dish_image
                 R.id.iv_add_dish_image -> {
 
-                    // Display the Toast Message
-                    // Toast.makeText(this@AddUpdateDishActivity, "You have clicked on the ImageView.", Toast.LENGTH_SHORT).show()
-
+                    // Initialize our custom Dialog so the user can pick image from Gallery/Camera
                     customImageSelectionDialog()
 
                     //Get back
