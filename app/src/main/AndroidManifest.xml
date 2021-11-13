@@ -28,12 +28,15 @@
             android:label="@string/app_name" />
 
         <!--
-            Tip: configChanges
-            It will prevent restarts when the screen app's orientation changes
+            Tips:
+            configChanges: The activity will not be recreated, but will receive a callback instead
+            screenOrientation: It will lock the activity in one orientation portrait/landscape
+            Reference: https://www.py4u.net/discuss/602736
          -->
         <activity
             android:name=".view.activities.AddUpdateDishActivity"
-            android:configChanges="orientation"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:label="@string/action_add_dish"
             android:theme="@style/Theme.FavDish.NoActionBar" />
