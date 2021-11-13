@@ -1,10 +1,21 @@
 package org.abubaker.favdish.view.activities
 
+import android.Manifest
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import org.abubaker.favdish.R
 import org.abubaker.favdish.databinding.ActivityAddUpdateDishBinding
 import org.abubaker.favdish.databinding.DialogCustomImageSelectionBinding
@@ -69,11 +80,41 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         // onClick: Camera
         binding.tvCamera.setOnClickListener {
-            Toast.makeText(
-                this@AddUpdateDishActivity,
-                "You have clicked on the Camera.",
-                Toast.LENGTH_SHORT
-            ).show()
+
+            // Let ask for the permission while selecting the image from camera using Dexter Library. And Remove the toast message.
+            Dexter.withContext(this@AddUpdateDishActivity)
+
+                .withPermissions(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                )
+
+                .withListener(object : MultiplePermissionsListener {
+
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+
+                        // Here after all the permission are granted launch the CAMERA to capture an image.
+                        if (report!!.areAllPermissionsGranted()) {
+
+                            Toast.makeText(
+                                this@AddUpdateDishActivity,
+                                "You have the Camera permission now to capture image.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissions: MutableList<PermissionRequest>?,
+                        token: PermissionToken?
+                    ) {
+                        // Show the alert dialog
+                        showRationalDialogForPermissions()
+
+                    }
+                }).onSameThread()
+                .check()
 
             // Close the Dialog after displaying the Toast Message
             dialog.dismiss()
@@ -81,11 +122,37 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         // onClick: Gallery
         binding.tvGallery.setOnClickListener {
-            Toast.makeText(
-                this@AddUpdateDishActivity,
-                "You have clicked on the Gallery.",
-                Toast.LENGTH_SHORT
-            ).show()
+
+            // Ask for the permission while selecting the image from Gallery using Dexter Library. And Remove the toast message.
+            Dexter.withContext(this@AddUpdateDishActivity)
+                .withPermissions(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+
+                        // Here after all the permission are granted launch the gallery to select and image.
+                        if (report!!.areAllPermissionsGranted()) {
+
+                            // Show the Toast message for now just to know that we have the permission.
+                            Toast.makeText(
+                                this@AddUpdateDishActivity,
+                                "You have the Gallery permission now to select image.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissions: MutableList<PermissionRequest>?,
+                        token: PermissionToken?
+                    ) {
+                        showRationalDialogForPermissions()
+                    }
+                }).onSameThread()
+                .check()
 
             // Close the Dialog after displaying the Toast Message
             dialog.dismiss()
@@ -107,6 +174,34 @@ class AddUpdateDishActivity : AppCompatActivity(),
             onBackPressed()
         }
 
+    }
+
+
+    /**
+     * A function used to show the alert dialog when the permissions are denied and need to allow it from settings app info.
+     */
+    private fun showRationalDialogForPermissions() {
+
+        AlertDialog.Builder(this)
+
+            .setMessage("It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings")
+
+            .setPositiveButton(
+                "GO TO SETTINGS"
+            ) { _, _ ->
+                try {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    e.printStackTrace()
+                }
+            }
+
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
     }
 
 
