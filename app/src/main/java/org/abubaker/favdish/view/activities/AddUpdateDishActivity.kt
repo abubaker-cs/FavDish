@@ -23,8 +23,10 @@ class AddUpdateDishActivity : AppCompatActivity(),
         // Initialize the ActionBar with required actions for the onClick Event
         setupActionBar()
 
-        // Assign the click event to the image button.
-        mBinding.ivAddDishImage.setOnClickListener(this@AddUpdateDishActivity)
+        // Important: Assign the click event to the image button, otherwise Toast will not be displayed
+        mBinding.ivAddDishImage.setOnClickListener(
+            this@AddUpdateDishActivity
+        )
 
     }
 
@@ -32,19 +34,28 @@ class AddUpdateDishActivity : AppCompatActivity(),
     // Action for: Add Image (icon)
     override fun onClick(v: View?) {
 
-        // Perform the action when user clicks on the addDishImage and show Toast message for now.
-        when (v.id) {
+        // If the view is not NULL
+        if (v != null) {
 
-            R.id.iv_add_dish_image -> {
 
-                Toast.makeText(
-                    this@AddUpdateDishActivity,
-                    "You have clicked on the ImageView.",
-                    Toast.LENGTH_SHORT
-                ).show()
+            when (v.id) {
 
-                return
+                // When id = Add image icon: #iv_add_dish_image
+                R.id.iv_add_dish_image -> {
+
+                    // Display the Toast Message
+                    Toast.makeText(
+                        this@AddUpdateDishActivity,
+                        "You have clicked on the ImageView.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    //Get back
+                    return
+                }
+
             }
+
         }
     }
 
