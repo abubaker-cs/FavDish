@@ -27,8 +27,13 @@
             android:exported="true"
             android:label="@string/app_name" />
 
+        <!--
+            Tip: configChanges
+            It will prevent restart when the screen app's orientation changes
+         -->
         <activity
             android:name=".view.activities.AddUpdateDishActivity"
+            android:configChanges="orientation"
             android:exported="true"
             android:label="@string/action_add_dish"
             android:theme="@style/Theme.FavDish.NoActionBar" />
