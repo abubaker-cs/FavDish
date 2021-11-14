@@ -199,6 +199,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
             .setPositiveButton(
                 "GO TO SETTINGS"
             ) { _, _ ->
+
+                // Try | Catch
                 try {
 
                     // Defined the parameters for the required intent
@@ -215,6 +217,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     e.printStackTrace()
 
                 }
+
             }
 
             .setNegativeButton("Cancel") { dialog, _ ->
