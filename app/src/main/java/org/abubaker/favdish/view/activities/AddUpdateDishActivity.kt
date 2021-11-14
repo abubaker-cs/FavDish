@@ -96,7 +96,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
 
-                        // Here after all the permission are granted launch the CAMERA to capture an image.
+                        // Verification: Here after all the permission are granted launch the CAMERA to capture an image.
                         if (report!!.areAllPermissionsGranted()) {
 
                             Toast.makeText(
@@ -140,7 +140,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                 .withListener(object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
 
-                        // Here after all the permission are granted launch the gallery to select and image.
+                        // Verification: Here after all the permission are granted launch the gallery to select and image.
                         if (report!!.areAllPermissionsGranted()) {
 
                             // Show the Toast message for now just to know that we have the permission.
