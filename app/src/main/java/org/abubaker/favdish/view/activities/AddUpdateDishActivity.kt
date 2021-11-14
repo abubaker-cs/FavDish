@@ -205,7 +205,11 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                     // Defined the parameters for the required intent
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+
+                    // Fetch the Uri
                     val uri = Uri.fromParts("package", packageName, null)
+
+                    // Add the DATA to the intent
                     intent.data = uri
 
                     // Initialize the intent
