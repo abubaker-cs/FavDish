@@ -184,7 +184,6 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
     }
 
-
     /**
      * A function used to show the alert dialog when the permissions are denied and need to allow it from settings app info.
      */
@@ -196,6 +195,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
             // Content of the Alert Message
             .setMessage("It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings")
 
+            // Define Button's Label + Action
             .setPositiveButton(
                 "GO TO SETTINGS"
             ) { _, _ ->
