@@ -43,7 +43,6 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
     }
 
-
     // Action for: Add Image (icon)
     override fun onClick(v: View?) {
 
@@ -81,15 +80,18 @@ class AddUpdateDishActivity : AppCompatActivity(),
         // onClick: Camera
         binding.tvCamera.setOnClickListener {
 
-            // Let ask for the permission while selecting the image from camera using Dexter Library. And Remove the toast message.
+            // Ask for the permission while selecting the image from camera using Dexter Library.
+            // And Remove the toast message.
             Dexter.withContext(this@AddUpdateDishActivity)
 
+                // Required permissions: Read / Write External Storage + Camera
                 .withPermissions(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA
                 )
 
+                // Multiple Permissions Listener
                 .withListener(object : MultiplePermissionsListener {
 
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
@@ -102,7 +104,9 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 "You have the Camera permission now to capture image.",
                                 Toast.LENGTH_SHORT
                             ).show()
+
                         }
+
                     }
 
                     override fun onPermissionRationaleShouldBeShown(
@@ -113,8 +117,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         showRationalDialogForPermissions()
 
                     }
-                }).onSameThread()
-                .check()
+
+                }).onSameThread().check()
 
             // Close the Dialog after displaying the Toast Message
             dialog.dismiss()
@@ -125,10 +129,14 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
             // Ask for the permission while selecting the image from Gallery using Dexter Library. And Remove the toast message.
             Dexter.withContext(this@AddUpdateDishActivity)
+
+                // Required permissions: Read / Write External Storage
                 .withPermissions(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
+
+                // Multiple Permissions Listener
                 .withListener(object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
 
@@ -141,7 +149,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 "You have the Gallery permission now to select image.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            
+
                         }
                     }
 
@@ -151,8 +159,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     ) {
                         showRationalDialogForPermissions()
                     }
-                }).onSameThread()
-                .check()
+
+                }).onSameThread().check()
 
             // Close the Dialog after displaying the Toast Message
             dialog.dismiss()
@@ -182,26 +190,40 @@ class AddUpdateDishActivity : AppCompatActivity(),
      */
     private fun showRationalDialogForPermissions() {
 
+        // Dialog Parameters
         AlertDialog.Builder(this)
 
+            // Content of the Alert Message
             .setMessage("It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings")
 
             .setPositiveButton(
                 "GO TO SETTINGS"
             ) { _, _ ->
                 try {
+
+                    // Defined the parameters for the required intent
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts("package", packageName, null)
                     intent.data = uri
+
+                    // Initialize the intent
                     startActivity(intent)
+
                 } catch (e: ActivityNotFoundException) {
+
+                    // Catch and print Error
                     e.printStackTrace()
+
                 }
             }
 
             .setNegativeButton("Cancel") { dialog, _ ->
+
+                // Close the Dialog
                 dialog.dismiss()
+
             }.show()
+
     }
 
 
