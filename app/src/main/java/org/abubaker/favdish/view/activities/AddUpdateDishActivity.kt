@@ -235,7 +235,6 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         .load(selectedPhotoUri)
                         .centerCrop()
                         .into(mBinding.ivDishImage)
-                    // END
 
                     // Replace the add icon with edit icon once the image is selected.
                     mBinding.ivAddDishImage.setImageDrawable(
@@ -246,6 +245,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     )
                 }
             }
+
         } else if (resultCode == Activity.RESULT_CANCELED) {
             Log.e("Cancelled", "Cancelled")
         }
