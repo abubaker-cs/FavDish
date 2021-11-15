@@ -93,7 +93,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
                 // Required permissions: Read / Write External Storage + Camera
                 .withPermissions(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    // Newer device do not require following code ( API > 30 )
+                    // Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA
                 )
 
@@ -139,7 +140,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                 // Required permissions: Read / Write External Storage
                 .withPermissions(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    // Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
 
                 // Multiple Permissions Listener
