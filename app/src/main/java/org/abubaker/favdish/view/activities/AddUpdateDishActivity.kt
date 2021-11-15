@@ -20,8 +20,11 @@ import com.bumptech.glide.Glide
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
 import org.abubaker.favdish.R
 import org.abubaker.favdish.databinding.ActivityAddUpdateDishBinding
 import org.abubaker.favdish.databinding.DialogCustomImageSelectionBinding
@@ -138,37 +141,63 @@ class AddUpdateDishActivity : AppCompatActivity(),
             Dexter.withContext(this@AddUpdateDishActivity)
 
                 // Required permissions: Read / Write External Storage
-                .withPermissions(
+                .withPermission(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     // Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
 
                 // Multiple Permissions Listener
-                .withListener(object : MultiplePermissionsListener {
-                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                        // Here after all the permission are granted launch the gallery to select and image.
+                        val galleryIntent = Intent(
+                            Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                        )
 
-                        // Verification: Here after all the permission are granted launch the gallery to select and image.
-                        if (report!!.areAllPermissionsGranted()) {
+                        startActivityForResult(galleryIntent, GALLERY)
+                    }
 
-                            // Show the Toast message for now just to know that we have the permission.
-                            // Toast.makeText(this@AddUpdateDishActivity, "You have the Gallery permission now to select image.", Toast.LENGTH_SHORT).show()
-
-                            // Launch the gallery for Image selection using the constant.
-                            val galleryIntent = Intent(
-                                Intent.ACTION_PICK,
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                            )
-
-                            startActivityForResult(galleryIntent, GALLERY)
-                        }
+                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                        Toast.makeText(
+                            this@AddUpdateDishActivity,
+                            "You have denied the storage permission to select image.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                     override fun onPermissionRationaleShouldBeShown(
-                        permissions: MutableList<PermissionRequest>?,
+                        permission: PermissionRequest?,
                         token: PermissionToken?
                     ) {
                         showRationalDialogForPermissions()
                     }
+
+
+//                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+//
+//                        // Verification: Here after all the permission are granted launch the gallery to select and image.
+//                        if (report!!.areAllPermissionsGranted()) {
+//
+//                            // Show the Toast message for now just to know that we have the permission.
+//                            // Toast.makeText(this@AddUpdateDishActivity, "You have the Gallery permission now to select image.", Toast.LENGTH_SHORT).show()
+//
+//                            // Launch the gallery for Image selection using the constant.
+//                            val galleryIntent = Intent(
+//                                Intent.ACTION_PICK,
+//                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//                            )
+//
+//                            startActivityForResult(galleryIntent, GALLERY)
+//                        }
+//                    }
+//
+//                    override fun onPermissionRationaleShouldBeShown(
+//                        permissions: MutableList<PermissionRequest>?,
+//                        token: PermissionToken?
+//                    ) {
+//                        showRationalDialogForPermissions()
+//                    }
 
                 }).onSameThread().check()
 
