@@ -1,16 +1,21 @@
 package org.abubaker.favdish.view.activities
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -144,12 +149,15 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         if (report!!.areAllPermissionsGranted()) {
 
                             // Show the Toast message for now just to know that we have the permission.
-                            Toast.makeText(
-                                this@AddUpdateDishActivity,
-                                "You have the Gallery permission now to select image.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            // Toast.makeText(this@AddUpdateDishActivity, "You have the Gallery permission now to select image.", Toast.LENGTH_SHORT).show()
 
+                            // Launch the gallery for Image selection using the constant.
+                            val galleryIntent = Intent(
+                                Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                            )
+
+                            startActivityForResult(galleryIntent, GALLERY)
                         }
                     }
 
@@ -168,6 +176,62 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         //Start the dialog and display it on screen.
         dialog.show()
+    }
+
+    /**
+     * Receive the result from a previous call to
+     * {@link #startActivityForResult(Intent, int)}.  This follows the
+     * related Activity API as described there in
+     * {@link Activity#onActivityResult(int, int, Intent)}.
+     *
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode The integer result code returned by the child activity
+     *                   through its setResult().
+     * @param data An Intent, which can return result data to the caller
+     *               (various data can be attached to Intent "extras").
+     */
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == CAMERA) {
+
+                data?.extras?.let {
+                    val thumbnail: Bitmap =
+                        data.extras!!.get("data") as Bitmap // Bitmap from camera
+                    mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
+
+                    // Replace the add icon with edit icon once the image is selected.
+                    mBinding.ivAddDishImage.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this@AddUpdateDishActivity,
+                            R.drawable.ic_vector_edit
+                        )
+                    )
+                }
+            }
+            // Get the selected image from gallery. The selected will be in form of URI so set it to the Dish ImageView.
+            else if (requestCode == GALLERY) {
+
+                data?.let {
+                    // Here we will get the select image URI.
+                    val selectedPhotoUri = data.data
+
+                    mBinding.ivDishImage.setImageURI(selectedPhotoUri) // Set the selected image from GALLERY to imageView.
+
+                    // Replace the add icon with edit icon once the image is selected.
+                    mBinding.ivAddDishImage.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this@AddUpdateDishActivity,
+                            R.drawable.ic_vector_edit
+                        )
+                    )
+                }
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.e("Cancelled", "Cancelled")
+        }
     }
 
 
@@ -206,7 +270,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     // Defined the parameters for the required intent
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
 
-                    // Fetch the Uri
+                    // Fetch the Uri: Go to the settings of our package
                     val uri = Uri.fromParts("package", packageName, null)
 
                     // Add the DATA to the intent
@@ -233,5 +297,9 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
     }
 
+    companion object {
+        private const val CAMERA = 1
+        private const val GALLERY = 2
+    }
 
 }
