@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -200,9 +201,17 @@ class AddUpdateDishActivity : AppCompatActivity(),
                 data?.extras?.let {
                     val thumbnail: Bitmap =
                         data.extras!!.get("data") as Bitmap // Bitmap from camera
-                    mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
 
-                    // Replace the add icon with edit icon once the image is selected.
+                    // Here we will replace the setImageBitmap using glide as below.
+                    // mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
+
+                    // Set Capture Image bitmap to the imageView using Glide
+                    Glide.with(this@AddUpdateDishActivity)
+                        .load(thumbnail)
+                        .centerCrop()
+                        .into(mBinding.ivDishImage)
+
+                    // Replace the add icon with edit icon once the image is loaded.
                     mBinding.ivAddDishImage.setImageDrawable(
                         ContextCompat.getDrawable(
                             this@AddUpdateDishActivity,
@@ -218,7 +227,15 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     // Here we will get the select image URI.
                     val selectedPhotoUri = data.data
 
-                    mBinding.ivDishImage.setImageURI(selectedPhotoUri) // Set the selected image from GALLERY to imageView.
+                    // Here we will replace the setImageURI using Glide as below.
+                    // mBinding.ivDishImage.setImageURI(selectedPhotoUri) // Set the selected image from GALLERY to imageView.
+
+                    // Set Selected Image bitmap to the imageView using Glide
+                    Glide.with(this@AddUpdateDishActivity)
+                        .load(selectedPhotoUri)
+                        .centerCrop()
+                        .into(mBinding.ivDishImage)
+                    // END
 
                     // Replace the add icon with edit icon once the image is selected.
                     mBinding.ivAddDishImage.setImageDrawable(
