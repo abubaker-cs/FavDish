@@ -18,7 +18,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -164,7 +163,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                         )
 
-                        startActivityForResult(galleryIntent, GALLERY)
+                        //  startActivityForResult(galleryIntent, GALLERY)
                     }
 
                     // If the permission was denied
@@ -230,85 +229,85 @@ class AddUpdateDishActivity : AppCompatActivity(),
             }
         }
 
-    /**
-     * Receive the result from a previous call to
-     * {@link #startActivityForResult(Intent, int)}.  This follows the
-     * related Activity API as described there in
-     * {@link Activity#onActivityResult(int, int, Intent)}.
-     *
-     * @param requestCode The integer request code originally supplied to
-     *                    startActivityForResult(), allowing you to identify who this
-     *                    result came from.
-     * @param resultCode The integer result code returned by the child activity
-     *                   through its setResult().
-     * @param data An Intent, which can return result data to the caller
-     *               (various data can be attached to Intent "extras").
-     */
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-
-            // CAMERA
-            if (requestCode == CAMERA) {
-
-                data?.extras?.let {
-
-                    // Bitmap from camera
-                    val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
-
-                    // Here we will replace the setImageBitmap using glide as below.
-                    // mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
-
-                    // Set Capture Image bitmap to the imageView using Glide
-                    Glide.with(this@AddUpdateDishActivity)
-                        .load(thumbnail)
-                        .centerCrop()
-                        .into(mBinding.ivDishImage)
-
-                    // Replace the add icon with edit icon once the image is loaded.
-                    mBinding.ivAddDishImage.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            this@AddUpdateDishActivity,
-                            R.drawable.ic_vector_edit
-                        )
-                    )
-                }
-            }
-
-            // GALLERY: Get the selected image from gallery. The selected will be in form of URI so set it to the Dish ImageView.
-            else if (requestCode == GALLERY) {
-
-                data?.let {
-                    // Here we will get the select image URI.
-                    val selectedPhotoUri = data.data
-
-                    // Here we will replace the setImageURI using Glide as below.
-                    // mBinding.ivDishImage.setImageURI(selectedPhotoUri) // Set the selected image from GALLERY to imageView.
-
-                    // Set Selected Image bitmap to the imageView using Glide
-                    Glide.with(this@AddUpdateDishActivity)
-                        .load(selectedPhotoUri)
-                        .centerCrop()
-                        .into(mBinding.ivDishImage)
-
-                    // Replace the add icon with edit icon once the image is selected.
-                    mBinding.ivAddDishImage.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            this@AddUpdateDishActivity,
-                            R.drawable.ic_vector_edit
-                        )
-                    )
-                }
-            }
-
-
-        } else if (resultCode == Activity.RESULT_CANCELED) {
-
-            // If Cancelled
-            Log.e("Cancelled", "Cancelled")
-
-        }
-    }
+//    /**
+//     * Receive the result from a previous call to
+//     * {@link #startActivityForResult(Intent, int)}.  This follows the
+//     * related Activity API as described there in
+//     * {@link Activity#onActivityResult(int, int, Intent)}.
+//     *
+//     * @param requestCode The integer request code originally supplied to
+//     *                    startActivityForResult(), allowing you to identify who this
+//     *                    result came from.
+//     * @param resultCode The integer result code returned by the child activity
+//     *                   through its setResult().
+//     * @param data An Intent, which can return result data to the caller
+//     *               (various data can be attached to Intent "extras").
+//     */
+//    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == Activity.RESULT_OK) {
+//
+//            // CAMERA
+//            if (requestCode == CAMERA) {
+//
+//                data?.extras?.let {
+//
+//                    // Bitmap from camera
+//                    val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
+//
+//                    // Here we will replace the setImageBitmap using glide as below.
+//                    // mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
+//
+//                    // Set Capture Image bitmap to the imageView using Glide
+//                    Glide.with(this@AddUpdateDishActivity)
+//                        .load(thumbnail)
+//                        .centerCrop()
+//                        .into(mBinding.ivDishImage)
+//
+//                    // Replace the add icon with edit icon once the image is loaded.
+//                    mBinding.ivAddDishImage.setImageDrawable(
+//                        ContextCompat.getDrawable(
+//                            this@AddUpdateDishActivity,
+//                            R.drawable.ic_vector_edit
+//                        )
+//                    )
+//                }
+//            }
+//
+//            // GALLERY: Get the selected image from gallery. The selected will be in form of URI so set it to the Dish ImageView.
+//            else if (requestCode == GALLERY) {
+//
+//                data?.let {
+//                    // Here we will get the select image URI.
+//                    val selectedPhotoUri = data.data
+//
+//                    // Here we will replace the setImageURI using Glide as below.
+//                    // mBinding.ivDishImage.setImageURI(selectedPhotoUri) // Set the selected image from GALLERY to imageView.
+//
+//                    // Set Selected Image bitmap to the imageView using Glide
+//                    Glide.with(this@AddUpdateDishActivity)
+//                        .load(selectedPhotoUri)
+//                        .centerCrop()
+//                        .into(mBinding.ivDishImage)
+//
+//                    // Replace the add icon with edit icon once the image is selected.
+//                    mBinding.ivAddDishImage.setImageDrawable(
+//                        ContextCompat.getDrawable(
+//                            this@AddUpdateDishActivity,
+//                            R.drawable.ic_vector_edit
+//                        )
+//                    )
+//                }
+//            }
+//
+//
+//        } else if (resultCode == Activity.RESULT_CANCELED) {
+//
+//            // If Cancelled
+//            Log.e("Cancelled", "Cancelled")
+//
+//        }
+//    }
 
 
     private fun setupActionBar() {
