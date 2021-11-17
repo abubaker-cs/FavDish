@@ -14,6 +14,8 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -115,7 +117,9 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 // Open the CAMERA: Start camera using the Image capture action.
                                 // Get the result in the onActivityResult method as we are using startActivityForResult.
                                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                                startActivityForResult(intent, CAMERA)
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                startForResultToLoadImage.launch(intent)
+                                // startActivityForResult(intent, CAMERA)
 
                             }
 
@@ -189,6 +193,42 @@ class AddUpdateDishActivity : AppCompatActivity(),
         //Start the dialog and display it on screen.
         dialog.show()
     }
+
+    private val startForResultToLoadImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
+            if (result.resultCode == Activity.RESULT_OK) {
+
+                try {
+
+                    val selectedImage: Uri? = result.data?.data
+                    if (selectedImage != null) {
+                        mBinding.ivDishImage.setImageURI(selectedImage)
+
+                    } else {
+
+                        // From Camera code goes here.
+                        // Get the bitmap directly from camera
+                        result.data?.extras?.let {
+                            val bitmap: Bitmap = result.data?.extras?.get("data") as Bitmap
+                            mBinding.ivDishImage.setImageBitmap(bitmap)
+
+                            mBinding.ivAddDishImage.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    this,
+                                    R.drawable.ic_vector_edit
+                                )
+                            )
+                        }
+
+                    }
+                } catch (error: Exception) {
+
+                    Log.d("log==>>", "Error : ${error.localizedMessage}")
+
+                }
+            }
+        }
 
     /**
      * Receive the result from a previous call to
