@@ -106,14 +106,19 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
 
-                        // Verification: Here after all the permission are granted launch the CAMERA to capture an image.
-                        if (report!!.areAllPermissionsGranted()) {
+                        // Safeguard: Execute only if the report is not EMPTY
+                        report?.let {
 
-                            Toast.makeText(
-                                this@AddUpdateDishActivity,
-                                "You have the Camera permission now to capture image.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            // Verification: Here after all the permission are granted launch the CAMERA to capture an image.
+                            if (report.areAllPermissionsGranted()) {
+
+                                Toast.makeText(
+                                    this@AddUpdateDishActivity,
+                                    "You have the Camera permission now to capture image.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
 
                         }
 
@@ -140,14 +145,15 @@ class AddUpdateDishActivity : AppCompatActivity(),
             // Ask for the permission while selecting the image from Gallery using Dexter Library. And Remove the toast message.
             Dexter.withContext(this@AddUpdateDishActivity)
 
-                // Required permissions: Read / Write External Storage
+                // Required permissions: Read External Storage
                 .withPermission(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    // Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
 
-                // Multiple Permissions Listener
+                // Single Permission Listener
                 .withListener(object : PermissionListener {
+
+                    // If all permissions were granted
                     override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                         // Here after all the permission are granted launch the gallery to select and image.
                         val galleryIntent = Intent(
@@ -158,6 +164,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         startActivityForResult(galleryIntent, GALLERY)
                     }
 
+                    // If the permission was denied
                     override fun onPermissionDenied(response: PermissionDeniedResponse?) {
                         Toast.makeText(
                             this@AddUpdateDishActivity,
@@ -166,38 +173,13 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         ).show()
                     }
 
+                    // Inform the user that he did not activated the required permission
                     override fun onPermissionRationaleShouldBeShown(
                         permission: PermissionRequest?,
                         token: PermissionToken?
                     ) {
                         showRationalDialogForPermissions()
                     }
-
-
-//                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-//
-//                        // Verification: Here after all the permission are granted launch the gallery to select and image.
-//                        if (report!!.areAllPermissionsGranted()) {
-//
-//                            // Show the Toast message for now just to know that we have the permission.
-//                            // Toast.makeText(this@AddUpdateDishActivity, "You have the Gallery permission now to select image.", Toast.LENGTH_SHORT).show()
-//
-//                            // Launch the gallery for Image selection using the constant.
-//                            val galleryIntent = Intent(
-//                                Intent.ACTION_PICK,
-//                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//                            )
-//
-//                            startActivityForResult(galleryIntent, GALLERY)
-//                        }
-//                    }
-//
-//                    override fun onPermissionRationaleShouldBeShown(
-//                        permissions: MutableList<PermissionRequest>?,
-//                        token: PermissionToken?
-//                    ) {
-//                        showRationalDialogForPermissions()
-//                    }
 
                 }).onSameThread().check()
 
