@@ -157,6 +157,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                     // If all permissions were granted
                     override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+
                         // Here after all the permission are granted launch the gallery to select and image.
                         val galleryIntent = Intent(
                             Intent.ACTION_PICK,
@@ -168,11 +169,13 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                     // If the permission was denied
                     override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+
                         Toast.makeText(
                             this@AddUpdateDishActivity,
                             "You have denied the storage permission to select image.",
                             Toast.LENGTH_SHORT
                         ).show()
+
                     }
 
                     // Inform the user that he did not activated the required permission
