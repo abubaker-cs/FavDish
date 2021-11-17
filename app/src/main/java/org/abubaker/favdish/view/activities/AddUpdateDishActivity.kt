@@ -112,11 +112,10 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             // Verification: Here after all the permission are granted launch the CAMERA to capture an image.
                             if (report.areAllPermissionsGranted()) {
 
-                                Toast.makeText(
-                                    this@AddUpdateDishActivity,
-                                    "You have the Camera permission now to capture image.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                // Open the CAMERA: Start camera using the Image capture action.
+                                // Get the result in the onActivityResult method as we are using startActivityForResult.
+                                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                startActivityForResult(intent, CAMERA)
 
                             }
 
@@ -208,11 +207,14 @@ class AddUpdateDishActivity : AppCompatActivity(),
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
+
+            // CAMERA
             if (requestCode == CAMERA) {
 
                 data?.extras?.let {
-                    val thumbnail: Bitmap =
-                        data.extras!!.get("data") as Bitmap // Bitmap from camera
+
+                    // Bitmap from camera
+                    val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
 
                     // Here we will replace the setImageBitmap using glide as below.
                     // mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
@@ -232,7 +234,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     )
                 }
             }
-            // Get the selected image from gallery. The selected will be in form of URI so set it to the Dish ImageView.
+
+            // GALLERY: Get the selected image from gallery. The selected will be in form of URI so set it to the Dish ImageView.
             else if (requestCode == GALLERY) {
 
                 data?.let {
@@ -258,8 +261,12 @@ class AddUpdateDishActivity : AppCompatActivity(),
                 }
             }
 
+
         } else if (resultCode == Activity.RESULT_CANCELED) {
+
+            // If Cancelled
             Log.e("Cancelled", "Cancelled")
+
         }
     }
 
@@ -326,6 +333,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
     }
 
+    // Companion Objects for CAMERA + GALLERY
     companion object {
         private const val CAMERA = 1
         private const val GALLERY = 2
