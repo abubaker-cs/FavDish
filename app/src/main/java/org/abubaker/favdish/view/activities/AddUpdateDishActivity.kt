@@ -5,8 +5,11 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,9 +19,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -30,11 +40,19 @@ import com.karumi.dexter.listener.single.PermissionListener
 import org.abubaker.favdish.R
 import org.abubaker.favdish.databinding.ActivityAddUpdateDishBinding
 import org.abubaker.favdish.databinding.DialogCustomImageSelectionBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.util.*
 
 class AddUpdateDishActivity : AppCompatActivity(),
     View.OnClickListener {
 
     private lateinit var mBinding: ActivityAddUpdateDishBinding
+
+    // A global variable for stored image path.
+    private var mImagePath: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -226,6 +244,10 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 .centerCrop()
                                 .into(mBinding.ivDishImage)
 
+                            // Save the captured image via Camera to the app directory and get back the image path.
+                            mImagePath = saveImageToInternalStorage(thumbnail)
+                            Log.i("ImagePath", mImagePath)
+
                             // Replace the add icon with edit icon once the image is loaded.
                             mBinding.ivAddDishImage.setImageDrawable(
                                 ContextCompat.getDrawable(this, R.drawable.ic_vector_edit)
@@ -264,10 +286,48 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             val selectedPhotoUri = result.data?.data
 
                             // Here we will replace the image using Glide as below.
+                            // Glide.with(this@AddUpdateDishActivity).load(selectedPhotoUri).centerCrop().into(mBinding.ivDishImage)
+
+                            // Implement the listener to get the bitmap of Image using Glide.
+                            // Set Selected Image URI to the imageView using Glide
                             Glide.with(this@AddUpdateDishActivity)
                                 .load(selectedPhotoUri)
                                 .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .listener(object : RequestListener<Drawable> {
+
+                                    // Fail:
+                                    override fun onLoadFailed(
+                                        @Nullable e: GlideException?,
+                                        model: Any?,
+                                        target: Target<Drawable>?,
+                                        isFirstResource: Boolean
+                                    ): Boolean {
+                                        // log exception
+                                        Log.e("TAG", "Error loading image", e)
+                                        return false // important to return false so the error placeholder can be placed
+                                    }
+
+                                    // Success:
+                                    override fun onResourceReady(
+                                        resource: Drawable,
+                                        model: Any?,
+                                        target: Target<Drawable>?,
+                                        dataSource: DataSource?,
+                                        isFirstResource: Boolean
+                                    ): Boolean {
+
+                                        // Get the Bitmap and save it to the local storage and get the Image Path.
+                                        val bitmap: Bitmap = resource.toBitmap()
+
+                                        mImagePath = saveImageToInternalStorage(bitmap)
+                                        Log.i("ImagePath", mImagePath)
+                                        return false
+                                    }
+
+                                })
                                 .into(mBinding.ivDishImage)
+                            // END
 
                             // Replace the add icon with edit icon once the image is loaded.
                             mBinding.ivAddDishImage.setImageDrawable(
@@ -348,10 +408,58 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
     }
 
+    // START
+    /**
+     * A function to save a copy of an image to internal storage for FavDishApp to use.
+     *
+     * @param bitmap
+     */
+    private fun saveImageToInternalStorage(bitmap: Bitmap): String {
+
+        // Get the context wrapper instance
+        val wrapper = ContextWrapper(applicationContext)
+
+        // Initializing a new file
+        // The bellow line return a directory in internal storage
+        /**
+         * The Mode Private here is
+         * File creation mode: the default mode, where the created file can only
+         * be accessed by the calling application (or all applications sharing the
+         * same user ID).
+         */
+        var file = wrapper.getDir(IMAGE_DIRECTORY, Context.MODE_PRIVATE)
+
+        // Mention a file name to save the image
+        file = File(file, "${UUID.randomUUID()}.jpg")
+
+        try {
+            // Get the file output stream
+            val stream: OutputStream = FileOutputStream(file)
+
+            // Compress bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+            // Flush the stream
+            stream.flush()
+
+            // Close stream
+            stream.close()
+
+        } catch (e: IOException) {
+
+            // Print the caught exception
+            e.printStackTrace()
+        }
+
+        // Return the saved image absolute path
+        return file.absolutePath
+    }
+
     // Companion Objects for CAMERA + GALLERY
-    // companion object {
-    //    private const val CAMERA = 1
-    //    private const val GALLERY = 2
-    // }
+    companion object {
+        private const val CAMERA = 1
+        private const val GALLERY = 2
+        private const val IMAGE_DIRECTORY = "FavDishImages"
+    }
 
 }
