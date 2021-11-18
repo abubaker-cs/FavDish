@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -199,11 +200,15 @@ class AddUpdateDishActivity : AppCompatActivity(),
     private val startForResultToLoadImage =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 
+            // If the RESULT_OK
             if (result.resultCode == Activity.RESULT_OK) {
 
                 try {
 
+                    // Get Selected image's Uri
                     val selectedImage: Uri? = result.data?.data
+
+                    // If Selected image is not NULL
                     if (selectedImage != null) {
                         mBinding.ivDishImage.setImageURI(selectedImage)
 
@@ -212,9 +217,20 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         // From Camera code goes here.
                         // Get the bitmap directly from camera
                         result.data?.extras?.let {
-                            val bitmap: Bitmap = result.data?.extras?.get("data") as Bitmap
-                            mBinding.ivDishImage.setImageBitmap(bitmap)
 
+                            // Bitmap from camera
+                            val thumbnail: Bitmap = result.data?.extras?.get("data") as Bitmap
+
+                            // Image: Main image for the recipe
+                            // mBinding.ivDishImage.setImageBitmap(thumbnail)
+
+                            // Set Capture Image bitmap to the imageView using Glide
+                            Glide.with(this@AddUpdateDishActivity)
+                                .load(thumbnail)
+                                .centerCrop()
+                                .into(mBinding.ivDishImage)
+
+                            // Replace the add icon with edit icon once the image is loaded.
                             mBinding.ivAddDishImage.setImageDrawable(
                                 ContextCompat.getDrawable(
                                     this,
@@ -224,8 +240,10 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         }
 
                     }
+
                 } catch (error: Exception) {
 
+                    // Log Error
                     Log.d("log==>>", "Error : ${error.localizedMessage}")
 
                 }
