@@ -118,6 +118,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 // Get the result in the onActivityResult method as we are using startActivityForResult.
                                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                                // Note: Since startActivityForResult() is depreciated, thus we will use the new approach
                                 startForResultToLoadImage.launch(intent)
                                 // startActivityForResult(intent, CAMERA)
 
@@ -210,19 +212,12 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                     // If Selected image is not NULL
                     if (selectedImage != null) {
-                        mBinding.ivDishImage.setImageURI(selectedImage)
 
-                    } else {
-
-                        // From Camera code goes here.
                         // Get the bitmap directly from camera
                         result.data?.extras?.let {
 
-                            // Bitmap from camera
+                            // Store the reference of captured Bitmap from camera into ta variable
                             val thumbnail: Bitmap = result.data?.extras?.get("data") as Bitmap
-
-                            // Image: Main image for the recipe
-                            // mBinding.ivDishImage.setImageBitmap(thumbnail)
 
                             // Set Capture Image bitmap to the imageView using Glide
                             Glide.with(this@AddUpdateDishActivity)
@@ -232,10 +227,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                             // Replace the add icon with edit icon once the image is loaded.
                             mBinding.ivAddDishImage.setImageDrawable(
-                                ContextCompat.getDrawable(
-                                    this,
-                                    R.drawable.ic_vector_edit
-                                )
+                                ContextCompat.getDrawable(this, R.drawable.ic_vector_edit)
                             )
                         }
 
@@ -249,6 +241,75 @@ class AddUpdateDishActivity : AppCompatActivity(),
                 }
             }
         }
+
+    private fun setupActionBar() {
+
+        // Enable Support for the ActionBar
+        setSupportActionBar(mBinding.toolbarAddDishActivity)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Assign required action on the click event
+        mBinding.toolbarAddDishActivity.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+    }
+
+    /**
+     * A function used to show the alert dialog when the permissions are denied and need to allow it from settings app info.
+     */
+    private fun showRationalDialogForPermissions() {
+
+        // Dialog Parameters
+        AlertDialog.Builder(this)
+
+            // Content of the Alert Message
+            .setMessage("It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings")
+
+            // Define Button's Label + Action
+            .setPositiveButton(
+                "GO TO SETTINGS"
+            ) { _, _ ->
+
+                // Try | Catch
+                try {
+
+                    // Defined the parameters for the required intent
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+
+                    // Fetch the Uri: Go to the settings of our package
+                    val uri = Uri.fromParts("package", packageName, null)
+
+                    // Add the DATA to the intent
+                    intent.data = uri
+
+                    // Initialize the intent
+                    startActivity(intent)
+
+                } catch (e: ActivityNotFoundException) {
+
+                    // Catch and print Error
+                    e.printStackTrace()
+
+                }
+
+            }
+
+            .setNegativeButton("Cancel") { dialog, _ ->
+
+                // Close the Dialog
+                dialog.dismiss()
+
+            }.show()
+
+    }
+
+    // Companion Objects for CAMERA + GALLERY
+//    companion object {
+//        private const val CAMERA = 1
+//        private const val GALLERY = 2
+//    }
+
 
 //    /**
 //     * Receive the result from a previous call to
@@ -329,74 +390,5 @@ class AddUpdateDishActivity : AppCompatActivity(),
 //
 //        }
 //    }
-
-
-    private fun setupActionBar() {
-
-        // Enable Support for the ActionBar
-        setSupportActionBar(mBinding.toolbarAddDishActivity)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // Assign required action on the click event
-        mBinding.toolbarAddDishActivity.setNavigationOnClickListener {
-            onBackPressed()
-        }
-
-    }
-
-    /**
-     * A function used to show the alert dialog when the permissions are denied and need to allow it from settings app info.
-     */
-    private fun showRationalDialogForPermissions() {
-
-        // Dialog Parameters
-        AlertDialog.Builder(this)
-
-            // Content of the Alert Message
-            .setMessage("It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings")
-
-            // Define Button's Label + Action
-            .setPositiveButton(
-                "GO TO SETTINGS"
-            ) { _, _ ->
-
-                // Try | Catch
-                try {
-
-                    // Defined the parameters for the required intent
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-
-                    // Fetch the Uri: Go to the settings of our package
-                    val uri = Uri.fromParts("package", packageName, null)
-
-                    // Add the DATA to the intent
-                    intent.data = uri
-
-                    // Initialize the intent
-                    startActivity(intent)
-
-                } catch (e: ActivityNotFoundException) {
-
-                    // Catch and print Error
-                    e.printStackTrace()
-
-                }
-
-            }
-
-            .setNegativeButton("Cancel") { dialog, _ ->
-
-                // Close the Dialog
-                dialog.dismiss()
-
-            }.show()
-
-    }
-
-    // Companion Objects for CAMERA + GALLERY
-    companion object {
-        private const val CAMERA = 1
-        private const val GALLERY = 2
-    }
 
 }
