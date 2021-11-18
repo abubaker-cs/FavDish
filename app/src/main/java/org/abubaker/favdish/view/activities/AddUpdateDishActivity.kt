@@ -216,7 +216,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                         // Get the bitmap directly from camera
                         result.data?.extras?.let {
 
-                            // Store the reference of captured Bitmap from camera into ta variable
+                            // Store the reference of captured Bitmap from camera into a thumbnail variable
                             val thumbnail: Bitmap = result.data?.extras?.get("data") as Bitmap
 
                             // Set Capture Image bitmap to the imageView using Glide
