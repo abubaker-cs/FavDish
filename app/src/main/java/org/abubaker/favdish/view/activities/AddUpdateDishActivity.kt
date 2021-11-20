@@ -23,6 +23,7 @@ import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -40,6 +41,9 @@ import com.karumi.dexter.listener.single.PermissionListener
 import org.abubaker.favdish.R
 import org.abubaker.favdish.databinding.ActivityAddUpdateDishBinding
 import org.abubaker.favdish.databinding.DialogCustomImageSelectionBinding
+import org.abubaker.favdish.databinding.DialogCustomListBinding
+import org.abubaker.favdish.utils.Constants
+import org.abubaker.favdish.view.adapters.CustomListItemAdapter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -70,6 +74,11 @@ class AddUpdateDishActivity : AppCompatActivity(),
             this@AddUpdateDishActivity
         )
 
+        // Assign the click events to the EditText fields as you have noticed while designing we have disabled few fields like Type, Category and Cooking time.
+        mBinding.etType.setOnClickListener(this@AddUpdateDishActivity)
+        mBinding.etCategory.setOnClickListener(this@AddUpdateDishActivity)
+        mBinding.etCookingTime.setOnClickListener(this@AddUpdateDishActivity)
+
     }
 
     // Action for: Add Image (icon)
@@ -87,6 +96,35 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     customImageSelectionDialog()
 
                     //Get back
+                    return
+                }
+
+                // Perform the action of the view and launch the dialog.
+                R.id.et_type -> {
+                    customItemsListDialog(
+                        resources.getString(R.string.title_select_dish_type),
+                        Constants.dishTypes(),
+                        Constants.DISH_TYPE
+                    )
+                    return
+                }
+
+                R.id.et_category -> {
+                    customItemsListDialog(
+                        resources.getString(R.string.title_select_dish_category),
+                        Constants.dishCategories(),
+                        Constants.DISH_CATEGORY
+                    )
+                    return
+                }
+
+                R.id.et_cooking_time -> {
+
+                    customItemsListDialog(
+                        resources.getString(R.string.title_select_dish_cooking_time),
+                        Constants.dishCookTime(),
+                        Constants.DISH_COOKING_TIME
+                    )
                     return
                 }
 
@@ -484,6 +522,42 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         // Return the saved image's absolute path
         return file.absolutePath
+
+    }
+
+    /**
+     * A function to launch the custom list dialog.
+     *
+     * @param title - Define the title at runtime according to the list items.
+     * @param itemsList - List of items to be selected.
+     * @param selection - By passing this param you can identify the list item selection.
+     */
+    private fun customItemsListDialog(title: String, itemsList: List<String>, selection: String) {
+
+        //
+        val customListDialog = Dialog(this@AddUpdateDishActivity)
+
+        val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
+
+        /**
+         * Set the screen content from a layout resource. The resource will be inflated,
+         * adding all top-level views to the screen.
+         * */
+        customListDialog.setContentView(binding.root)
+
+        binding.tvTitle.text = title
+
+        // Set the LayoutManager that this RecyclerView will use.
+        binding.rvList.layoutManager = LinearLayoutManager(this@AddUpdateDishActivity)
+
+        // Adapter class is initialized and list is passed in the param.
+        val adapter = CustomListItemAdapter(this@AddUpdateDishActivity, itemsList, selection)
+
+        // adapter instance is set to the recyclerview to inflate the items.
+        binding.rvList.adapter = adapter
+
+        //Start the dialog and display it on screen.
+        customListDialog.show()
 
     }
 
