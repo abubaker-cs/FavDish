@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.abubaker.favdish.databinding.ItemCustomListLayoutBinding
+import org.abubaker.favdish.view.activities.AddUpdateDishActivity
 
 /**
  * Create a custom list adapter to use it while showing the list item in the RecyclerView.
@@ -43,6 +44,15 @@ class CustomListItemAdapter(
         val item = listItems[position]
 
         holder.tvText.text = item
+
+        // Define the ItemView click event and send the result to the base class.
+        holder.itemView.setOnClickListener {
+
+            if (activity is AddUpdateDishActivity) {
+                activity.selectedListItem(item, selection)
+            }
+        }
+
     }
 
     /**
