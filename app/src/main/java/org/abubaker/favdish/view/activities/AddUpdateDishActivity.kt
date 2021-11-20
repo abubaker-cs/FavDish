@@ -449,7 +449,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
             // Compress bitmap while maintaining 100% image Quality
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
 
-            // Flush the stream
+            // Flush the stream (because we are done with the compression method,
+            // otherwise stream will remain open all the time
             stream.flush()
 
             // Close stream
@@ -457,12 +458,14 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         } catch (e: IOException) {
 
-            // Print the caught exception
+            // Print the caught IOException
             e.printStackTrace()
+
         }
 
-        // Return the saved image absolute path
+        // Return the saved image's absolute path
         return file.absolutePath
+
     }
 
     // Companion Objects
