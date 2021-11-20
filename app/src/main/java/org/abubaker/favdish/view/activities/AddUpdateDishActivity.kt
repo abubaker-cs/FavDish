@@ -142,7 +142,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     return
                 }
 
-                // TODO Step 6: Perform the action on button click.
+                // Perform the action on button click.
                 R.id.btn_add_dish -> {
 
                     // Define the local variables and get the EditText values.
@@ -162,6 +162,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     val cookingDirection =
                         mBinding.etDirectionToCook.text.toString().trim { it <= ' ' }
 
+                    // Conditions
                     when {
 
                         TextUtils.isEmpty(mImagePath) -> {
