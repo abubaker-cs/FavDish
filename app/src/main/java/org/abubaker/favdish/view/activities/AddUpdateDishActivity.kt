@@ -331,7 +331,6 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                                 })
                                 .into(mBinding.ivDishImage)
-                            // END
 
                             // Replace the add icon with edit icon once the image is loaded.
                             mBinding.ivAddDishImage.setImageDrawable(
