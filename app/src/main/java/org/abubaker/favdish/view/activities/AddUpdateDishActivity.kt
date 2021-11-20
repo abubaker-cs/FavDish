@@ -295,7 +295,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             Glide.with(this@AddUpdateDishActivity)
                                 .load(selectedPhotoUri)
                                 .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL) //
                                 .listener(object : RequestListener<Drawable> {
 
                                     // Fail:
