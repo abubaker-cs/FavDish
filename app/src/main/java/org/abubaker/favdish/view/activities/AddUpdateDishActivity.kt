@@ -246,6 +246,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                             // Save the captured image via Camera to the app directory and get back the image path.
                             mImagePath = saveImageToInternalStorage(thumbnail)
+
+                            // Print the URI (Path of the file)
                             Log.i("ImagePath", mImagePath)
 
                             // Replace the add icon with edit icon once the image is loaded.
@@ -321,6 +323,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                         val bitmap: Bitmap = resource.toBitmap()
 
                                         mImagePath = saveImageToInternalStorage(bitmap)
+
+                                        // Print the URI (Path of the file)
                                         Log.i("ImagePath", mImagePath)
                                         return false
                                     }
@@ -411,7 +415,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
     // START
     /**
      * A function to save a copy of an image to internal storage for FavDishApp to use.
-     *
+     * It will get a bitmap but a String will be returned.
      * @param bitmap
      */
     private fun saveImageToInternalStorage(bitmap: Bitmap): String {
@@ -421,22 +425,28 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         // Initializing a new file
         // The bellow line return a directory in internal storage
+
         /**
          * The Mode Private here is
          * File creation mode: the default mode, where the created file can only
          * be accessed by the calling application (or all applications sharing the
          * same user ID).
+         *
+         * IMAGE_DIRECTORY = FavDishImages defined in the "companion object" block
+         *
          */
         var file = wrapper.getDir(IMAGE_DIRECTORY, Context.MODE_PRIVATE)
 
-        // Mention a file name to save the image
+        // Store using a random file name to save the image in .jpg format
         file = File(file, "${UUID.randomUUID()}.jpg")
 
+        // Precaution
         try {
+
             // Get the file output stream
             val stream: OutputStream = FileOutputStream(file)
 
-            // Compress bitmap
+            // Compress bitmap while maintaining 100% image Quality
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
 
             // Flush the stream
@@ -455,7 +465,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
         return file.absolutePath
     }
 
-    // Companion Objects for CAMERA + GALLERY
+    // Companion Objects
     companion object {
         private const val CAMERA = 1
         private const val GALLERY = 2
