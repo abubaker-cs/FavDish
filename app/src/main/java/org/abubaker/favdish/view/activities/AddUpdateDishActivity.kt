@@ -330,14 +330,22 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                         isFirstResource: Boolean
                                     ): Boolean {
 
-                                        // Get the Bitmap and save it to the local storage and get the Image Path.
-                                        val bitmap: Bitmap = resource.toBitmap()
+                                        // We are verifying if the returned resource i.e. Drawable is not empty
+                                        resource.let {
 
-                                        mImagePath = saveImageToInternalStorage(bitmap)
+                                            // Get the Bitmap from the "resource parameter" and save it to the local storage and get the Image Path.
+                                            val bitmap: Bitmap = resource.toBitmap()
 
-                                        // Print the URI (Path of the file)
-                                        Log.i("ImagePath", mImagePath)
-                                        return false
+                                            // Store the image and get its absolute Path
+                                            mImagePath = saveImageToInternalStorage(bitmap)
+
+                                            // Print the URI (Path of the file)
+                                            Log.i("ImagePath", mImagePath)
+
+                                            // important to return false
+                                            return false
+                                        }
+
                                     }
 
 
