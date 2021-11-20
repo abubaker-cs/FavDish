@@ -244,7 +244,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 .centerCrop()
                                 .into(mBinding.ivDishImage)
 
-                            // Save the captured image via Camera to the app directory and get back the image path.
+                            // Save the captured image via Camera to the FavDishImages directory and get back the image path.
                             mImagePath = saveImageToInternalStorage(thumbnail)
 
                             // Print the URI (Path of the file)
