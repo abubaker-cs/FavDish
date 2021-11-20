@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.abubaker.favdish.databinding.ItemCustomListLayoutBinding
 
-// TODO Step 8: Create a custom list adapter to use it while showing the list item in the RecyclerView.
-// START
+/**
+ * Create a custom list adapter to use it while showing the list item in the RecyclerView.
+ */
 class CustomListItemAdapter(
     private val activity: Activity,
     private val listItems: List<String>,
