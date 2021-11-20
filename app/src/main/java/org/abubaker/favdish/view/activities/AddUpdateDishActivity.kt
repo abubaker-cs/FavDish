@@ -149,11 +149,16 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     // For Dish Image we have the global variable defined already.
 
                     val title = mBinding.etTitle.text.toString().trim { it <= ' ' }
+
                     val type = mBinding.etType.text.toString().trim { it <= ' ' }
+
                     val category = mBinding.etCategory.text.toString().trim { it <= ' ' }
+
                     val ingredients = mBinding.etIngredients.text.toString().trim { it <= ' ' }
+
                     val cookingTimeInMinutes =
                         mBinding.etCookingTime.text.toString().trim { it <= ' ' }
+
                     val cookingDirection =
                         mBinding.etDirectionToCook.text.toString().trim { it <= ' ' }
 
@@ -190,6 +195,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+
                         TextUtils.isEmpty(ingredients) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -197,6 +203,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+
                         TextUtils.isEmpty(cookingTimeInMinutes) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -204,6 +211,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+
                         TextUtils.isEmpty(cookingDirection) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -211,16 +219,16 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+
                         else -> {
 
-                            // TODO Step 8: Show the Toast Message for now that you dish entry is valid.
-                            // START
+                            // Show the Toast Message for now that you dish entry is valid.
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
                                 "All the entries are valid.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            // END
+
                         }
                     }
                 }
