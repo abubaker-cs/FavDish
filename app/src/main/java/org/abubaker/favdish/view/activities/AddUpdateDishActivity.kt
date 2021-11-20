@@ -295,8 +295,16 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             Glide.with(this@AddUpdateDishActivity)
                                 .load(selectedPhotoUri)
                                 .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL) //
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+
+                                // It will listen for Drawable
                                 .listener(object : RequestListener<Drawable> {
+
+                                    /**
+                                     * The large amount of parameters inside onLoadFailed() and onResourceReady()
+                                     * are auto generated as we are simply overriding the required methods using
+                                     * custom code, i.e. to print the File's PATH
+                                     */
 
                                     // Fail:
                                     override fun onLoadFailed(
@@ -305,9 +313,12 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                         target: Target<Drawable>?,
                                         isFirstResource: Boolean
                                     ): Boolean {
+
                                         // log exception
                                         Log.e("TAG", "Error loading image", e)
-                                        return false // important to return false so the error placeholder can be placed
+
+                                        // important to return false so the error placeholder can be placed
+                                        return false
                                     }
 
                                     // Success:
@@ -328,6 +339,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                         Log.i("ImagePath", mImagePath)
                                         return false
                                     }
+
 
                                 })
                                 .into(mBinding.ivDishImage)
