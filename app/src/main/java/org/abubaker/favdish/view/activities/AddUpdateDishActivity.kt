@@ -271,6 +271,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
      * A function to launch the custom image selection dialog.
      */
     private fun customImageSelectionDialog() {
+
+        // Defining variable for the custom dialog()
         val dialog = Dialog(this@AddUpdateDishActivity)
 
         // Inflate the layout: dialog_custom_image_selection_binding.xml
