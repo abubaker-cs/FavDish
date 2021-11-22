@@ -17,6 +17,18 @@ class CustomListItemAdapter(
 ) :
     RecyclerView.Adapter<CustomListItemAdapter.ViewHolder>() {
 
+    // ViewHolder will require 3 Members
+    /**
+     * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
+     */
+    class ViewHolder(view: ItemCustomListLayoutBinding) : RecyclerView.ViewHolder(view.root) {
+
+        // Holds the TextView that will add each item to tvText in item_custom_list_layout.xml
+        val tvText = view.tvText
+
+    }
+
+    // Member 1/3 - What should happen when we create the ViewHolder?
     /**
      * Inflates the item views which is designed in xml layout file
      *
@@ -24,11 +36,21 @@ class CustomListItemAdapter(
      * {@link ViewHolder} and initializes some private fields to be used by RecyclerView.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+        // Select file to bind: item_custom_list_layout.xml
         val binding: ItemCustomListLayoutBinding =
-            ItemCustomListLayoutBinding.inflate(LayoutInflater.from(activity), parent, false)
+            ItemCustomListLayoutBinding.inflate(
+                LayoutInflater.from(activity),
+                parent,
+                false
+            )
+
+        // Bind the selected file to the ViewHolder
         return ViewHolder(binding)
+
     }
 
+    // Member 2/3 - How each item will look like?
     /**
      * Binds each item in the ArrayList to a view
      *
@@ -41,8 +63,10 @@ class CustomListItemAdapter(
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        // We are selecting the CURRENT item in the LIST total records
         val item = listItems[position]
 
+        //
         holder.tvText.text = item
 
         // Define the ItemView click event and send the result to the base class.
@@ -56,21 +80,12 @@ class CustomListItemAdapter(
 
     }
 
+    // Member 3/3
     /**
      * Gets the number of items in the list
      */
     override fun getItemCount(): Int {
         return listItems.size
-    }
-
-    /**
-     * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
-     */
-    class ViewHolder(view: ItemCustomListLayoutBinding) : RecyclerView.ViewHolder(view.root) {
-
-        // Holds the TextView that will add each item to tvText in item_custom_list_layout.xml
-        val tvText = view.tvText
-
     }
 
 }
