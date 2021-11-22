@@ -153,20 +153,31 @@ class AddUpdateDishActivity : AppCompatActivity(),
                 // Button - Add Dish: Perform the action on button click.
                 R.id.btn_add_dish -> {
 
+
+                    /**
+                     * Get rid of EMPTY spaces
+                     */
+
                     // Define the local variables and get the EditText values.
                     // For Dish Image we have the global variable defined already.
 
+                    // Title
                     val title = mBinding.etTitle.text.toString().trim { it <= ' ' }
 
+                    // Type
                     val type = mBinding.etType.text.toString().trim { it <= ' ' }
 
+                    // Category
                     val category = mBinding.etCategory.text.toString().trim { it <= ' ' }
 
+                    // Ingredients
                     val ingredients = mBinding.etIngredients.text.toString().trim { it <= ' ' }
 
+                    // Cooking Time
                     val cookingTimeInMinutes =
                         mBinding.etCookingTime.text.toString().trim { it <= ' ' }
 
+                    // Cooking Directions
                     val cookingDirection =
                         mBinding.etDirectionToCook.text.toString().trim { it <= ' ' }
 
