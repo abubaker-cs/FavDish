@@ -643,6 +643,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
         // Replaced the dialog variable with the global variable.
         mCustomListDialog = Dialog(this@AddUpdateDishActivity)
 
+        // Select the XML file to bind, i.e. dialog_custom_list.xml
         val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
 
         /**
@@ -651,12 +652,17 @@ class AddUpdateDishActivity : AppCompatActivity(),
          * */
         mCustomListDialog.setContentView(binding.root)
 
+        /**
+         * Populate DATA
+         */
+
+        // Title
         binding.tvTitle.text = title
 
-        // Set the LayoutManager that this RecyclerView will use.
+        // LayoutManager for the RecyclerView = Linear
         binding.rvList.layoutManager = LinearLayoutManager(this@AddUpdateDishActivity)
 
-        // Adapter class is initialized and list is passed in the param.
+        // Adapter class: is initialized and list is passed in the param.
         val adapter = CustomListItemAdapter(this@AddUpdateDishActivity, itemsList, selection)
 
         // adapter instance is set to the recyclerview to inflate the items.

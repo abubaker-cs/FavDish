@@ -28,7 +28,7 @@ class CustomListItemAdapter(
 
     }
 
-    // Member 1/3 - What should happen when we create the ViewHolder?
+    // Member 1/3 - "Select Dish Type" | XML file with the list will be inflated
     /**
      * Inflates the item views which is designed in xml layout file
      *
