@@ -51,6 +51,7 @@ class CustomListItemAdapter(
             if (activity is AddUpdateDishActivity) {
                 activity.selectedListItem(item, selection)
             }
+
         }
 
     }
@@ -66,7 +67,10 @@ class CustomListItemAdapter(
      * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
      */
     class ViewHolder(view: ItemCustomListLayoutBinding) : RecyclerView.ViewHolder(view.root) {
-        // Holds the TextView that will add each item to
+
+        // Holds the TextView that will add each item to tvText in item_custom_list_layout.xml
         val tvText = view.tvText
+
     }
+
 }
