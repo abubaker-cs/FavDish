@@ -155,7 +155,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
 
                     /**
-                     * Get rid of EMPTY spaces
+                     * Get rid of the EMPTY spaces
                      */
 
                     // Define the local variables and get the EditText values.
