@@ -69,11 +69,15 @@ class CustomListItemAdapter(
         //
         holder.tvText.text = item
 
-        // Define the ItemView click event and send the result to the base class.
+        // Very IMPORTANT: Define the ItemView click event
         holder.itemView.setOnClickListener {
 
+            // Are we currently in the AddUpdateDishActivity ?
             if (activity is AddUpdateDishActivity) {
+
+                //  Send the result to the base class.
                 activity.selectedListItem(item, selection)
+
             }
 
         }

@@ -700,17 +700,35 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         when (selection) {
 
+            // Dish Type:
             Constants.DISH_TYPE -> {
+
+                // Hide the Custom Dialog
                 mCustomListDialog.dismiss()
+
+                // Update Value with the selected Dish Type
                 mBinding.etType.setText(item)
+
             }
 
+            // Category
             Constants.DISH_CATEGORY -> {
+
+                // Hide the Custom Dialog
                 mCustomListDialog.dismiss()
+
+                // Update Value with the selected Dish Category
                 mBinding.etCategory.setText(item)
+
             }
+
+            // Cooking Time
             else -> {
+
+                // Hide the Custom Dialog
                 mCustomListDialog.dismiss()
+
+                // Update Value with the selected Cooking Time
                 mBinding.etCookingTime.setText(item)
             }
         }
