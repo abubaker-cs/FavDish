@@ -79,7 +79,9 @@ class AddUpdateDishActivity : AppCompatActivity(),
             this@AddUpdateDishActivity
         )
 
-        // Assign the click events to the EditText fields as you have noticed while designing we have disabled few fields like Type, Category and Cooking time.
+        /**
+         * Assign the click events to the EditText fields as you have noticed while designing we have disabled few fields like Type, Category and Cooking time.
+         */
 
         // Type
         mBinding.etType.setOnClickListener(this@AddUpdateDishActivity)
@@ -113,25 +115,31 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     return
                 }
 
-                // Perform the action of the view and launch the dialog.
+                // Type - Perform the action of the view and launch the dialog.
                 R.id.et_type -> {
+
                     customItemsListDialog(
                         resources.getString(R.string.title_select_dish_type),
                         Constants.dishTypes(),
                         Constants.DISH_TYPE
                     )
                     return
+
                 }
 
+                // Category
                 R.id.et_category -> {
+
                     customItemsListDialog(
                         resources.getString(R.string.title_select_dish_category),
                         Constants.dishCategories(),
                         Constants.DISH_CATEGORY
                     )
                     return
+
                 }
 
+                // Cooking Time
                 R.id.et_cooking_time -> {
 
                     customItemsListDialog(
@@ -142,7 +150,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     return
                 }
 
-                // Perform the action on button click.
+                // Button - Add Dish: Perform the action on button click.
                 R.id.btn_add_dish -> {
 
                     // Define the local variables and get the EditText values.
@@ -162,9 +170,12 @@ class AddUpdateDishActivity : AppCompatActivity(),
                     val cookingDirection =
                         mBinding.etDirectionToCook.text.toString().trim { it <= ' ' }
 
-                    // Conditions
+                    /**
+                     * Validation: Validate if no field is empty.
+                     */
                     when {
 
+                        // Image | Thumbnail
                         TextUtils.isEmpty(mImagePath) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -173,6 +184,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             ).show()
                         }
 
+                        // Title for the Recipe
                         TextUtils.isEmpty(title) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -181,6 +193,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             ).show()
                         }
 
+                        // Type
                         TextUtils.isEmpty(type) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -189,6 +202,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             ).show()
                         }
 
+                        // Category
                         TextUtils.isEmpty(category) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -197,6 +211,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             ).show()
                         }
 
+                        // Ingredients
                         TextUtils.isEmpty(ingredients) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -205,6 +220,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             ).show()
                         }
 
+                        // Cooking Time (Duration)
                         TextUtils.isEmpty(cookingTimeInMinutes) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
@@ -213,6 +229,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             ).show()
                         }
 
+                        // Cooking Directions
                         TextUtils.isEmpty(cookingDirection) -> {
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
