@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
@@ -17,8 +18,10 @@
         android:textSize="@dimen/_16sdp"
         tools:text="Item Value" />
 
+    <!-- Custom 1dp Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:background="@color/divider_line_color" />
+
 </LinearLayout>

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Fixed Vertical Orientation -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,6 +8,7 @@
     android:orientation="vertical"
     android:padding="@dimen/_10sdp">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
@@ -15,6 +18,7 @@
         android:textStyle="bold"
         tools:text="Dialog Title" />
 
+    <!-- List: RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
@@ -22,4 +26,5 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:visibility="visible"
         tools:visibility="visible" />
+
 </LinearLayout>
