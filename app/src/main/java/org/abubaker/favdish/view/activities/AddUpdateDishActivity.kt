@@ -272,7 +272,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
      */
     private fun customImageSelectionDialog() {
 
-        // Defining variable for the custom dialog()
+        // This will be used to display our custom dialog for selecting the image from CAMERA / GALLERY
         val dialog = Dialog(this@AddUpdateDishActivity)
 
         // Inflate the layout: dialog_custom_image_selection_binding.xml
@@ -670,7 +670,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
      */
     private fun customItemsListDialog(title: String, itemsList: List<String>, selection: String) {
 
-        // Replaced the dialog variable with the global variable.
+        // mCustomListDialog will act as a TEMPLATE and it  will be used for allowing the user to
+        // select the items from the lists of Type, Category and Cooking Duration
         mCustomListDialog = Dialog(this@AddUpdateDishActivity)
 
         // Select the XML file to bind, i.e. dialog_custom_list.xml
