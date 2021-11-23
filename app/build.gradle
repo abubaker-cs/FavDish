@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+    id 'kotlin-kapt' // Required by ROOM
 }
 
 android {
@@ -31,10 +31,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    // Required by ROOM
     packagingOptions {
+
+        // It will exclude the atomic functions module from the package and prevent warnings
         exclude 'META-INF/atomicfu.kotlin_module'
+
     }
 
+    // Required by ROOM
     kotlinOptions {
         jvmTarget = '1.8'
     }
