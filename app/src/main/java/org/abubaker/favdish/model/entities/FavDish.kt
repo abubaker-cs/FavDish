@@ -33,7 +33,7 @@ data class FavDish(
 
     /**
      * Specifies the name of the column in the table
-     * if you want it to be different from the name of the member variable.
+     * if you want it to be different from the name of the member variable
      */
 
     // Cooking Time
