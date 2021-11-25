@@ -3,6 +3,8 @@ package org.abubaker.favdish.model.database
 import androidx.annotation.WorkerThread
 import org.abubaker.favdish.model.entities.FavDish
 
+// TEMPLATE: https://developer.android.com/codelabs/android-room-with-a-view-kotlin#8
+
 // WHY?
 // ===
 // Repository will get reference and limited access to the Database through DAO

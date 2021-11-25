@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.abubaker.favdish.model.entities.FavDish
 
-// Template: https://developer.android.com/codelabs/android-room-with-a-view-kotlin#7
+// TEMPLATE: https://developer.android.com/codelabs/android-room-with-a-view-kotlin#7
 
 /**
  * This is the backend. The database. This used to be done by the OpenHelper.

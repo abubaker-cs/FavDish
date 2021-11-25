@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import org.abubaker.favdish.model.entities.FavDish
 
+// TEMPLATE: https://developer.android.com/codelabs/android-room-with-a-view-kotlin#5
+
 // WHY?
 // ===
 // DAO will avoid exposing the entire database, and rather an limited access to the DB will be provided
