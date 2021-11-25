@@ -16,10 +16,12 @@ interface FavDishDao {
      * ===============
      * All queries must be executed on a separate thread.
      * They cannot be executed from Main Thread or it will cause an crash.
+     *
      * ---------------
-     * Room has Kotlin coroutines support.
-     * This allows your queries to be annotated with the suspend modifier and then called from a coroutine
-     * or from another suspension function.
+     *
+     * suspend:
+     * Room has Kotlin coroutines support. This allows your queries to be annotated with the suspend
+     * modifier and then called from a coroutine or from another suspension function.
      */
 
     /**
