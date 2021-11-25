@@ -3,6 +3,10 @@ package org.abubaker.favdish.model.database
 import androidx.annotation.WorkerThread
 import org.abubaker.favdish.model.entities.FavDish
 
+// WHY?
+// ===
+// Repository will get reference and limited access to the Database through DAO
+
 /**
  * A Repository manages queries and allows you to use multiple backend.
  *
@@ -19,7 +23,9 @@ class FavDishRepository(private val favDishDao: FavDishDao) {
      * implement anything else to ensure we're not doing long running database work
      * off the main thread.
      */
-    // TODO Step 2: Create a suspend function to insert the data and annotate it with @WorkerThread.
+
+    // 1. Suspend function to insert the data and
+    // 2. Annotate it with @WorkerThread.
     @WorkerThread
     suspend fun insertFavDishData(favDish: FavDish) {
         favDishDao.insertFavDishDetails(favDish)

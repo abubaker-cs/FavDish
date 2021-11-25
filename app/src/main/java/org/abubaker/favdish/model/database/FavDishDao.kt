@@ -4,6 +4,11 @@ import androidx.room.Dao
 import androidx.room.Insert
 import org.abubaker.favdish.model.entities.FavDish
 
+// WHY?
+// ===
+// DAO will avoid exposing the entire database, and rather an limited access to the DB will be provided
+// in the Repository through our DAO
+
 /**
  * Defined an interface named as FavDishDao
  * that we will use to specify SQL queries and associate them with method calls.
