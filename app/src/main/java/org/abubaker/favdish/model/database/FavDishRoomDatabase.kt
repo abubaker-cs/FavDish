@@ -6,7 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.abubaker.favdish.model.entities.FavDish
 
-// START
+// Template: https://developer.android.com/codelabs/android-room-with-a-view-kotlin#7
+
 /**
  * This is the backend. The database. This used to be done by the OpenHelper.
  * The fact that this has very few comments emphasizes its coolness.
@@ -25,6 +26,8 @@ abstract class FavDishRoomDatabase : RoomDatabase() {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
+
+                //
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavDishRoomDatabase::class.java,
@@ -32,9 +35,13 @@ abstract class FavDishRoomDatabase : RoomDatabase() {
                 )
                     .fallbackToDestructiveMigration()
                     .build()
+
+                //
                 INSTANCE = instance
+
                 // return instance
                 instance
+
             }
 
         }
