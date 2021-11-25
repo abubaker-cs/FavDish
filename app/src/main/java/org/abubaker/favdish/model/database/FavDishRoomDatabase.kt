@@ -15,16 +15,18 @@ import org.abubaker.favdish.model.entities.FavDish
 @Database(entities = [FavDish::class], version = 1)
 abstract class FavDishRoomDatabase : RoomDatabase() {
 
+    // Inside the "companion object" we basically need to use the Singleton of our Instance.
     companion object {
 
-        // Singleton prevents multiple instances of database opening at the same time.
+        // Singleton: Prevents multiple instances of database opening at the same time.
+        // @Volatile: The writes to this field are immediately made visible to other threads.
         @Volatile
         private var INSTANCE: FavDishRoomDatabase? = null
 
+        //
         fun getDatabase(context: Context): FavDishRoomDatabase {
 
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
+            // If INSTANCE is NULL then create the DATABASE, otherwise return the INSTANCE
             return INSTANCE ?: synchronized(this) {
 
                 //
