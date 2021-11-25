@@ -30,6 +30,9 @@ class FavDishRepository(private val favDishDao: FavDishDao) {
     // 2. Annotate it with @WorkerThread.
     @WorkerThread
     suspend fun insertFavDishData(favDish: FavDish) {
+
+        // Execute the insertFavDishDetails function from the FavDishDao.kt file
         favDishDao.insertFavDishDetails(favDish)
+
     }
 }
