@@ -23,13 +23,13 @@ abstract class FavDishRoomDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: FavDishRoomDatabase? = null
 
-        //
+        // getDatabase() will return FavDishRoomDatabase object which will be our INSTANCE (Singleton)
         fun getDatabase(context: Context): FavDishRoomDatabase {
 
             // If INSTANCE is NULL then create the DATABASE, otherwise return the INSTANCE
             return INSTANCE ?: synchronized(this) {
 
-                //
+                // Build the Database
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavDishRoomDatabase::class.java,
@@ -38,7 +38,7 @@ abstract class FavDishRoomDatabase : RoomDatabase() {
                     .fallbackToDestructiveMigration()
                     .build()
 
-                //
+                // Store the result of instance
                 INSTANCE = instance
 
                 // return instance
