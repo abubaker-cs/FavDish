@@ -15,7 +15,9 @@
     <!-- Permission: Camera -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- Link the application class with application. Add the name parameter in the application tag as below.-->
     <application
+        android:name=".application.FavDishApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

@@ -15,6 +15,9 @@ import org.abubaker.favdish.model.entities.FavDish
 @Database(entities = [FavDish::class], version = 1)
 abstract class FavDishRoomDatabase : RoomDatabase() {
 
+    // Create abstract function that we can access from the application class to initialize the repository class.
+    abstract fun favDishDao(): FavDishDao
+
     // Inside the "companion object" we basically need to use the Singleton of our Instance.
     companion object {
 
