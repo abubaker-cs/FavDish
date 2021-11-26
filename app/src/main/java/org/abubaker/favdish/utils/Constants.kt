@@ -9,6 +9,10 @@ object Constants {
     const val DISH_CATEGORY: String = "DishCategory"
     const val DISH_COOKING_TIME: String = "DishCookingTime"
 
+    // We will use following for the Image Source while inserting the Dish details.
+    const val DISH_IMAGE_SOURCE_LOCAL: String = "Local"
+    const val DISH_IMAGE_SOURCE_ONLINE: String = "Online"
+
     /**
      * Dish Type
      */
