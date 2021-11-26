@@ -4,9 +4,8 @@ import android.app.Application
 import org.abubaker.favdish.model.database.FavDishRepository
 import org.abubaker.favdish.model.database.FavDishRoomDatabase
 
-// Create a application class where we can define the variable scope to use through out the application.
 /**
- * A application class where we can define the variable scope to use through out the application.
+ * An application class where we can define the variable scope to use through out the application.
  */
 class FavDishApplication : Application() {
 
@@ -14,6 +13,7 @@ class FavDishApplication : Application() {
     /**Using by lazy so the database and the repository are only created when they're needed
      * rather than when the application starts.
      */
+
     /**
      * The "lazy" keyword used for creating a new instance that uses the specified initialization function
      * and the default thread-safety mode [LazyThreadSafetyMode.SYNCHRONIZED].
