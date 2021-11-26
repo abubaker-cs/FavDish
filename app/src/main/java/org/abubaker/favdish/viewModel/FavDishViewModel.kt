@@ -45,18 +45,20 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
 class FavDishViewModelFactory(private val repository: FavDishRepository) :
     ViewModelProvider.Factory {
 
+    // Required Member: create()
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         //
         if (modelClass.isAssignableFrom(FavDishViewModel::class.java)) {
 
-            //
+            // T = ViewModel
+            // @Suppress("UNCHECKED_CAST") = we are asking to receive warnings
             @Suppress("UNCHECKED_CAST")
             return FavDishViewModel(repository) as T
 
         }
 
-        //
+        // Catch and Throw Exception Error
         throw IllegalArgumentException("Unknown ViewModel class")
 
     }
