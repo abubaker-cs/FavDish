@@ -269,6 +269,10 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                         else -> {
 
+                            /**
+                             * Next steps will be taken to save the user provided details in the Room Database
+                             */
+
                             // Create an instance of the entity class and pass the required values to it. Remove the Toast Message.
                             val favDishDetails: FavDish = FavDish(
                                 mImagePath,
@@ -282,7 +286,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                                 false
                             )
 
-                            // Now pass the value to the ViewModelClass and display the Toast message to acknowledge.
+                            // Now pass the favDishDetails value to the ViewModelClass and display the Toast message to acknowledge.
                             mFavDishViewModel.insert(favDishDetails)
 
                             // Show the Toast Message for now that you dish entry is valid.
