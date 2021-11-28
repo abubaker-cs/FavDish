@@ -20,6 +20,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -40,11 +41,15 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import org.abubaker.favdish.R
+import org.abubaker.favdish.application.FavDishApplication
 import org.abubaker.favdish.databinding.ActivityAddUpdateDishBinding
 import org.abubaker.favdish.databinding.DialogCustomImageSelectionBinding
 import org.abubaker.favdish.databinding.DialogCustomListBinding
+import org.abubaker.favdish.model.entities.FavDish
 import org.abubaker.favdish.utils.Constants
 import org.abubaker.favdish.view.adapters.CustomListItemAdapter
+import org.abubaker.favdish.viewModel.FavDishViewModel
+import org.abubaker.favdish.viewModel.FavDishViewModelFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -62,6 +67,18 @@ class AddUpdateDishActivity : AppCompatActivity(),
     // Define the custom list dialog global and initialize it in the function as it is define previously.
     // A global variable for the custom list dialog.
     private lateinit var mCustomListDialog: Dialog
+
+    // Create an instance of the ViewModel class so that we can access its methods in our View class.
+    /**
+     * To create the ViewModel we used the viewModels delegate, passing in an instance of our FavDishViewModelFactory.
+     * This is constructed based on the repository retrieved from the FavDishApplication.
+     */
+    private val mFavDishViewModel: FavDishViewModel by viewModels {
+
+        //
+        FavDishViewModelFactory((application as FavDishApplication).repository)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -251,12 +268,34 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
                         else -> {
 
+                            // Create an instance of the entity class and pass the required values to it. Remove the Toast Message.
+                            val favDishDetails: FavDish = FavDish(
+                                mImagePath,
+                                Constants.DISH_IMAGE_SOURCE_LOCAL,
+                                title,
+                                type,
+                                category,
+                                ingredients,
+                                cookingTimeInMinutes,
+                                cookingDirection,
+                                false
+                            )
+
+                            // Now pass the value to the ViewModelClass and display the Toast message to acknowledge.
+                            mFavDishViewModel.insert(favDishDetails)
+
                             // Show the Toast Message for now that you dish entry is valid.
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
-                                "All the entries are valid.",
+                                "You successfully added your favorite dish details.",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            // You even print the log if Toast is not displayed on emulator
+                            Log.e("Insertion", "Success")
+
+                            // Finish the Activity
+                            finish()
 
                         }
                     }
