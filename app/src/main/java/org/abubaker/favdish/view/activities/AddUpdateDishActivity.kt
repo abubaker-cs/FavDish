@@ -68,14 +68,15 @@ class AddUpdateDishActivity : AppCompatActivity(),
     // A global variable for the custom list dialog.
     private lateinit var mCustomListDialog: Dialog
 
-    // Create an instance of the ViewModel class so that we can access its methods in our View class.
     /**
+     * With the following instance of the ViewModel class, we can access its methods in our View class.
+     *
      * To create the ViewModel we used the viewModels delegate, passing in an instance of our FavDishViewModelFactory.
      * This is constructed based on the repository retrieved from the FavDishApplication.
      */
     private val mFavDishViewModel: FavDishViewModel by viewModels {
 
-        //
+        // We are "passing" the repository from our application
         FavDishViewModelFactory((application as FavDishApplication).repository)
 
     }
