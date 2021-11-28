@@ -1,6 +1,7 @@
 package org.abubaker.favdish.model.database
 
 import androidx.annotation.WorkerThread
+import kotlinx.coroutines.flow.Flow
 import org.abubaker.favdish.model.entities.FavDish
 
 // TEMPLATE: https://developer.android.com/codelabs/android-room-with-a-view-kotlin#8
@@ -39,5 +40,5 @@ class FavDishRepository(private val favDishDao: FavDishDao) {
     // Create a variable for the dishes list to access it from ViewModel.
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    // val allDishesList: Flow<List<FavDish>> = favDishDao.getAllDishesList()
+    val allDishesList: Flow<List<FavDish>> = favDishDao.getAllDishesList()
 }
