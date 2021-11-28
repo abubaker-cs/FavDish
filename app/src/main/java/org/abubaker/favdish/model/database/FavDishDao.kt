@@ -41,7 +41,7 @@ interface FavDishDao {
     @Insert
     suspend fun insertFavDishDetails(favDish: FavDish)
 
-    // TODO Step 1: Create a function to get the list of dishes from database using @Query.
+    // Create a function to get the list of dishes from database using @Query.
     /**
      * When data changes, you usually want to take some action, such as displaying the updated data in the UI.
      * This means you have to observe the data so when it changes, you can react.

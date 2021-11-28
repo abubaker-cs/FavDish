@@ -23,7 +23,9 @@ class FavDishApplication : Application() {
      * Note that the returned instance uses itself to synchronize on. Do not synchronize from external code on
      * the returned instance as it may cause accidental deadlock. Also this behavior can be changed in the future.
      */
-    private val database by lazy { FavDishRoomDatabase.getDatabase(this@FavDishApplication) }
+    private val database by lazy {
+        FavDishRoomDatabase.getDatabase(this@FavDishApplication)
+    }
 
     // A variable for repository.
     val repository by lazy { FavDishRepository(database.favDishDao()) }
