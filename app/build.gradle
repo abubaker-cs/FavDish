@@ -17,6 +17,14 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         minSdkVersion 24
+
+        // https://stackoverflow.com/a/58122855/7589309
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.incremental"] = "true"
+            }
+        }
+
     }
 
     buildTypes {
@@ -36,6 +44,7 @@ android {
 
         // It will exclude the atomic functions module from the package and prevent warnings
         exclude 'META-INF/atomicfu.kotlin_module'
+        resources.excludes += "DebugProbesKt.bin"
 
     }
 
@@ -68,8 +77,12 @@ dependencies {
     // Room components
     // Reference Link: https://developer.android.com/training/data-storage/room
     def room_version = '2.3.0'
+    implementation "androidx.room:room-runtime:2.3.0"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    // Kotlin coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-RC'
 
     // These dependencies are already added if you have created the project with BottomNavigationActivity.
     // Lifecycle components

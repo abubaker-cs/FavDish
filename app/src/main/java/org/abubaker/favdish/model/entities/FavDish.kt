@@ -17,7 +17,7 @@ data class FavDish(
     @ColumnInfo val image: String,
 
     // Image Source: Local or Online
-    @ColumnInfo val imageSource: String,
+    @ColumnInfo(name = "image_source") val imageSource: String, // Local or Online
 
     // Title
     @ColumnInfo val title: String,
