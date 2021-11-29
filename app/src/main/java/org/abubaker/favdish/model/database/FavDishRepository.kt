@@ -13,7 +13,7 @@ import org.abubaker.favdish.model.entities.FavDish
 /**
  * A Repository manages queries and allows you to use multiple backend.
  *
- * The DAO is passed into the repository constructor as opposed to the whole database
+ * The DAO is passed into the repository constructor as opposed to the whole database.
  * This is because it only needs access to the DAO, since the DAO contains all the read/write methods for the database.
  * There's no need to expose the entire database to the repository.
  *

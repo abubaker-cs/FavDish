@@ -30,11 +30,17 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
 
     }
 
-    //  Get all the dishes list from the database in the ViewModel to pass it to the UI.
-    /** Using LiveData and caching what allDishes returns has several benefits:
-     * We can put an observer on the data (instead of polling for changes) and only
-     * update the UI when the data actually changes.
-     * Repository is completely separated from the UI through the ViewModel.
+    /**
+     * What needs to be done?
+     * ======================
+     * Get all the dishes list from the database in the ViewModel to pass it to the UI.
+     *
+     * LiveData (How?)
+     * ===============
+     * Using LiveData and caching what allDishes returns has several benefits:
+     * 1. We can put an observer on the data (instead of polling for changes)
+     * 2. Only update the UI when the data actually changes.
+     * 3. Repository is completely separated from the UI through the ViewModel.
      */
     val allDishesList: LiveData<List<FavDish>> = repository.allDishesList.asLiveData()
 }
