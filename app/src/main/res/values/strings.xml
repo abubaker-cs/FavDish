@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FavDish</string>
 
+    <!-- Titles for NavBar -->
     <string name="title_all_dishes">All Dishes</string>
     <string name="title_favorite_dishes">Favorite</string>
     <string name="title_random_dish">Random Dish</string>

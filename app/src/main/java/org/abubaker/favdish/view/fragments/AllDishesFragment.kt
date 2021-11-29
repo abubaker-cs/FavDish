@@ -31,7 +31,7 @@ class AllDishesFragment : Fragment() {
      * To create the ViewModel we used the viewModels delegate, passing in an instance of our FavDishViewModelFactory.
      * This is constructed based on the repository retrieved from the FavDishApplication.
      *
-     * FavDishViewModelFactory = Defined in our FavDishViewModel.kt file
+     * FavDishViewModelFactory = Defined in our AllDishesViewModel.kt file
      * requireActivity = Returns FragmentActivity
      *
      */
@@ -149,6 +149,7 @@ class AllDishesFragment : Fragment() {
                 startActivity(Intent(requireActivity(), AddUpdateDishActivity::class.java))
                 return true
             }
+
         }
 
         return super.onOptionsItemSelected(item)

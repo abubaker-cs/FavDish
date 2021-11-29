@@ -24,7 +24,7 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
 
         // Call the repository function and pass the details.
         // ---
-        // Our ViewModel (FavDishViewModel.kt) will execute the function insertFavDishData()
+        // Our ViewModel (AllDishesViewModel.kt) will execute the function insertFavDishData()
         // inside the repository (FavDishRepository.kt)
         repository.insertFavDishData(dish)
 

@@ -8,13 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import org.abubaker.favdish.databinding.FragmentDashboardBinding
-import org.abubaker.favdish.viewModel.DashboardViewModel
+import org.abubaker.favdish.databinding.FragmentRandomDishBinding
+import org.abubaker.favdish.viewModel.RandomDishViewModel
 
-class DashboardFragment : Fragment() {
+class RandomDishFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private var _binding: FragmentDashboardBinding? = null
+    private lateinit var randomDishViewModel: RandomDishViewModel
+    private var _binding: FragmentRandomDishBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,15 +25,15 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dashboardViewModel =
-            ViewModelProvider(this)[DashboardViewModel::class.java]
+        randomDishViewModel =
+            ViewModelProvider(this)[RandomDishViewModel::class.java]
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentRandomDishBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
+        val textView: TextView = binding.textNotifications
 
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        randomDishViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
 
@@ -44,5 +44,4 @@ class DashboardFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }
