@@ -51,7 +51,7 @@ class AllDishesFragment : Fragment() {
 
 
     /**
-     * onCreateView()
+     * onCreateView() - Inflate Layout all_dishes_fragment.xml
      */
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,14 +70,16 @@ class AllDishesFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        // #1 Define Layout | GridLayoutManager = 2 Columns
+        //
         // Initialize the RecyclerView and bind the adapter class
         // Set the LayoutManager that this RecyclerView will use.
         mBinding.rvDishesList.layoutManager = GridLayoutManager(requireActivity(), 2)
 
-        // Adapter class is initialized and list is passed in the param.
+        // #2 - Set Adapter | Adapter class is initialized and list is passed in the param.
         val favDishAdapter = FavDishAdapter(this@AllDishesFragment)
 
-        // adapter instance is set to the recyclerview to inflate the items.
+        // #3 - Bind to the RecyclerView | adapter instance is set to the recyclerview to inflate the items.
         mBinding.rvDishesList.adapter = favDishAdapter
 
         /**

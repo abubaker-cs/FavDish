@@ -11,6 +11,7 @@ import org.abubaker.favdish.model.entities.FavDish
 class FavDishAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FavDishAdapter.ViewHolder>() {
 
+    // It will be a list of favorite dishes
     private var dishes: List<FavDish> = listOf()
 
     // ViewHolder will require 3 Members
@@ -55,14 +56,17 @@ class FavDishAdapter(private val fragment: Fragment) :
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        // Dish we are currently looking at
         val dish = dishes[position]
 
-        // Load the dish image in the ImageView.
+        // Load the dish image in the ImageView (Thumbnail)
         Glide.with(fragment)
             .load(dish.image)
             .into(holder.ivDishImage)
 
+        // Update the Title: tv_dish_title in item_dish_layout.xml file
         holder.tvTitle.text = dish.title
+
     }
 
     // Member 3/3
@@ -75,7 +79,11 @@ class FavDishAdapter(private val fragment: Fragment) :
 
     // Create a function that will have the updated list of dishes that we will bind it to the adapter class.
     fun dishesList(list: List<FavDish>) {
+
+        // List of our dishes
         dishes = list
+
+        // It will notify any registered observer that the data has been changed
         notifyDataSetChanged()
     }
 
