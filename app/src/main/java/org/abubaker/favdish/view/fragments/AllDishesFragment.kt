@@ -96,14 +96,24 @@ class AllDishesFragment : Fragment() {
                 // Pass the dishes list to the adapter class.
                 if (it.isNotEmpty()) {
 
+                    // Show Dish List (RecyclerView)
                     mBinding.rvDishesList.visibility = View.VISIBLE
+
+                    // Hide Fallback Message
                     mBinding.tvNoDishesAddedYet.visibility = View.GONE
 
+                    // Populate the List | it = List of the favorite dishes that we get from
+                    // our observer, which basically gets the data from the database.
                     favDishAdapter.dishesList(it)
+
                 } else {
 
+                    // Hide Dish List (RecyclerView)
                     mBinding.rvDishesList.visibility = View.GONE
+
+                    // Show Fallback Message
                     mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+
                 }
 
             }
