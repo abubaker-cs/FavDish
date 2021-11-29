@@ -26,10 +26,21 @@ class AllDishesFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    // Create a ViewModel instance to access the methods.
     /**
+     *
+     * What to do?
+     * ===========
+     * Create a ViewModel instance (mFavDishViewModel) to access the methods, which we will use to
+     * populate data from the database into our fragment.
+     *
+     * Theory:
+     * =======
      * To create the ViewModel we used the viewModels delegate, passing in an instance of our FavDishViewModelFactory.
      * This is constructed based on the repository retrieved from the FavDishApplication.
+     *
+     * FavDishViewModelFactory = Defined in our FavDishViewModel.kt file
+     * requireActivity = Returns FragmentActivity
+     *
      */
     private val mFavDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
@@ -70,8 +81,14 @@ class AllDishesFragment : Fragment() {
 
     // Override the onViewCreated method and get the dishes list and print the title in Log for now.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+
         /**
+         * What we are doing?
+         * ==================
+         * We are using our mFavDishViewModel to call allDishesList to observe using viewLifecycleOwner for any changes.
+         *
          * Add an observer on the LiveData returned by getAllDishesList.
          * The onChanged() method fires when the observed data changes and the activity is in the foreground.
          */
@@ -79,10 +96,14 @@ class AllDishesFragment : Fragment() {
             dishes.let {
 
                 for (item in it) {
+
+                    // This will print title of all the Dishes in the Log
                     Log.i("Dish Title", "${item.id} :: ${item.title}")
+
                 }
             }
         }
+
     }
 
     /**
