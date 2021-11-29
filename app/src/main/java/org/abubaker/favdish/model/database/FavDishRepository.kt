@@ -37,8 +37,12 @@ class FavDishRepository(private val favDishDao: FavDishDao) {
 
     }
 
-    // Create a variable for the dishes list to access it from ViewModel.
-    // Room executes all queries on a separate thread.
-    // Observed Flow will notify the observer when the data has changed.
+    /**
+     * We are asking to execute the .getAllDishesList() function from our FavDishDao.kt file
+     *
+     * Create a variable for the dishes list to access it from ViewModel.
+     * Room executes all queries on a separate thread.
+     * Observed Flow will notify the observer when the data has changed.
+     */
     val allDishesList: Flow<List<FavDish>> = favDishDao.getAllDishesList()
 }
