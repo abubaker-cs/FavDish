@@ -39,6 +39,9 @@ class AllDishesFragment : Fragment() {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
 
+    /**
+     * onCreate()
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,6 +49,10 @@ class AllDishesFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+
+    /**
+     * onCreateView()
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -103,7 +110,9 @@ class AllDishesFragment : Fragment() {
     }
 
     /**
-     * XML: menu_all_dishes
+     * onCreateOptionsMenu()
+     *
+     * Inflate XML: menu_all_dishes
      */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
@@ -113,6 +122,9 @@ class AllDishesFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    /**
+     * onOptionsItemSelected()
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
