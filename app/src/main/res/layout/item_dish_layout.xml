@@ -13,9 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--The "tools" param is used to show the text only in the designing view
- it will not be displayed once you run the app.-->
-
+        <!-- Thumbnail -->
         <ImageView
             android:id="@+id/iv_dish_image"
             android:layout_width="match_parent"
@@ -25,6 +23,7 @@
             android:scaleType="fitXY"
             tools:src="@mipmap/ic_launcher" />
 
+        <!-- Title -->
         <TextView
             android:id="@+id/tv_dish_title"
             android:layout_width="match_parent"
@@ -35,5 +34,7 @@
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             tools:text="Dish Title" />
+
     </LinearLayout>
-</androidx.cardview.widget.CardView><!--END-->
+
+</androidx.cardview.widget.CardView>

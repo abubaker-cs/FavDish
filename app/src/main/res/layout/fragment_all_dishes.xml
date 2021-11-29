@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.AllDishesFragment">
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_dishes_list"
         android:layout_width="0dp"
@@ -16,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Fallback: No Dishes Added Yet -->
     <TextView
         android:id="@+id/tv_no_dishes_added_yet"
         android:layout_width="0dp"
