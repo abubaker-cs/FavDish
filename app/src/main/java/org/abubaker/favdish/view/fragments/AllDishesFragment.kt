@@ -13,16 +13,8 @@ import org.abubaker.favdish.view.activities.AddUpdateDishActivity
 import org.abubaker.favdish.view.adapters.FavDishAdapter
 import org.abubaker.favdish.viewModel.FavDishViewModel
 import org.abubaker.favdish.viewModel.FavDishViewModelFactory
-import org.abubaker.favdish.viewModel.HomeViewModel
 
 class AllDishesFragment : Fragment() {
-
-    private lateinit var homeViewModel: HomeViewModel
-    // private var _binding: FragmentAllDishesBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    // private val binding get() = _binding!!
 
     // Create a global variable for the ViewBinding.
     private lateinit var mBinding: FragmentAllDishesBinding
@@ -64,22 +56,7 @@ class AllDishesFragment : Fragment() {
         mBinding = FragmentAllDishesBinding.inflate(inflater, container, false)
         return mBinding.root
 
-        // homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-
-        // _binding = FragmentAllDishesBinding.inflate(inflater, container, false)
-        // val root: View = binding.root
-
-        // val textView: TextView = binding.textHome
-
-        // homeViewModel.text.observe(viewLifecycleOwner, Observer { textView.text = it })
-
-        // return root
     }
-
-    // override fun onDestroyView() {
-    // super.onDestroyView()
-    // _binding = null
-    // }
 
     // Override the onViewCreated method and get the dishes list and print the title in Log for now.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -120,12 +97,6 @@ class AllDishesFragment : Fragment() {
                     mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
                 }
 
-                // for (item in it) {
-
-                // This will print title of all the Dishes in the Log
-                // Log.i("Dish Title", "${item.id} :: ${item.title}")
-
-                // }
             }
         }
 
