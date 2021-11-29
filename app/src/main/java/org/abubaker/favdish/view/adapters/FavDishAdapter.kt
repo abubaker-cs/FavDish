@@ -13,6 +13,17 @@ class FavDishAdapter(private val fragment: Fragment) :
 
     private var dishes: List<FavDish> = listOf()
 
+    // ViewHolder will require 3 Members
+    /**
+     * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
+     */
+    class ViewHolder(view: ItemDishLayoutBinding) : RecyclerView.ViewHolder(view.root) {
+        // Holds the TextView that will add each item to
+        val ivDishImage = view.ivDishImage
+        val tvTitle = view.tvDishTitle
+    }
+
+    // Member 1/3 - Inflate the XML file: item_dish_layout.xml
     /**
      * Inflates the item views which is designed in xml layout file
      *
@@ -20,11 +31,18 @@ class FavDishAdapter(private val fragment: Fragment) :
      * {@link ViewHolder} and initializes some private fields to be used by RecyclerView.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val binding: ItemDishLayoutBinding =
-            ItemDishLayoutBinding.inflate(LayoutInflater.from(fragment.context), parent, false)
+            ItemDishLayoutBinding.inflate(
+                LayoutInflater.from(fragment.context),
+                parent,
+                false
+            )
+
         return ViewHolder(binding)
     }
 
+    // Member 2/3 - How each item will look like?
     /**
      * Binds each item in the ArrayList to a view
      *
@@ -47,6 +65,7 @@ class FavDishAdapter(private val fragment: Fragment) :
         holder.tvTitle.text = dish.title
     }
 
+    // Member 3/3
     /**
      * Gets the number of items in the list
      */
@@ -59,14 +78,5 @@ class FavDishAdapter(private val fragment: Fragment) :
         dishes = list
         notifyDataSetChanged()
     }
-    // END
 
-    /**
-     * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
-     */
-    class ViewHolder(view: ItemDishLayoutBinding) : RecyclerView.ViewHolder(view.root) {
-        // Holds the TextView that will add each item to
-        val ivDishImage = view.ivDishImage
-        val tvTitle = view.tvDishTitle
-    }
 }
