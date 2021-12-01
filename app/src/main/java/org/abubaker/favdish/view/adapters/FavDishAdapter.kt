@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.abubaker.favdish.databinding.ItemDishLayoutBinding
 import org.abubaker.favdish.model.entities.FavDish
+import org.abubaker.favdish.view.fragments.AllDishesFragment
 
 class FavDishAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FavDishAdapter.ViewHolder>() {
@@ -66,6 +67,13 @@ class FavDishAdapter(private val fragment: Fragment) :
 
         // Update the Title: tv_dish_title in item_dish_layout.xml file
         holder.tvTitle.text = dish.title
+
+        // Assign the click event to the itemview and perform the required action.
+        holder.itemView.setOnClickListener {
+            if (fragment is AllDishesFragment) {
+                fragment.dishDetails()
+            }
+        }
 
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import org.abubaker.favdish.R
 import org.abubaker.favdish.application.FavDishApplication
@@ -118,6 +119,17 @@ class AllDishesFragment : Fragment() {
 
             }
         }
+
+    }
+
+    /**
+     * A function to navigate to the Dish Details Fragment.
+     */
+    fun dishDetails() {
+
+        // Set the target where we want to navigate to, i.e. DishDetailsFragment
+        findNavController()
+            .navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails())
 
     }
 
