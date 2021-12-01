@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     // Make the navController variable as global variable.
-    private lateinit var mNavController: NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +24,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // val navView: BottomNavigationView = binding.navView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
 
+            // Prepare items for the bottom menu
             setOf(
                 R.id.navigation_all_dishes,
                 R.id.navigation_favorite_dishes,
@@ -40,29 +39,57 @@ class MainActivity : AppCompatActivity() {
 
         )
 
+        // Setup ActionBar with the above defined appBarConfiguration
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        // Setup NavController
         binding.navView.setupWithNavController(navController)
     }
 
-    // Override the onSupportNavigateUp method.
+    /**
+     * onSupportNavigateUp()
+     */
     override fun onSupportNavigateUp(): Boolean {
 
         // Add the navigate up code and pass the required params. This will navigate the user from
         // DishDetailsFragment to AllDishesFragment when user clicks on the home back button.
-        return NavigationUI.navigateUp(mNavController, null)
+        return NavigationUI.navigateUp(navController, null)
+
     }
 
-    // TODO Step 7: Create a function to hide the BottomNavigationView with animation.
+    /**
+     * hideBottomNavigationView() - It will hide the BottomNavigationView with animation.
+     */
     fun hideBottomNavigationView() {
+
+        // If there are any animations running, then get rid of them.
         binding.navView.clearAnimation()
-        binding.navView.animate().translationY(binding.navView.height.toFloat()).duration = 300
+
+        // Y-Axis: The animation will move the object vertically
+        binding.navView.animate().translationY(
+
+            // We will be animating the height of the bottom menu
+            binding.navView.height.toFloat()
+
+        ).duration = 300
+
     }
 
-    // TODO Step 8: Create a function to show the BottomNavigationView with Animation.
+    /**
+     * showBottomNavigationView() - Show the BottomNavigationView with Animation.
+     */
     fun showBottomNavigationView() {
+
+        // If there are any animations running, then get rid of them.
         binding.navView.clearAnimation()
-        binding.navView.animate().translationY(0f).duration = 300
+
+        // Y-Axis: The animation will move the object vertically
+        binding.navView.animate().translationY(
+
+            //
+            0f
+
+        ).duration = 300
     }
 
 }
