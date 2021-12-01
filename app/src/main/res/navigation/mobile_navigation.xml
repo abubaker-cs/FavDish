@@ -38,5 +38,15 @@
         android:id="@+id/dishDetailsFragment"
         android:name="org.abubaker.favdish.view.fragments.DishDetailsFragment"
         android:label="@string/title_dish_details"
-        tools:layout="@layout/fragment_dish_details" />
+        tools:layout="@layout/fragment_dish_details">
+
+        <!--
+         We are defining the argument's type based on our database's table structure.
+         That is defined in the FavDish.kt file
+         -->
+        <argument
+            android:name="dishDetails"
+            app:argType="org.abubaker.favdish.model.entities.FavDish" />
+
+    </fragment>
 </navigation>

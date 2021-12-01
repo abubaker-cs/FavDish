@@ -1,14 +1,17 @@
 package org.abubaker.favdish.model.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 /**
  * Create a new package name as entities in the model package. After creating the entities package
  * create data class with the entities (Dish Items) that we want to insert in the database.
  */
 
+@Parcelize
 // Define the Table name using @Entity() and set the class to be a "data class"
 @Entity(tableName = "fav_dishes_table")
 data class FavDish(
@@ -48,4 +51,4 @@ data class FavDish(
     // PrimaryKey
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 
-)
+) : Parcelable

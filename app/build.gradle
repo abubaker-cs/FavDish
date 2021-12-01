@@ -2,9 +2,13 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt' // Required by ROOM
+
     // Apply the plugin to navigate with auto generated classes and pass the arguments.
     // Reference: https://developer.android.com/guide/navigation/navigation-pass-data#Safe-args
     id 'androidx.navigation.safeargs.kotlin'
+
+    // Apply the parcelize plugin
+    id 'kotlin-parcelize'
 }
 
 android {

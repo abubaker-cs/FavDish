@@ -77,7 +77,8 @@ class FavDishAdapter(private val fragment: Fragment) :
 
                 // Ask the AllDishesFragment.kt file to execute the dishDetails() function,
                 // so the user can be navigated to the DishDetailsFragment
-                fragment.dishDetails()
+                // dish: will be passed as a required parm value
+                fragment.dishDetails(dish)
 
             }
 

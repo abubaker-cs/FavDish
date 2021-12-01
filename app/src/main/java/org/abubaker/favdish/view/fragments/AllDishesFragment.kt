@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import org.abubaker.favdish.R
 import org.abubaker.favdish.application.FavDishApplication
 import org.abubaker.favdish.databinding.FragmentAllDishesBinding
+import org.abubaker.favdish.model.entities.FavDish
 import org.abubaker.favdish.view.activities.AddUpdateDishActivity
 import org.abubaker.favdish.view.activities.MainActivity
 import org.abubaker.favdish.view.adapters.FavDishAdapter
@@ -136,8 +137,9 @@ class AllDishesFragment : Fragment() {
     /**
      * A function to navigate to the Dish Details Fragment.
      * Note: We will execute it from the FavDishAdapter.kt file (Adapter)
+     * We assigned a required param so data can be passed to the targeted Fragment.
      */
-    fun dishDetails() {
+    fun dishDetails(favDish: FavDish) {
 
         // Step 1. Hide the Bottom Navigation
         // Call the hideBottomNavigationView function when user wants to navigate to the DishDetailsFragment.
@@ -147,8 +149,9 @@ class AllDishesFragment : Fragment() {
 
         // Step 2. Navigate to the DishDetailsFragment
         // Set the target where we want to navigate to, i.e. DishDetailsFragment
+        // We are adding the favDish as the required argument.
         findNavController()
-            .navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails())
+            .navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails(favDish))
 
     }
 
