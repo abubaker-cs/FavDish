@@ -127,6 +127,7 @@ class AllDishesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        // Show - Bottom Navigation on the MainActivity
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)!!.showBottomNavigationView()
         }
@@ -138,11 +139,13 @@ class AllDishesFragment : Fragment() {
      */
     fun dishDetails() {
 
+        // Step 1. Hide the Bottom Navigation
         // Call the hideBottomNavigationView function when user wants to navigate to the DishDetailsFragment.
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)!!.hideBottomNavigationView()
         }
 
+        // Step 2. Navigate to the DishDetailsFragment
         // Set the target where we want to navigate to, i.e. DishDetailsFragment
         findNavController()
             .navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails())
