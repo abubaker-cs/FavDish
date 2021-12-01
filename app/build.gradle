@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt' // Required by ROOM
+    // Apply the plugin to navigate with auto generated classes and pass the arguments.
+    // Reference: https://developer.android.com/guide/navigation/navigation-pass-data#Safe-args
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -73,6 +76,7 @@ dependencies {
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Room components
     // Reference Link: https://developer.android.com/training/data-storage/room

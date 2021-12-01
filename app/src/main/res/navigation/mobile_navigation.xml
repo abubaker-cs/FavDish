@@ -10,7 +10,14 @@
         android:id="@+id/navigation_all_dishes"
         android:name="org.abubaker.favdish.view.fragments.AllDishesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_all_dishes" />
+        tools:layout="@layout/fragment_all_dishes">
+
+        <!-- Navigate to: -->
+        <action
+            android:id="@+id/action_all_dishes_to_dish_details"
+            app:destination="@id/dishDetailsFragment" />
+
+    </fragment>
 
     <!-- Favorite Dish -->
     <fragment
@@ -19,10 +26,17 @@
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_favorite_dishes" />
 
-    <!-- Ranbdom Dish -->
+    <!-- Random Dish -->
     <fragment
         android:id="@+id/navigation_random_dish"
         android:name="org.abubaker.favdish.view.fragments.RandomDishFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_random_dish" />
+
+    <!-- Dish Details -->
+    <fragment
+        android:id="@+id/dishDetailsFragment"
+        android:name="org.abubaker.favdish.view.fragments.DishDetailsFragment"
+        android:label="@string/title_dish_details"
+        tools:layout="@layout/fragment_dish_details" />
 </navigation>
