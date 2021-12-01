@@ -68,11 +68,19 @@ class FavDishAdapter(private val fragment: Fragment) :
         // Update the Title: tv_dish_title in item_dish_layout.xml file
         holder.tvTitle.text = dish.title
 
+        // onClick() Event for the Grid Items:
         // Assign the click event to the itemview and perform the required action.
         holder.itemView.setOnClickListener {
+
+            // Verify that the request is coming from correct source:
             if (fragment is AllDishesFragment) {
+
+                // Ask the AllDishesFragment.kt file to execute the dishDetails() function,
+                // so the user can be navigated to the DishDetailsFragment
                 fragment.dishDetails()
+
             }
+
         }
 
     }

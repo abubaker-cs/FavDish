@@ -124,6 +124,7 @@ class AllDishesFragment : Fragment() {
 
     /**
      * A function to navigate to the Dish Details Fragment.
+     * Note: We will execute it from the FavDishAdapter.kt file (Adapter)
      */
     fun dishDetails() {
 
