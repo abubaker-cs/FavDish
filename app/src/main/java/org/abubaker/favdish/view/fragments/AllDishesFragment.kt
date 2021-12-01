@@ -11,6 +11,7 @@ import org.abubaker.favdish.R
 import org.abubaker.favdish.application.FavDishApplication
 import org.abubaker.favdish.databinding.FragmentAllDishesBinding
 import org.abubaker.favdish.view.activities.AddUpdateDishActivity
+import org.abubaker.favdish.view.activities.MainActivity
 import org.abubaker.favdish.view.adapters.FavDishAdapter
 import org.abubaker.favdish.viewModel.FavDishViewModel
 import org.abubaker.favdish.viewModel.FavDishViewModelFactory
@@ -122,11 +123,25 @@ class AllDishesFragment : Fragment() {
 
     }
 
+    // Override the onResume method and call the function to show the BottomNavigationView when user is on the AllDishesFragment.
+    override fun onResume() {
+        super.onResume()
+
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)!!.showBottomNavigationView()
+        }
+    }
+
     /**
      * A function to navigate to the Dish Details Fragment.
      * Note: We will execute it from the FavDishAdapter.kt file (Adapter)
      */
     fun dishDetails() {
+
+        // Call the hideBottomNavigationView function when user wants to navigate to the DishDetailsFragment.
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)!!.hideBottomNavigationView()
+        }
 
         // Set the target where we want to navigate to, i.e. DishDetailsFragment
         findNavController()
