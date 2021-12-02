@@ -63,6 +63,7 @@ class DishDetailsFragment : Fragment() {
             binding!!.tvTitle.text = it.dishDetails.title
 
             // Type
+            // Deprecated: type.capitalize(Local.ROOT)
             binding!!.tvType.text =
                 it.dishDetails.type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } // Used to make first letter capital
 
@@ -91,5 +92,11 @@ class DishDetailsFragment : Fragment() {
         super.onDestroy()
         binding = null
     }
+
+    /**
+     * Important:
+     * The binding should set to null in onDestroyView instead of onDestroy, because its lifecycle
+     * is attach to the view which is different from fragment, it can cause memory leak if not.
+     */
 
 }
