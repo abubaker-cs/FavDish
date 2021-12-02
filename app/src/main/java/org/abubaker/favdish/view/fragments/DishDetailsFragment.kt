@@ -14,6 +14,7 @@ import java.util.*
 
 class DishDetailsFragment : Fragment() {
 
+    // It will be used for ViewBinding
     private var binding: FragmentDishDetailsBinding? = null
 
     override fun onCreateView(
@@ -43,6 +44,7 @@ class DishDetailsFragment : Fragment() {
         // If arguments has data, then populate filed in the UI
         args.let {
 
+            // Thumbnail
             try {
                 // Load the dish image in the ImageView.
                 Glide.with(requireActivity())
