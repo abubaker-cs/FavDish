@@ -31,7 +31,11 @@ class DishDetailsFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        // Get the required arguments that we have passed through action and print few details in the Log for now.
+        /**
+         * navArgs() - Returns a Lazy delegate to access the Fragment's arguments as an Args instance.
+         *
+         * Get the required arguments that we have passed through action and print few details in the Log for now.
+         */
         val args: DishDetailsFragmentArgs by navArgs()
         // Log.i("Dish Title", args.dishDetails.title)
         // Log.i("Dish Type", args.dishDetails.type)
