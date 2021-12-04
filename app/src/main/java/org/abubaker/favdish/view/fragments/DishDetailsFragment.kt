@@ -100,6 +100,19 @@ class DishDetailsFragment : Fragment() {
                                      * vibrantSwatch = Returns the most vibrant swatch in the palette.
                                      * Might be null, that's why we need to check if it is NULL using: it.vibrantSwatch?.rgb ?: 0
                                      */
+
+                                    /**
+                                     * 6 Color Modes:
+                                     * Reference: https://developer.android.com/training/material/palette-colors
+                                     * ==============
+                                     * The palette library attempts to extract the following six color profiles:
+                                     * 1. Light Vibrant : Palette.getLightVibrantSwatch()
+                                     * 2. Dark Vibrant: Palette.getDarkVibrantSwatch()
+                                     * 3. Vibrant: Palette.getVibrantSwatch()
+                                     * 4. Light Muted: Palette.getLightMutedSwatch()
+                                     * 5. Dark Muted: Palette.getDarkMutedSwatch()
+                                     * 6. Muted: Palette.getMutedSwatch()
+                                     */
                                     val intColor = palette?.vibrantSwatch?.rgb ?: 0
 
                                     // Change background color based on the fetched RGB value
