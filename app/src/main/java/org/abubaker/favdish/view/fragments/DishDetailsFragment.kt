@@ -59,6 +59,8 @@ class DishDetailsFragment : Fragment() {
                 Glide.with(requireActivity())
                     .load(it.dishDetails.image)
                     .centerCrop()
+
+                    // This listener (function) will be used to generate Palette and update background color.
                     .listener(object : RequestListener<Drawable> {
 
                         // Failure: Log the Error message if image will be failed to download.
