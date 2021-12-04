@@ -101,6 +101,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
+    // Android Palette
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+
     // SDP - a scalable size unit
     // https://github.com/intuit/sdp/
     implementation 'com.intuit.sdp:sdp-android:1.0.6'

@@ -1,14 +1,23 @@
 package org.abubaker.favdish.view.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import org.abubaker.favdish.R
 import org.abubaker.favdish.databinding.FragmentDishDetailsBinding
+import org.jetbrains.annotations.Nullable
 import java.io.IOException
 import java.util.*
 
@@ -50,6 +59,57 @@ class DishDetailsFragment : Fragment() {
                 Glide.with(requireActivity())
                     .load(it.dishDetails.image)
                     .centerCrop()
+                    .listener(object : RequestListener<Drawable> {
+
+                        // Failure: Log the Error message if image will be failed to download.
+                        override fun onLoadFailed(
+                            @Nullable e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+
+                            // log exception
+                            Log.e("TAG", "Error loading image", e)
+
+                            // important to return false so the error placeholder can be placed
+                            return false
+                        }
+
+                        // Success: Generate Color from our reference image and apply it as a BackgroundColor to the target Object.
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+
+                            // Generate the Palette and set the vibrantSwatch as the background of the view.
+                            // Once the resource (Drawable Image) is ready generate the Palette from the bitmap of image.
+                            Palette.from(resource.toBitmap())
+
+                                // We are GENERATING colors from the bitmap
+                                .generate { palette ->
+
+                                    /**
+                                     * Type of Swatches:
+                                     * If it is a value then use it, otherwise use 0
+                                     * vibrantSwatch = Returns the most vibrant swatch in the palette.
+                                     * Might be null, that's why we need to check if it is NULL using: it.vibrantSwatch?.rgb ?: 0
+                                     */
+                                    val intColor = palette?.vibrantSwatch?.rgb ?: 0
+
+                                    // Change background color based on the fetched RGB value
+                                    // setBackgroundColor requires an Int value, and our rgb() is already returning result as an integer value
+                                    binding!!.rlDishDetailMain.setBackgroundColor(intColor)
+
+                                }
+                            return false
+                        }
+                    })
+
+                    // Load image into the ImageView
                     .into(binding!!.ivDishImage)
 
             } catch (e: IOException) {
