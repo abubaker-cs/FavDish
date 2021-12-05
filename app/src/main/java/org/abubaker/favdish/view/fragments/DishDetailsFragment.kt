@@ -38,7 +38,10 @@ class DishDetailsFragment : Fragment() {
      * This is constructed based on the repository retrieved from the FavDishApplication.
      */
     private val mFavDishViewModel: FavDishViewModel by viewModels {
+
+        // Setup: We want to use the ViewModel in our DishDetailsFragment
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+
     }
 
     override fun onCreateView(
@@ -170,15 +173,40 @@ class DishDetailsFragment : Fragment() {
             // Cooking Duration
             binding!!.tvCookingTime.text =
                 resources.getString(R.string.lbl_estimate_cooking_time, it.dishDetails.cookingTime)
+
+            // Important: Without adding following code, our Favorite icon will remain unchanged if
+            // we will return back to the details page from the list. This code will ensure that
+            // correct updated state will be feteched from the database.
+            if (args.dishDetails.favoriteDish) {
+
+                // State: Favorite
+                binding!!.ivFavoriteDish.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireActivity(),
+                        R.drawable.ic_favorite_selected
+                    )
+                )
+            } else {
+
+                // State: Unfavorite
+                binding!!.ivFavoriteDish.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireActivity(),
+                        R.drawable.ic_favorite_unselected
+                    )
+                )
+            }
         }
 
 
         /**
-         * Assign the event to the favorite button.
+         * Assign the event to the favorite icon.
          */
         binding!!.ivFavoriteDish.setOnClickListener {
 
             // Update the favorite dish variable based on the current selection. i.e If it true then make it false vice-versa.
+            // ! = Since our value is Boolean, so if it was FALSE then the value will be saved as True, and vice-versa.
+            // False > True | True > False
             args.dishDetails.favoriteDish = !args.dishDetails.favoriteDish
 
             // Pass the updated values to ViewModel
