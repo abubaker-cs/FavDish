@@ -86,6 +86,15 @@ class FavoriteDishesFragment : Fragment() {
 
     }
 
+    // Override the onResume function to show the BottomNavigationView when the fragment is completely loaded.
+    override fun onResume() {
+        super.onResume()
+
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)!!.showBottomNavigationView()
+        }
+    }
+
     // Override the onDestroy method and make the mBinding null where the method is executed.
     override fun onDestroy() {
         super.onDestroy()
