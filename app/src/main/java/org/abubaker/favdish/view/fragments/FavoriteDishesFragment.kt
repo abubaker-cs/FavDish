@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import org.abubaker.favdish.application.FavDishApplication
 import org.abubaker.favdish.databinding.FragmentFavoriteDishesBinding
+import org.abubaker.favdish.model.entities.FavDish
+import org.abubaker.favdish.view.activities.MainActivity
 import org.abubaker.favdish.view.adapters.FavDishAdapter
 import org.abubaker.favdish.viewModel.FavDishViewModel
 import org.abubaker.favdish.viewModel.FavDishViewModelFactory
@@ -87,6 +90,23 @@ class FavoriteDishesFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    // Create a function to navigate to the Dish Details Fragment.
+    /**
+     * A function to navigate to the Dish Details Fragment.
+     *
+     * @param favDish
+     */
+    fun dishDetails(favDish: FavDish) {
+
+        // Hide the BottomNavigationView while navigating to the DetailsFragment.
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)!!.hideBottomNavigationView()
+        }
+
+        findNavController()
+            .navigate(FavoriteDishesFragmentDirections.actionFavoriteDishesToDishDetails(favDish))
     }
 
 }

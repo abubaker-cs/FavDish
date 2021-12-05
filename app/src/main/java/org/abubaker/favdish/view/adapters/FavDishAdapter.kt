@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import org.abubaker.favdish.databinding.ItemDishLayoutBinding
 import org.abubaker.favdish.model.entities.FavDish
 import org.abubaker.favdish.view.fragments.AllDishesFragment
+import org.abubaker.favdish.view.fragments.FavoriteDishesFragment
 
 class FavDishAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FavDishAdapter.ViewHolder>() {
@@ -80,6 +81,8 @@ class FavDishAdapter(private val fragment: Fragment) :
                 // dish: will be passed as a required parm value
                 fragment.dishDetails(dish)
 
+            } else if (fragment is FavoriteDishesFragment) {
+                fragment.dishDetails(dish)
             }
 
         }
