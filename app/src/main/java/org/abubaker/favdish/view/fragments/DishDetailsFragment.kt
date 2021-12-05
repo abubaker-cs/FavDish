@@ -184,10 +184,10 @@ class DishDetailsFragment : Fragment() {
             // Pass the updated values to ViewModel
             mFavDishViewModel.update(args.dishDetails)
 
-            // Update the icons and display the toast message accordingly.
+            // Favorite Icon: Update the icons and display the toast message accordingly.
             if (args.dishDetails.favoriteDish) {
 
-                //
+                // Favorite Icon: Selected Mode
                 binding!!.ivFavoriteDish.setImageDrawable(
                     ContextCompat.getDrawable(
                         requireActivity(),
@@ -195,7 +195,7 @@ class DishDetailsFragment : Fragment() {
                     )
                 )
 
-                //
+                // Message: You have added the dish to your favorites.
                 Toast.makeText(
                     requireActivity(),
                     resources.getString(R.string.msg_added_to_favorites),
@@ -204,7 +204,7 @@ class DishDetailsFragment : Fragment() {
 
             } else {
 
-                //
+                // Favorite Icon: Unselected Mode
                 binding!!.ivFavoriteDish.setImageDrawable(
                     ContextCompat.getDrawable(
                         requireActivity(),
@@ -212,7 +212,7 @@ class DishDetailsFragment : Fragment() {
                     )
                 )
 
-                //
+                // Message: You have removed the dish from your favorites
                 Toast.makeText(
                     requireActivity(),
                     resources.getString(R.string.msg_removed_from_favorite),
