@@ -120,6 +120,7 @@ class DishDetailsFragment : Fragment() {
                                     binding!!.rlDishDetailMain.setBackgroundColor(intColor)
 
                                 }
+
                             return false
                         }
                     })

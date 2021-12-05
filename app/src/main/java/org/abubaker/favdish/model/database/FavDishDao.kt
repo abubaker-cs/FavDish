@@ -15,7 +15,7 @@ import org.abubaker.favdish.model.entities.FavDish
 // in the Repository through our DAO
 
 /**
- * Defined an interface named as FavDishDao
+ * Defined an interface named as FavDishDao.
  * that we will use to specify SQL queries and associate them with method calls.
  */
 @Dao
