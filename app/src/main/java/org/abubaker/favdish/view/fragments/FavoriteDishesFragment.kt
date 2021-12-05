@@ -1,48 +1,92 @@
 package org.abubaker.favdish.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import org.abubaker.favdish.application.FavDishApplication
 import org.abubaker.favdish.databinding.FragmentFavoriteDishesBinding
-import org.abubaker.favdish.viewModel.FavoriteDishesViewModel
+import org.abubaker.favdish.view.adapters.FavDishAdapter
+import org.abubaker.favdish.viewModel.FavDishViewModel
+import org.abubaker.favdish.viewModel.FavDishViewModelFactory
 
 class FavoriteDishesFragment : Fragment() {
 
-    private lateinit var favoriteDishesViewModel: FavoriteDishesViewModel
-    private var _binding: FragmentFavoriteDishesBinding? = null
+    private var binding: FragmentFavoriteDishesBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    /**
+     * We are creating an instance of ViewModel to access the methods that are necessary to populate the UI.
+     *
+     * To create the ViewModel we used the viewModels delegate, passing in an instance of our FavDishViewModelFactory.
+     * This is constructed based on the repository retrieved from the FavDishApplication.
+     */
+    private val mFavDishViewModel: FavDishViewModel by viewModels {
+        FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        favoriteDishesViewModel =
-            ViewModelProvider(this)[FavoriteDishesViewModel::class.java]
 
-        _binding = FragmentFavoriteDishesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        // Initialize the view
+        binding = FragmentFavoriteDishesBinding.inflate(inflater, container, false)
+        return binding!!.root
 
-        val textView: TextView = binding.textDashboard
 
-        favoriteDishesViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-
-        return root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        /**
+         * Add an observer to get the list of updated favorite dishes.
+         *
+         * Add an observer on the LiveData returned by getFavoriteDishesList.
+         * The onChanged() method fires when the observed data changes and the activity is in the foreground.
+         */
+        mFavDishViewModel.favoriteDishes.observe(viewLifecycleOwner) { dishes ->
+            dishes.let {
+
+                // Set the LayoutManager that this RecyclerView will use.
+                binding!!.rvFavoriteDishesList.layoutManager =
+                    GridLayoutManager(requireActivity(), 2)
+
+                // Adapter class is initialized and list is passed in the param.
+                val adapter = FavDishAdapter(this@FavoriteDishesFragment)
+
+                // adapter instance is set to the recyclerview to inflate the items.
+                binding!!.rvFavoriteDishesList.adapter = adapter
+
+                if (it.isNotEmpty()) {
+                    // Print the id and title in the log for now.
+                    // for (dish in it) { Log.i("Favorite Dish", "${dish.id} :: ${dish.title}") }
+
+                    binding!!.rvFavoriteDishesList.visibility = View.VISIBLE
+                    binding!!.tvNoFavoriteDishesAvailable.visibility = View.GONE
+
+                    adapter.dishesList(it)
+
+                } else {
+                    Log.i("List of Favorite Dishes", "is empty.")
+
+                    binding!!.rvFavoriteDishesList.visibility = View.GONE
+                    binding!!.tvNoFavoriteDishesAvailable.visibility = View.VISIBLE
+                }
+            }
+        }
+
+    }
+
+    // Override the onDestroy method and make the mBinding null where the method is executed.
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
 }
