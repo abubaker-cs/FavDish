@@ -43,6 +43,15 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
      * 3. Repository is completely separated from the UI through the ViewModel.
      */
     val allDishesList: LiveData<List<FavDish>> = repository.allDishesList.asLiveData()
+
+    /**
+     * Launching a new coroutine to update the data in a non-blocking way
+     */
+    fun update(dish: FavDish) = viewModelScope.launch {
+
+        // this (AllDishesViewModel) > FavDishRepository > FavDishDao (updateFavDishData)
+        repository.updateFavDishData(dish)
+    }
 }
 
 /**

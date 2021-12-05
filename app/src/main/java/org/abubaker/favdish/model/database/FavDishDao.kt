@@ -1,9 +1,6 @@
 package org.abubaker.favdish.model.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import org.abubaker.favdish.model.entities.FavDish
 
@@ -61,5 +58,13 @@ interface FavDishDao {
      */
     @Query("SELECT * FROM FAV_DISHES_TABLE ORDER BY ID")
     fun getAllDishesList(): Flow<List<FavDish>>
+
+    /**
+     * A function to update favorite dish details to the local database using Room.
+     *
+     * @param favDish - Here we will pass the entity class that we have created with updated details along with "id".
+     */
+    @Update
+    suspend fun updateFavDishDetails(favDish: FavDish)
 
 }
