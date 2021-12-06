@@ -32,7 +32,7 @@ class FavDishAdapter(private val fragment: Fragment) :
         // Title
         val tvTitle = view.tvDishTitle
 
-        // Menu icon
+        // Popup (Dropdown) menu icon
         val ibMore = view.ibMore
 
     }
@@ -101,7 +101,12 @@ class FavDishAdapter(private val fragment: Fragment) :
 
         }
 
-        // We want the menu icon should be visible only in the AllDishesFragment not in the FavoriteDishesFragment so add the below to achieve it.
+        /**
+         * Important:
+         * ==========
+         * We want the menu icon should be visible only in the AllDishesFragment
+         * not in the FavoriteDishesFragment so add the below to achieve it.
+         */
         if (fragment is AllDishesFragment) {
 
             // Display in the All Dishes fragment
@@ -114,10 +119,12 @@ class FavDishAdapter(private val fragment: Fragment) :
 
         }
 
-        // Assign the click event to the ib_more icon and Popup the menu items.
+        /**
+         * Click event for the ib_more (Dropdown) icon and Popup the menu items.
+         */
         holder.ibMore.setOnClickListener {
 
-            //
+            // Popup menu Object - create a new popup menu with an anchor view.
             val popup = PopupMenu(fragment.context, holder.ibMore)
 
             // Inflating the Popup using xml file
@@ -126,7 +133,7 @@ class FavDishAdapter(private val fragment: Fragment) :
             // Assign the click event to the menu items as below and print the Log or You can display the Toast message for now.
             popup.setOnMenuItemClickListener {
 
-                //
+                // Edit Menu item?
                 if (it.itemId == R.id.action_edit_dish) {
 
                     // Edit Button was clicked
@@ -143,7 +150,8 @@ class FavDishAdapter(private val fragment: Fragment) :
                 true
             }
 
-            popup.show() //showing popup menu
+            // Initialize the popup menu
+            popup.show()
         }
 
     }
