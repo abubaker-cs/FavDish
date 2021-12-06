@@ -124,7 +124,10 @@ class FavoriteDishesFragment : Fragment() {
 
         // Hide the BottomNavigationView while navigating to the DetailsFragment.
         if (requireActivity() is MainActivity) {
+
+            // Execute the hideBottomNavigationView() defined in the MainActivity.kt file
             (activity as MainActivity?)!!.hideBottomNavigationView()
+
         }
 
         // Navigate to the Details Fragment
