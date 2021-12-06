@@ -102,7 +102,7 @@ class FavDishAdapter(private val fragment: Fragment) :
         }
 
         /**
-         * Important:
+         * Important: Display popup menu only for the "All Dishes" fragment
          * ==========
          * We want the menu icon should be visible only in the AllDishesFragment
          * not in the FavoriteDishesFragment so add the below to achieve it.
@@ -146,7 +146,7 @@ class FavDishAdapter(private val fragment: Fragment) :
 
                 }
 
-                //
+                // It is important to return true
                 true
             }
 
