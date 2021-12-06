@@ -1,5 +1,6 @@
 package org.abubaker.favdish.view.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -187,6 +188,54 @@ class AllDishesFragment : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    // Create a function to show an AlertDialog while delete the dish details.
+    /**
+     * Method is used to show the Alert Dialog while deleting the dish details.
+     *
+     * @param dish - Dish details that we want to delete.
+     */
+    fun deleteDish(dish: FavDish) {
+
+        val builder = AlertDialog.Builder(requireActivity())
+
+        // set title for alert dialog
+        builder.setTitle(resources.getString(R.string.title_delete_dish))
+
+        // set message for alert dialog
+        builder.setMessage(resources.getString(R.string.msg_delete_dish_dialog, dish.title))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        // performing positive action
+        builder.setPositiveButton(resources.getString(R.string.lbl_yes)) { dialogInterface, _ ->
+
+            //
+            mFavDishViewModel.delete(dish)
+
+            // Dialog will be dismissed
+            dialogInterface.dismiss()
+
+        }
+
+        // performing negative action
+        builder.setNegativeButton(resources.getString(R.string.lbl_no)) { dialogInterface, _ ->
+
+            // Dialog will be dismissed
+            dialogInterface.dismiss()
+
+        }
+
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+
+        // Set other dialog properties
+
+        // Will not allow user to cancel after clicking on remaining screen area.
+        alertDialog.setCancelable(false)
+
+        // show the dialog to UI
+        alertDialog.show()
     }
 
 }

@@ -68,6 +68,9 @@ class AddUpdateDishActivity : AppCompatActivity(),
     // A global variable for the custom list dialog.
     private lateinit var mCustomListDialog: Dialog
 
+    // A global variable for dish details that we will receive via intent.
+    private var mFavDishDetails: FavDish? = null
+
     /**
      * With the following instance of the ViewModel class, we can access its methods in our View class.
      *
@@ -89,8 +92,54 @@ class AddUpdateDishActivity : AppCompatActivity(),
         mBinding = ActivityAddUpdateDishBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
+        // Verify if there is any additional information attached in the bundle?
+        if (intent.hasExtra(Constants.EXTRA_DISH_DETAILS)) {
+
+            // Get the dish details from intent extra and initialize the mFavDishDetails variable.
+            mFavDishDetails = intent.getParcelableExtra(Constants.EXTRA_DISH_DETAILS)
+
+        }
+
         // Initialize the ActionBar with required actions for the onClick Event
         setupActionBar()
+
+        /**
+         * Populate saved records in the text/image views for Editing the existing content.
+         */
+        mFavDishDetails?.let {
+            if (it.id != 0) {
+
+                // Get the image path
+                mImagePath = it.image
+
+                // Load the dish image in the ImageView.
+                Glide.with(this@AddUpdateDishActivity)
+                    .load(mImagePath)
+                    .centerCrop()
+                    .into(mBinding.ivDishImage)
+
+                // Title
+                mBinding.etTitle.setText(it.title)
+
+                // Type
+                mBinding.etType.setText(it.type)
+
+                // Category
+                mBinding.etCategory.setText(it.category)
+
+                // Ingredients
+                mBinding.etIngredients.setText(it.ingredients)
+
+                // Cooking Time
+                mBinding.etCookingTime.setText(it.cookingTime)
+
+                // Cooking Duration
+                mBinding.etDirectionToCook.setText(it.directionToCook)
+
+                // Button Text: Update Dish
+                mBinding.btnAddDish.text = resources.getString(R.string.lbl_update_dish)
+            }
+        }
 
         // Important: Assign the click event to the image button, otherwise Toast will not be displayed
         mBinding.ivAddDishImage.setOnClickListener(
@@ -273,31 +322,68 @@ class AddUpdateDishActivity : AppCompatActivity(),
                              * Next steps will be taken to save the user provided details in the Room Database
                              */
 
+                            var dishID = 0
+                            var imageSource = Constants.DISH_IMAGE_SOURCE_LOCAL
+                            var favoriteDish = false
+
+                            mFavDishDetails?.let {
+                                if (it.id != 0) {
+                                    dishID = it.id
+                                    imageSource = it.imageSource
+                                    favoriteDish = it.favoriteDish
+                                }
+                            }
+
                             // Create an instance of the entity class and pass the required values to it. Remove the Toast Message.
                             val favDishDetails: FavDish = FavDish(
                                 mImagePath,
-                                Constants.DISH_IMAGE_SOURCE_LOCAL,
+                                imageSource,
                                 title,
                                 type,
                                 category,
                                 ingredients,
                                 cookingTimeInMinutes,
                                 cookingDirection,
-                                false
+                                favoriteDish,
+                                dishID
                             )
 
-                            // Now pass the favDishDetails value to the ViewModelClass and display the Toast message to acknowledge.
-                            mFavDishViewModel.insert(favDishDetails)
+                            /**
+                             * dishID == 0 | Insert()
+                             * dishID == 1 | Update()
+                             *
+                             * Now pass the favDishDetails value to the ViewModelClass and display the Toast message to acknowledge.
+                             */
+                            if (dishID == 0) {
 
-                            // Show the Toast Message for now that you dish entry is valid.
-                            Toast.makeText(
-                                this@AddUpdateDishActivity,
-                                "You successfully added your favorite dish details.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                // Database: Insert()
+                                mFavDishViewModel.insert(favDishDetails)
 
-                            // You even print the log if Toast is not displayed on emulator
-                            Log.e("Insertion", "Success")
+                                // Show the Toast Message for now that you dish entry is valid.
+                                Toast.makeText(
+                                    this@AddUpdateDishActivity,
+                                    "You successfully added your favorite dish details.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                // You even print the log if Toast is not displayed on emulator
+                                Log.e("Insertion", "Success")
+
+                            } else {
+
+                                // Database: Update()
+                                mFavDishViewModel.update(favDishDetails)
+
+                                Toast.makeText(
+                                    this@AddUpdateDishActivity,
+                                    "You successfully updated your favorite dish details.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                // You even print the log if Toast is not displayed on emulator
+                                Log.e("Updating", "Success")
+
+                            }
 
                             // Finish the Activity
                             finish()
@@ -591,6 +677,24 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
         // Enable Support for the ActionBar
         setSupportActionBar(mBinding.toolbarAddDishActivity)
+
+        // Update the title accordingly "ADD" or "UPDATE".
+        if (mFavDishDetails != null && mFavDishDetails!!.id != 0) {
+
+            // Set Title: Edit Dish
+            supportActionBar?.let {
+                it.title = resources.getString(R.string.title_edit_dish)
+            }
+
+        } else {
+
+            // Set Title: Add Dish
+            supportActionBar?.let {
+                it.title = resources.getString(R.string.title_add_dish)
+            }
+
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Assign required action on the click event

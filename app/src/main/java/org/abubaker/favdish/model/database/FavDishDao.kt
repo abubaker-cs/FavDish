@@ -79,4 +79,13 @@ interface FavDishDao {
     @Query("SELECT * FROM FAV_DISHES_TABLE WHERE favorite_dish = 1")
     fun getFavoriteDishesList(): Flow<List<FavDish>>
 
+    // Create a suspend function to delete the dish item from database.
+    /**
+     * A function to delete favorite dish details from the local database using Room.
+     *
+     * @param favDish - Here we will pass the entity class with details that we want to delete.
+     */
+    @Delete
+    suspend fun deleteFavDishDetails(favDish: FavDish)
+
 }

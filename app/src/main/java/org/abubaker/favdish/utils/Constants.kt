@@ -13,6 +13,9 @@ object Constants {
     const val DISH_IMAGE_SOURCE_LOCAL: String = "Local"
     const val DISH_IMAGE_SOURCE_ONLINE: String = "Online"
 
+    // This constant variable will be used for passing the DishDetails to AddUpdateDishActivity.
+    const val EXTRA_DISH_DETAILS: String = "DishDetails"
+
     /**
      * Dish Type
      */

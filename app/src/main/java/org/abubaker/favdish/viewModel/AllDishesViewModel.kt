@@ -60,6 +60,16 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
      * Repository is completely separated from the UI through the ViewModel.
      */
     val favoriteDishes: LiveData<List<FavDish>> = repository.favoriteDishes.asLiveData()
+
+    /**
+     * Launching a new coroutine to delete the data in a non-blocking way.
+     */
+    fun delete(dish: FavDish) = viewModelScope.launch {
+
+        // Call the repository function and pass the details.
+        repository.deleteFavDishData(dish)
+
+    }
 }
 
 /**

@@ -1,5 +1,6 @@
 package org.abubaker.favdish.view.adapters
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import com.bumptech.glide.Glide
 import org.abubaker.favdish.R
 import org.abubaker.favdish.databinding.ItemDishLayoutBinding
 import org.abubaker.favdish.model.entities.FavDish
+import org.abubaker.favdish.utils.Constants
+import org.abubaker.favdish.view.activities.AddUpdateDishActivity
 import org.abubaker.favdish.view.fragments.AllDishesFragment
 import org.abubaker.favdish.view.fragments.FavoriteDishesFragment
 
@@ -139,10 +142,27 @@ class FavDishAdapter(private val fragment: Fragment) :
                     // Edit Button was clicked
                     Log.i("You have clicked on", "Edit Option of ${dish.title}")
 
+                    // We will use the following code to pass the dish details to AddUpdateDishActivity.
+                    val intent =
+                        Intent(fragment.requireActivity(), AddUpdateDishActivity::class.java)
+
+                    // This constant "EXTRA_DISH_DETAILS" will pass the "DishDetails" as a string
+                    intent.putExtra(Constants.EXTRA_DISH_DETAILS, dish)
+
+                    // Initialize the intent
+                    fragment.requireActivity().startActivity(intent)
+
                 } else if (it.itemId == R.id.action_delete_dish) {
 
                     // Delete Button was clicked
                     Log.i("You have clicked on", "Delete Option of ${dish.title}")
+
+                    // Remove the log and call the function that we have created to delete.
+                    if (fragment is AllDishesFragment) {
+
+                        fragment.deleteDish(dish)
+
+                    }
 
                 }
 
