@@ -82,7 +82,10 @@ class FavDishAdapter(private val fragment: Fragment) :
                 fragment.dishDetails(dish)
 
             } else if (fragment is FavoriteDishesFragment) {
+
+                // FavoriteDishesFragment
                 fragment.dishDetails(dish)
+
             }
 
         }

@@ -28,7 +28,11 @@ class FavoriteDishesFragment : Fragment() {
      * This is constructed based on the repository retrieved from the FavDishApplication.
      */
     private val mFavDishViewModel: FavDishViewModel by viewModels {
+
+        // We need to pass the Repository, but to get it we need to first pass our activity's application.
+        // (requireActivity().application as FavDishApplication) =
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+
     }
 
     override fun onCreateView(
@@ -57,20 +61,24 @@ class FavoriteDishesFragment : Fragment() {
             dishes.let {
 
                 // Set the LayoutManager that this RecyclerView will use.
+                // requireActivity() = gets current context
                 binding!!.rvFavoriteDishesList.layoutManager =
                     GridLayoutManager(requireActivity(), 2)
 
                 // Adapter class is initialized and list is passed in the param.
                 val adapter = FavDishAdapter(this@FavoriteDishesFragment)
 
-                // adapter instance is set to the recyclerview to inflate the items.
+                // RecyclerView = Adapter instance is set to the recyclerview to inflate the items.
                 binding!!.rvFavoriteDishesList.adapter = adapter
 
                 if (it.isNotEmpty()) {
                     // Print the id and title in the log for now.
                     // for (dish in it) { Log.i("Favorite Dish", "${dish.id} :: ${dish.title}") }
 
+                    // RecyclerView = VISIBLE
                     binding!!.rvFavoriteDishesList.visibility = View.VISIBLE
+
+                    // Fallback Message = INVISIBLE
                     binding!!.tvNoFavoriteDishesAvailable.visibility = View.GONE
 
                     adapter.dishesList(it)
@@ -78,8 +86,12 @@ class FavoriteDishesFragment : Fragment() {
                 } else {
                     Log.i("List of Favorite Dishes", "is empty.")
 
+                    // RecyclerView = INVISIBLE
                     binding!!.rvFavoriteDishesList.visibility = View.GONE
+
+                    // Fallback Message = VISIBLE
                     binding!!.tvNoFavoriteDishesAvailable.visibility = View.VISIBLE
+
                 }
             }
         }
@@ -93,6 +105,7 @@ class FavoriteDishesFragment : Fragment() {
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)!!.showBottomNavigationView()
         }
+
     }
 
     // Override the onDestroy method and make the mBinding null where the method is executed.
@@ -114,6 +127,7 @@ class FavoriteDishesFragment : Fragment() {
             (activity as MainActivity?)!!.hideBottomNavigationView()
         }
 
+        // Navigate to the Details Fragment
         findNavController()
             .navigate(FavoriteDishesFragmentDirections.actionFavoriteDishesToDishDetails(favDish))
     }
