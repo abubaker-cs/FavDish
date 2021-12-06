@@ -102,6 +102,7 @@ class FavoriteDishesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        // If it is the MainActivity then execute the showBottomNavigationView() function
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)!!.showBottomNavigationView()
         }
