@@ -326,12 +326,16 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             var imageSource = Constants.DISH_IMAGE_SOURCE_LOCAL
                             var favoriteDish = false
 
+                            // We are checking if our mFavDishDetails is NOT EMPTY
                             mFavDishDetails?.let {
+
+                                // If ID is NOT 0, then:
                                 if (it.id != 0) {
                                     dishID = it.id
                                     imageSource = it.imageSource
                                     favoriteDish = it.favoriteDish
                                 }
+
                             }
 
                             // Create an instance of the entity class and pass the required values to it. Remove the Toast Message.
