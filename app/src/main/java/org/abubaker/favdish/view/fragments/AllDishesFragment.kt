@@ -264,10 +264,10 @@ class AllDishesFragment : Fragment() {
         // Dialog Title
         binding.tvTitle.text = resources.getString(R.string.title_select_item_to_filter)
 
-        // Attaching the List of "Dish Types" defined in Constants.kt file
+        // Getting the List of "Dish Types" defined in Constants.kt file
         val dishTypes = Constants.dishTypes()
 
-        // We are adding the 0 element to  get ALL items.
+        // We are adding a new dishType: "All Items" at the 0-Index Position in the recently fetched List
         dishTypes.add(0, Constants.ALL_ITEMS)
 
         // Set the LayoutManager that this RecyclerView will use.
