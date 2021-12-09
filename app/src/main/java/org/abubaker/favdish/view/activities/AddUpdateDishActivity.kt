@@ -847,7 +847,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
         binding.rvList.layoutManager = LinearLayoutManager(this@AddUpdateDishActivity)
 
         // Adapter class: is initialized and list is passed in the param.
-        val adapter = CustomListItemAdapter(this@AddUpdateDishActivity, itemsList, selection)
+        val adapter = CustomListItemAdapter(this@AddUpdateDishActivity, null, itemsList, selection)
 
         // adapter instance is set to the recyclerview to inflate the items.
         binding.rvList.adapter = adapter

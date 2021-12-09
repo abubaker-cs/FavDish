@@ -3,15 +3,18 @@ package org.abubaker.favdish.view.adapters
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import org.abubaker.favdish.databinding.ItemCustomListLayoutBinding
 import org.abubaker.favdish.view.activities.AddUpdateDishActivity
+import org.abubaker.favdish.view.fragments.AllDishesFragment
 
 /**
  * Create a custom list adapter to use it while showing the list item in the RecyclerView.
  */
 class CustomListItemAdapter(
     private val activity: Activity,
+    private val fragment: Fragment?,
     private val listItems: List<String>,
     private val selection: String
 ) :
@@ -77,6 +80,14 @@ class CustomListItemAdapter(
 
                 //  Send the result to the base class.
                 activity.selectedListItem(item, selection)
+
+            }
+
+            // Call the function and pass the required details.
+            if (fragment is AllDishesFragment) {
+
+                //
+                fragment.filterSelection(item)
 
             }
 

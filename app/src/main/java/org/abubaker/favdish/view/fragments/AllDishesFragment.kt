@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -48,6 +49,13 @@ class AllDishesFragment : Fragment() {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
 
+    // Make the global variable for FavDishAdapter class as below instead of local.
+    // A global variable for FavDishAdapter Class
+    private lateinit var mFavDishAdapter: FavDishAdapter
+
+    // Make the CustomItemsListDialog as global instead of local as below.
+    private lateinit var mCustomListDialog: Dialog
+
     /**
      * onCreate()
      */
@@ -86,10 +94,10 @@ class AllDishesFragment : Fragment() {
         mBinding.rvDishesList.layoutManager = GridLayoutManager(requireActivity(), 2)
 
         // #2 - Set Adapter | Adapter class is initialized and list is passed in the param.
-        val favDishAdapter = FavDishAdapter(this@AllDishesFragment)
+        mFavDishAdapter = FavDishAdapter(this@AllDishesFragment)
 
         // #3 - Bind to the RecyclerView | adapter instance is set to the recyclerview to inflate the items.
-        mBinding.rvDishesList.adapter = favDishAdapter
+        mBinding.rvDishesList.adapter = mFavDishAdapter
 
         /**
          * What we are doing?
@@ -113,7 +121,7 @@ class AllDishesFragment : Fragment() {
 
                     // Populate the List | it = List of the favorite dishes that we get from
                     // our observer, which basically gets the data from the database.
-                    favDishAdapter.dishesList(it)
+                    mFavDishAdapter.dishesList(it)
 
                 } else {
 
@@ -260,11 +268,11 @@ class AllDishesFragment : Fragment() {
     private fun filterDishesListDialog() {
 
         // We are defining our custom dialog
-        val customListDialog = Dialog(requireActivity())
+        mCustomListDialog = Dialog(requireActivity())
 
         // Binding the XML Layout: dialog_custom_list.xml and setting the ContentView at top-level
         val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
-        customListDialog.setContentView(binding.root)
+        mCustomListDialog.setContentView(binding.root)
 
         // Dialog Title
         binding.tvTitle.text = resources.getString(R.string.title_select_item_to_filter)
@@ -285,6 +293,9 @@ class AllDishesFragment : Fragment() {
             // Active Context
             requireActivity(),
 
+            //
+            this@AllDishesFragment,
+
             // List of Dish Types defined in Constants.kt
             dishTypes,
 
@@ -298,7 +309,50 @@ class AllDishesFragment : Fragment() {
         binding.rvList.adapter = adapter
 
         // Initialize the dialog and display it on screen.
-        customListDialog.show()
+        mCustomListDialog.show()
+    }
+
+    // Create a function to get the filter item selection and get the list from database accordingly.
+    /**
+     * A function to get the filter item selection and get the list from database accordingly.
+     *
+     * @param filterItemSelection
+     */
+    fun filterSelection(filterItemSelection: String) {
+
+        mCustomListDialog.dismiss()
+
+        Log.i("Filter Selection", filterItemSelection)
+
+        if (filterItemSelection == Constants.ALL_ITEMS) {
+
+            //
+            mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
+
+                dishes.let {
+
+                    //
+                    if (it.isNotEmpty()) {
+
+                        mBinding.rvDishesList.visibility = View.VISIBLE
+                        mBinding.tvNoDishesAddedYet.visibility = View.GONE
+
+                        mFavDishAdapter.dishesList(it)
+
+                    } else {
+
+                        mBinding.rvDishesList.visibility = View.GONE
+                        mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                    }
+
+                }
+            }
+        } else {
+
+            //
+            Log.i("Filter List", "Get Filter List")
+
+        }
     }
 
 }
