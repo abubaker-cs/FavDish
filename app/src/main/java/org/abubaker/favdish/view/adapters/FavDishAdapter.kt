@@ -142,7 +142,8 @@ class FavDishAdapter(private val fragment: Fragment) :
                     // Edit Button was clicked
                     Log.i("You have clicked on", "Edit Option of ${dish.title}")
 
-                    // We will use the following code to pass the dish details to AddUpdateDishActivity.
+                    // Based on the "active context", we will use the following code to pass
+                    // the dish details to AddUpdateDishActivity.
                     val intent =
                         Intent(fragment.requireActivity(), AddUpdateDishActivity::class.java)
 

@@ -679,6 +679,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
         setSupportActionBar(mBinding.toolbarAddDishActivity)
 
         // Update the title accordingly "ADD" or "UPDATE".
+        // Since we do not have any ENTRY of 0, so it will mean that, we are adding a new record
         if (mFavDishDetails != null && mFavDishDetails!!.id != 0) {
 
             // Set Title: Edit Dish
