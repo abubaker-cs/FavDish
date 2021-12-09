@@ -254,20 +254,17 @@ class AllDishesFragment : Fragment() {
      */
     private fun filterDishesListDialog() {
 
-        //
+        // We are defining our custom dialog
         val customListDialog = Dialog(requireActivity())
 
-        //
+        // Binding the XML Layout: dialog_custom_list.xml and setting the ContentView at top-level
         val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
-
-        /*Set the screen content from a layout resource.
-        The resource will be inflated, adding all top-level views to the screen.*/
         customListDialog.setContentView(binding.root)
 
-        //
+        // Dialog Title
         binding.tvTitle.text = resources.getString(R.string.title_select_item_to_filter)
 
-        //
+        // Attaching the List of "Dish Types" defined in Constants.kt file
         val dishTypes = Constants.dishTypes()
 
         // We are adding the 0 element to  get ALL items.
@@ -276,17 +273,26 @@ class AllDishesFragment : Fragment() {
         // Set the LayoutManager that this RecyclerView will use.
         binding.rvList.layoutManager = LinearLayoutManager(requireActivity())
 
+        // Defining parameters for the "adapter"
         // Adapter class is initialized and list is passed in the param.
         val adapter = CustomListItemAdapter(
+
+            // Active Context
             requireActivity(),
+
+            // List of Dish Types defined in Constants.kt
             dishTypes,
+
+            // CLICKED ITEM which the user will like to SEARCH/FILTER
             Constants.FILTER_SELECTION
+
         )
 
+        // Setting up the RecyclerView based on the recently configured adapter's parameters.
         // adapter instance is set to the recyclerview to inflate the items.
         binding.rvList.adapter = adapter
 
-        //Start the dialog and display it on screen.
+        // Initialize the dialog and display it on screen.
         customListDialog.show()
     }
 
