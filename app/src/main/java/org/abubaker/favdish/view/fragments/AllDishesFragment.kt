@@ -207,21 +207,21 @@ class AllDishesFragment : Fragment() {
         builder.setMessage(resources.getString(R.string.msg_delete_dish_dialog, dish.title))
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
-        // performing positive action
+        // Button: YES / Confirmed
         builder.setPositiveButton(resources.getString(R.string.lbl_yes)) { dialogInterface, _ ->
 
-            //
+            //  Delete the DATA from the Database.
             mFavDishViewModel.delete(dish)
 
-            // Dialog will be dismissed
+            // Dismiss the Dialog.
             dialogInterface.dismiss()
 
         }
 
-        // performing negative action
+        // Button: No
         builder.setNegativeButton(resources.getString(R.string.lbl_no)) { dialogInterface, _ ->
 
-            // Dialog will be dismissed
+            // Dismiss the Dialog.
             dialogInterface.dismiss()
 
         }
@@ -231,7 +231,7 @@ class AllDishesFragment : Fragment() {
 
         // Set other dialog properties
 
-        // Will not allow user to cancel after clicking on remaining screen area.
+        // Optional: Will not allow user to cancel after clicking on remaining screen area.
         alertDialog.setCancelable(false)
 
         // show the dialog to UI
