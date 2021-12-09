@@ -183,8 +183,13 @@ class AllDishesFragment : Fragment() {
 
             // Filter List
             R.id.action_filter_dishes -> {
+
+                // Executing the function to launch the custom dialog for "Filter List"
                 filterDishesListDialog()
+
+                // Return true
                 return true
+
             }
 
             // Add Dish
