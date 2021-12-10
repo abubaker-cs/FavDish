@@ -311,7 +311,6 @@ class AllDishesFragment : Fragment() {
         mCustomListDialog.show()
     }
 
-    // Create a function to get the filter item selection and get the list from database accordingly.
     /**
      * A function to get the filter item selection and get the list from database accordingly.
      *
@@ -357,15 +356,25 @@ class AllDishesFragment : Fragment() {
             mFavDishViewModel.getFilteredList(filterItemSelection)
                 .observe(viewLifecycleOwner) { dishes ->
                     dishes.let {
+
+                        // If it is NOT Empty
                         if (it.isNotEmpty()) {
 
+                            // RecyclerView = Visible
                             mBinding.rvDishesList.visibility = View.VISIBLE
+
+                            // Fallback Message = Invisible
                             mBinding.tvNoDishesAddedYet.visibility = View.GONE
 
+                            // Populate the RecyclerView with our recently fetched Dishes List
                             mFavDishAdapter.dishesList(it)
+
                         } else {
 
+                            // RecyclerView = Invisible
                             mBinding.rvDishesList.visibility = View.GONE
+
+                            // Fallback Message = Visible
                             mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
                         }
                     }
