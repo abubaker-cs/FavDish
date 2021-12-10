@@ -69,7 +69,7 @@ class CustomListItemAdapter(
         // We are selecting the CURRENT item in the LIST total records
         val item = listItems[position]
 
-        //
+        // Title
         holder.tvText.text = item
 
         // Very IMPORTANT: Define the ItemView click event

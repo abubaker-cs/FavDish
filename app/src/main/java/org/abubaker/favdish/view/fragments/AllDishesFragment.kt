@@ -49,11 +49,10 @@ class AllDishesFragment : Fragment() {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
 
-    // Make the global variable for FavDishAdapter class as below instead of local.
     // A global variable for FavDishAdapter Class
     private lateinit var mFavDishAdapter: FavDishAdapter
 
-    // Make the CustomItemsListDialog as global instead of local as below.
+    // A global variable for Custom Dialog
     private lateinit var mCustomListDialog: Dialog
 
     /**
@@ -324,9 +323,10 @@ class AllDishesFragment : Fragment() {
 
         Log.i("Filter Selection", filterItemSelection)
 
+        // Has the user selected "All Items" in the custom dialog?
         if (filterItemSelection == Constants.ALL_ITEMS) {
 
-            //
+            // Display All Dishes
             mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
 
                 dishes.let {
@@ -347,9 +347,10 @@ class AllDishesFragment : Fragment() {
 
                 }
             }
+
         } else {
 
-            //
+            // Take action based on the selected item
             Log.i("Filter List", "Get Filter List")
 
             // Remove the log and replace it with filtered list as below.
