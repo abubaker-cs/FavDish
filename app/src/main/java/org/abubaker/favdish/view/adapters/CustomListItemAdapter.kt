@@ -86,7 +86,7 @@ class CustomListItemAdapter(
             // Call the function and pass the required details.
             if (fragment is AllDishesFragment) {
 
-                //
+                // We want to select the user's requested item
                 fragment.filterSelection(item)
 
             }

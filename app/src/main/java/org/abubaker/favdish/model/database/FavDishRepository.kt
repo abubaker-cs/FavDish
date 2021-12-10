@@ -68,7 +68,6 @@ class FavDishRepository(private val favDishDao: FavDishDao) {
         favDishDao.deleteFavDishDetails(favDish)
     }
 
-    // Create a function get the filtered list of Dishes based on the selection.
     /**
      * A function to get the filtered list of Dishes.
      *

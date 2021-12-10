@@ -71,7 +71,6 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
 
     }
 
-    // Get the filtered list of dishes based on the dish type selection.
     /**
      * A function to get the filtered list of dishes based on the dish type selection.
      *

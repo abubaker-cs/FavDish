@@ -88,7 +88,6 @@ interface FavDishDao {
     @Delete
     suspend fun deleteFavDishDetails(favDish: FavDish)
 
-    // Create a function to get the list of dishes based on the dish type from the database.
     /**
      * A function to get the list of dishes based on the dish type from the database.
      *
