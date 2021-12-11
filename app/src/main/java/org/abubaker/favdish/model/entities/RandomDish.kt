@@ -1,6 +1,7 @@
 package org.abubaker.favdish.model.entities
 
 object RandomDish {
+
     data class Recipes(
         val recipes: List<Recipe>
     )
@@ -107,4 +108,5 @@ object RandomDish {
         val unitLong: String,
         val unitShort: String
     )
+
 }
