@@ -28,6 +28,12 @@ object Constants {
     // API KEY VALUE from the spoonacular console.
     const val API_KEY_VALUE: String = BuildConfig.API_KEY_SPOONACULAR
 
+    // KEY PARAMS
+    const val API_KEY: String = "apiKey"
+    const val LIMIT_LICENSE: String = "limitLicense"
+    const val TAGS: String = "tags"
+    const val NUMBER: String = "number"
+
     /**
      * Dish Type
      */
