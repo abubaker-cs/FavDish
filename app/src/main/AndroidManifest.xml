@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.abubaker.favdish">
 
+    <!-- Permission: Internet Access -->
+    <uses-permission android:name="android.permission.Internet" />
+
     <!-- Permission: Read External Storage -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 

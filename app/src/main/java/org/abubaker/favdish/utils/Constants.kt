@@ -1,5 +1,7 @@
 package org.abubaker.favdish.utils
 
+import org.abubaker.favdish.BuildConfig
+
 /**
  * This is used to define the constant values that we can use throughout the application.
  */
@@ -19,6 +21,12 @@ object Constants {
     // These constants will be used for "Filter List"
     const val ALL_ITEMS: String = "All"
     const val FILTER_SELECTION: String = "FilterSelection"
+
+    // API ENDPOINT: Query
+    const val API_ENDPOINT: String = "recipes/random"
+
+    // API KEY VALUE from the spoonacular console.
+    const val API_KEY_VALUE: String = BuildConfig.API_KEY_SPOONACULAR
 
     /**
      * Dish Type
