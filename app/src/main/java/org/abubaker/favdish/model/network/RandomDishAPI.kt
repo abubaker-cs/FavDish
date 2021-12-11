@@ -19,9 +19,17 @@ interface RandomDishAPI {
     fun getDishes(
 
         // Query parameter appended to the URL. This is the best practice instead of appending it as we have done in the browser.
+
+        // API Secret Key
         @Query(Constants.API_KEY) apiKey: String,
+
+        // Limit License?
         @Query(Constants.LIMIT_LICENSE) limitLicense: Boolean,
+
+        // Tags
         @Query(Constants.TAGS) tags: String,
+
+        // Number
         @Query(Constants.NUMBER) number: Int
 
     ): Single<RandomDish.Recipes> // The Single class implements the Reactive Pattern for a single value response. Click on the class using the Ctrl + Left Mouse Click to know more.
