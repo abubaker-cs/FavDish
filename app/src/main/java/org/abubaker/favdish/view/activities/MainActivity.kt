@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         ).duration = 300
 
-        //
+        // navView = Invisible
         binding.navView.visibility = View.GONE
 
     }
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         ).duration = 300
 
-        //
+        // navView = Visible
         binding.navView.visibility = View.VISIBLE
     }
 
