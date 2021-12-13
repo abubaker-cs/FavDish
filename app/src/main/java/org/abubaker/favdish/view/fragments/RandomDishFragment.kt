@@ -176,11 +176,10 @@ class RandomDishFragment : Fragment() {
         }
 
         // 07 Cooking Time (Duration)
-        binding!!.tvCookingTime.text =
-            resources.getString(
-                R.string.lbl_estimate_cooking_time,
-                recipe.readyInMinutes.toString()
-            )
+        binding!!.tvCookingTime.text = resources.getString(
+            R.string.lbl_estimate_cooking_time,
+            recipe.readyInMinutes.toString()
+        )
 
         /**
          * -----------------------------------------------------------------------------------------
