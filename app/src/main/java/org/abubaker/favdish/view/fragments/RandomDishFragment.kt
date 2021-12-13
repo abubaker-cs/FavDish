@@ -154,6 +154,8 @@ class RandomDishFragment : Fragment() {
         // The instruction fetched from the API are received in the Rich HTML text, so we need to
         // populate Rich HTML Text, in the TextView.
 
+        // Assign the "instructions" value received from the API to our tv_cooking_direction TextView
+        // Html.FROM_HTML_MODE_COMPACT / Html.fromHtml() will filter out the "HTML Tags" form the TEXT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
             // SDK > v24
@@ -165,7 +167,7 @@ class RandomDishFragment : Fragment() {
 
         } else {
 
-            //
+            // SDK < v23
             @Suppress("DEPRECATION")
             binding!!.tvCookingDirection.text = Html.fromHtml(recipe.instructions)
 
