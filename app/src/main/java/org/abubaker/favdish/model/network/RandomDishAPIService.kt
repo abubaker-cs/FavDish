@@ -20,6 +20,8 @@ class RandomDishApiService {
         .baseUrl(Constants.BASE_URL)
 
         /**
+         * 01 Converter Factory - To convert JSON
+         * ********************
          * A Converter.Factory converter which uses Gson for JSON.
          * We are adding a converter factory for serialization and deserialization of objects.
          *
@@ -30,7 +32,8 @@ class RandomDishApiService {
         .addConverterFactory(GsonConverterFactory.create())
 
         /**
-         * ***
+         * 02 Adapter Factory - For Observables
+         * ******************
          * A CallAdapter.Factory call adapter which uses RxJava 3 for creating observables.
          *
          * Adding this class to Retrofit allows you to return an Observable, Flowable, Single, Completable
@@ -41,7 +44,10 @@ class RandomDishApiService {
         // Create the Retrofit instance using the configured values.
         .build()
 
-        // Create an implementation of the API endpoints defined by the service interface in our case it is RandomDishAPI.
+        /**
+         *  Create an implementation of the API endpoints defined by the service interface,
+         *  in our case it is in RandomDishAPI.kt
+         */
         .create(RandomDishAPI::class.java)
 
     // This function will initial the API call and returns the API response.
