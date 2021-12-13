@@ -179,6 +179,7 @@ class RandomDishFragment : Fragment() {
             )
 
         /**
+         * -----------------------------------------------------------------------------------------
          * 08 Favorite Icon (Click Event)
          * Assign the click event to the Favorite Button and add the dish details to the local database if user click on it.
          */
