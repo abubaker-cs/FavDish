@@ -1,14 +1,27 @@
 package org.abubaker.favdish.view.fragments
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import org.abubaker.favdish.R
+import org.abubaker.favdish.application.FavDishApplication
 import org.abubaker.favdish.databinding.FragmentRandomDishBinding
+import org.abubaker.favdish.model.entities.FavDish
+import org.abubaker.favdish.model.entities.RandomDish
+import org.abubaker.favdish.utils.Constants
+import org.abubaker.favdish.viewModel.FavDishViewModel
+import org.abubaker.favdish.viewModel.FavDishViewModelFactory
 import org.abubaker.favdish.viewModel.RandomDishViewModel
 
 class RandomDishFragment : Fragment() {
@@ -69,7 +82,13 @@ class RandomDishFragment : Fragment() {
             viewLifecycleOwner,
             Observer { randomDishResponse ->
                 randomDishResponse?.let {
+
+                    // Log
                     Log.i("Random Dish Response", "$randomDishResponse.recipes[0]")
+
+                    // Call the function to populate the response in the UI.
+                    setRandomDishResponseInUI(randomDishResponse.recipes[0])
+
                 }
             })
 
@@ -88,6 +107,102 @@ class RandomDishFragment : Fragment() {
                 Log.i("Random Dish Loading", "$loadRandomDish")
             }
         })
+    }
+
+    /**
+     * A method to populate the API response in the UI.
+     *
+     * @param recipe - Data model class of the API response with filled data.
+     */
+    private fun setRandomDishResponseInUI(recipe: RandomDish.Recipe) {
+
+        // Load the dish image in the ImageView.
+        Glide.with(requireActivity())
+            .load(recipe.image)
+            .centerCrop()
+            .into(binding!!.ivDishImage)
+
+        binding!!.tvTitle.text = recipe.title
+
+        // Default Dish Type
+        var dishType: String = "other"
+
+        if (recipe.dishTypes.isNotEmpty()) {
+            dishType = recipe.dishTypes[0]
+            binding!!.tvType.text = dishType
+        }
+
+        // There is not category params present in the response so we will define it as Other.
+        binding!!.tvCategory.text = "Other"
+
+        var ingredients = ""
+        for (value in recipe.extendedIngredients) {
+
+            if (ingredients.isEmpty()) {
+                ingredients = value.original
+            } else {
+                ingredients = ingredients + ", \n" + value.original
+            }
+        }
+
+        binding!!.tvIngredients.text = ingredients
+
+        // The instruction or you can say the Cooking direction text is in the HTML format so we will you the fromHtml to populate it in the TextView.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            binding!!.tvCookingDirection.text = Html.fromHtml(
+                recipe.instructions,
+                Html.FROM_HTML_MODE_COMPACT
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            binding!!.tvCookingDirection.text = Html.fromHtml(recipe.instructions)
+        }
+
+        binding!!.tvCookingTime.text =
+            resources.getString(
+                R.string.lbl_estimate_cooking_time,
+                recipe.readyInMinutes.toString()
+            )
+
+        // Assign the click event to the Favorite Button and add the dish details to the local database if user click on it.
+        binding!!.ivFavoriteDish.setOnClickListener {
+
+            // Create a instance of FavDish data model class and fill it with required information from the API response.
+            val randomDishDetails = FavDish(
+                recipe.image,
+                Constants.DISH_IMAGE_SOURCE_ONLINE,
+                recipe.title,
+                dishType,
+                "Other",
+                ingredients,
+                recipe.readyInMinutes.toString(),
+                recipe.instructions,
+                true
+            )
+
+            // Create an instance of FavDishViewModel class and call insert function and pass the required details.
+            val mFavDishViewModel: FavDishViewModel by viewModels {
+                FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+            }
+
+            mFavDishViewModel.insert(randomDishDetails)
+
+            // Once the dish is inserted you can acknowledge user by Toast message as below and also update the favorite image by selected.
+            binding!!.ivFavoriteDish.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireActivity(),
+                    R.drawable.ic_favorite_selected
+                )
+            )
+
+            Toast.makeText(
+                requireActivity(),
+                resources.getString(R.string.msg_added_to_favorites),
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
+
     }
 
     // Override the onDestroy method and make the ViewBinding null when it is called.
