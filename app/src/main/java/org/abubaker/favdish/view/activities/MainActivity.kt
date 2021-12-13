@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         ).duration = 300
 
-        // navView = Invisible
+        // navView = GONE (removed from the UI) because Invisible will just change the transparency.
         binding.navView.visibility = View.GONE
 
     }
