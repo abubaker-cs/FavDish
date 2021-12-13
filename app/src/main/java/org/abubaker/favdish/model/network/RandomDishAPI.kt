@@ -20,7 +20,7 @@ interface RandomDishAPI {
      * EXAMPLE: GET https://api.spoonacular.com/recipes/random?number=1&tags=vegetarian,dessert
      */
     @GET(Constants.API_ENDPOINT)
-    fun getDishes(
+    fun getRandomDish(
 
         // Query parameter appended to the URL. This is the best practice instead of appending it as we have done in the browser.
 

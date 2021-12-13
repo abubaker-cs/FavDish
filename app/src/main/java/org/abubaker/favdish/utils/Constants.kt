@@ -37,6 +37,7 @@ object Constants {
     const val TAGS: String = "tags"
     const val NUMBER: String = "number"
 
+    // Defining the DEFAULT values of the constants
     // KEY PARAMS VALUES ==> YOU CAN CHANGE AS PER REQUIREMENT FROM HERE TO MAKE THE DIFFERENCE IN THE API RESPONSE.
     const val LIMIT_LICENSE_VALUE: Boolean = true
     const val TAGS_VALUE: String = "vegetarian, dessert"
