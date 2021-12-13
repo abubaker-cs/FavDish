@@ -7,6 +7,10 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * 1. Create the API
+ * 2. It will be used to return Dish details as "Single", that can be later on observed
+ */
 class RandomDishApiService {
 
     /**

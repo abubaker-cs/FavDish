@@ -36,7 +36,7 @@ class RandomDishFragment : Fragment() {
 
         // Initialize the ViewModel variable.
         mRandomDishViewModel =
-            ViewModelProvider(this).get(RandomDishViewModel::class.java)
+            ViewModelProvider(this)[RandomDishViewModel::class.java]
 
         // Call the function to get the response from API.
         mRandomDishViewModel.getRandomDishFromAPI()
