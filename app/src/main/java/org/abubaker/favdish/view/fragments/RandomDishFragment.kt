@@ -48,7 +48,7 @@ class RandomDishFragment : Fragment() {
         mRandomDishViewModel.getRandomDishFromAPI()
 
         // Call the observer function defined below in the same RandomDishFragment.kt file, to Load a Random Dish
-        // randomDishViewModelObserver()
+        randomDishViewModelObserver()
     }
 
     /**
