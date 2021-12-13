@@ -50,8 +50,13 @@ class RandomDishApiService {
          */
         .create(RandomDishAPI::class.java)
 
-    // This function will initial the API call and returns the API response.
-    // It will return a SINGLE Random Dish
+    /**
+     * This function will initial the API call and returns the API response.
+     * It will return a SINGLE Random Dish
+     *
+     * DOC URL: https://reactivex.io/documentation/single.html
+     *
+     */
     fun getRandomDish(): Single<RandomDish.Recipes> {
 
         // Pattern: BASE_URL (https://api.spoonacular.com/) / API_KEY_VALUE ? API_ENDPOINT ? number=NUMBER_VALUE & tags=TAGS_VALUE
