@@ -87,6 +87,8 @@ class RandomDishFragment : Fragment() {
                     Log.i("Random Dish Response", "$randomDishResponse.recipes[0]")
 
                     // Call the function to populate the response in the UI.
+                    // Note: Since the API's returned result will be a LIST of Recipes,
+                    // so we need to only Pick the 1st value at 0-index, using recipes[0]
                     setRandomDishResponseInUI(randomDishResponse.recipes[0])
 
                 }
