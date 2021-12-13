@@ -1,5 +1,6 @@
 package org.abubaker.favdish.view.fragments
 
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -30,6 +31,10 @@ class RandomDishFragment : Fragment() {
 
     // An instance of the ViewModel Class
     private lateinit var mRandomDishViewModel: RandomDishViewModel
+
+    // Create a global variable for Progress Dialog
+    // A global variable for Progress Dialog
+    private var mProgressDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +67,19 @@ class RandomDishFragment : Fragment() {
 
         // Call the observer function defined below in the same RandomDishFragment.kt file, to Load a Random Dish
         randomDishViewModelObserver()
+
+        // Set the setOnRefreshListener of SwipeRefreshLayout as below and call the getRandomDishFromAPI function to get the new dish details on the same screen.
+        /**
+         * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
+         * performs a swipe-to-refresh gesture.
+         */
+        binding!!.srlRandomDish.setOnRefreshListener {
+
+            // This method performs the actual data-refresh operation.
+            // The method calls setRefreshing(false) when it's finished.
+            mRandomDishViewModel.getRandomDishFromAPI()
+
+        }
     }
 
     /**
@@ -86,6 +104,11 @@ class RandomDishFragment : Fragment() {
                     // Log
                     Log.i("Random Dish Response", "$randomDishResponse.recipes[0]")
 
+                    // Hide the Loading ProgressBar of SwipeRefreshLayout once the response is success.
+                    if (binding!!.srlRandomDish.isRefreshing) {
+                        binding!!.srlRandomDish.isRefreshing = false
+                    }
+
                     // Call the function to populate the response in the UI.
                     // Note: Since the API's returned result will be a LIST of Recipes,
                     // so we need to only Pick the 1st value at 0-index, using recipes[0]
@@ -100,6 +123,11 @@ class RandomDishFragment : Fragment() {
             Observer { dataError ->
                 dataError?.let {
                     Log.i("Random Dish API Error", "$dataError")
+
+                    // Hide the Loading ProgressBar of SwipeRefreshLayout when there is an error from API.
+                    if (binding!!.srlRandomDish.isRefreshing) {
+                        binding!!.srlRandomDish.isRefreshing = false
+                    }
                 }
             })
 
@@ -107,6 +135,15 @@ class RandomDishFragment : Fragment() {
         mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner, Observer { loadRandomDish ->
             loadRandomDish?.let {
                 Log.i("Random Dish Loading", "$loadRandomDish")
+
+                // Show the progress dialog if the SwipeRefreshLayout is not visible and hide when the usage is completed.
+                // Show the progress dialog if the SwipeRefreshLayout is not visible and hide when the usage is completed.
+                if (loadRandomDish && !binding!!.srlRandomDish.isRefreshing) {
+                    showCustomProgressDialog() // Used to show the progress dialog
+                } else {
+                    hideProgressDialog()
+                }
+
             }
         })
     }
@@ -181,6 +218,18 @@ class RandomDishFragment : Fragment() {
             recipe.readyInMinutes.toString()
         )
 
+
+        // By default load the favorite image button as unselected.
+        binding!!.ivFavoriteDish.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireActivity(),
+                R.drawable.ic_favorite_unselected
+            )
+        )
+
+        // Create a variable to avoid the duplication of items that is added by click on the Favorite image to add the dish details to local database.
+        var addedToFavorite = false
+
         /**
          * -----------------------------------------------------------------------------------------
          * 08 Favorite Icon (Click Event)
@@ -188,63 +237,78 @@ class RandomDishFragment : Fragment() {
          */
         binding!!.ivFavoriteDish.setOnClickListener {
 
-            // 01 Prepare DATA to be inserted in the Database
-            // Create an instance of FavDish data model class and fill it with required information from the API response.
-            val randomDishDetails = FavDish(
+            // Handle the condition based on the variable that we have defined and show the Toast message.
+            if (addedToFavorite) {
 
-                // 01 Thumbnail
-                recipe.image,
-
-                // 02 Image Source (Online)
-                Constants.DISH_IMAGE_SOURCE_ONLINE,
-
-                // 03 Title
-                recipe.title,
-
-                // 04 Dish Type
-                dishType,
-
-                // 05 Category
-                "Other",
-
-                // 06 Ingredients
-                ingredients,
-
-                // 07 Cooking Time
-                recipe.readyInMinutes.toString(),
-
-                // 08 Cooking Duration
-                recipe.instructions,
-
-                // 09 Favorite?
-                true
-            )
-
-            // 02 Create an instance of ViewModel
-            // Create an instance of FavDishViewModel class and call insert function and pass the required details.
-            val mFavDishViewModel: FavDishViewModel by viewModels {
-                FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
-            }
-
-            // 03 Tell the ViewModel to initialize the insert()
-            mFavDishViewModel.insert(randomDishDetails)
-
-            // 04 Update Fav Icon
-            // Once the dish is inserted then update the favorite image by selected.
-            binding!!.ivFavoriteDish.setImageDrawable(
-                ContextCompat.getDrawable(
+                Toast.makeText(
                     requireActivity(),
-                    R.drawable.ic_favorite_selected
-                )
-            )
+                    resources.getString(R.string.msg_already_added_to_favorites),
+                    Toast.LENGTH_SHORT
+                ).show()
 
-            // 05 Display Toast Message to confirm that the action was successful.
-            // Once the dish is inserted you can acknowledge user by Toast message as below
-            Toast.makeText(
-                requireActivity(),
-                resources.getString(R.string.msg_added_to_favorites),
-                Toast.LENGTH_SHORT
-            ).show()
+            } else {
+
+                // 01 Prepare DATA to be inserted in the Database
+                // Create an instance of FavDish data model class and fill it with required information from the API response.
+                val randomDishDetails = FavDish(
+
+                    // 01 Thumbnail
+                    recipe.image,
+
+                    // 02 Image Source (Online)
+                    Constants.DISH_IMAGE_SOURCE_ONLINE,
+
+                    // 03 Title
+                    recipe.title,
+
+                    // 04 Dish Type
+                    dishType,
+
+                    // 05 Category
+                    "Other",
+
+                    // 06 Ingredients
+                    ingredients,
+
+                    // 07 Cooking Time
+                    recipe.readyInMinutes.toString(),
+
+                    // 08 Cooking Duration
+                    recipe.instructions,
+
+                    // 09 Favorite?
+                    true
+                )
+
+                // 02 Create an instance of ViewModel
+                // Create an instance of FavDishViewModel class and call insert function and pass the required details.
+                val mFavDishViewModel: FavDishViewModel by viewModels {
+                    FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+                }
+
+                // 03 Tell the ViewModel to initialize the insert()
+                mFavDishViewModel.insert(randomDishDetails)
+
+                // Update the value of variable.
+                addedToFavorite = true
+
+                // 04 Update Fav Icon
+                // Once the dish is inserted then update the favorite image by selected.
+                binding!!.ivFavoriteDish.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireActivity(),
+                        R.drawable.ic_favorite_selected
+                    )
+                )
+
+                // 05 Display Toast Message to confirm that the action was successful.
+                // Once the dish is inserted you can acknowledge user by Toast message as below
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getString(R.string.msg_added_to_favorites),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
         }
 
@@ -255,4 +319,33 @@ class RandomDishFragment : Fragment() {
         super.onDestroy()
         binding = null
     }
+
+    // Create a function to show the Custom Progress Dialog.
+    /**
+     * A function is used to show the Custom Progress Dialog.
+     */
+    private fun showCustomProgressDialog() {
+        mProgressDialog = Dialog(requireActivity())
+
+        mProgressDialog?.let {
+            /*Set the screen content from a layout resource.
+        The resource will be inflated, adding all top-level views to the screen.*/
+            it.setContentView(R.layout.dialog_custom_progress)
+
+            //Start the dialog and display it on screen.
+            it.show()
+        }
+    }
+    // END
+
+    // Create a function to hide the custom progress dialog.
+    /**
+     * This function is used to dismiss the progress dialog if it is visible to user.
+     */
+    private fun hideProgressDialog() {
+        mProgressDialog?.let {
+            it.dismiss()
+        }
+    }
+
 }
