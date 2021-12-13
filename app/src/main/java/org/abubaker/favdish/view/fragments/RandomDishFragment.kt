@@ -30,27 +30,39 @@ class RandomDishFragment : Fragment() {
 
     }
 
-    // Override the onViewCreated method and Initialize the ViewModel variable.
+    // Override the onViewCreated method and Initialize the ViewModel variable (mRandomDishViewModel)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize the ViewModel variable.
+        // ViewModelProvider will be used to initialize/create our ViewModel
+        //
+        // For the following code to work our:
+        // class RandomDishViewModel{} should be
+        // class RandomDishViewModel : ViewModel() {} in RandomDishViewModel.kt file
         mRandomDishViewModel =
             ViewModelProvider(this)[RandomDishViewModel::class.java]
 
-        // Call the function to get the response from API.
+        // Execute the getRandomDishFromAPI inside the RandomDishViewModel.kt to get the RESPONSE from the API
         mRandomDishViewModel.getRandomDishFromAPI()
 
-        // Call the observer function.
+        // Call the observer function defined below in the same RandomDishFragment.kt file
         randomDishViewModelObserver()
     }
 
-    // Create a function to get the data in the observer after the API is triggered.
     /**
      * A function to get the data in the observer after the API is triggered.
+     * It will observe the response from the API.
      */
     private fun randomDishViewModelObserver() {
 
+        /**
+         * These are 3 mutable properties, that were defined in the RandomDishViewModel.kt file:
+         * 1. val loadRandomDish = MutableLiveData<Boolean>()
+         * 2. val randomDishResponse = MutableLiveData<RandomDish.Recipes>()
+         * 3. val randomDishLoadingError = MutableLiveData<Boolean>()
+         */
+
+        // 01 Get the Response
         mRandomDishViewModel.randomDishResponse.observe(
             viewLifecycleOwner,
             Observer { randomDishResponse ->
@@ -59,6 +71,7 @@ class RandomDishFragment : Fragment() {
                 }
             })
 
+        // 02 ERROR
         mRandomDishViewModel.randomDishLoadingError.observe(
             viewLifecycleOwner,
             Observer { dataError ->
@@ -67,6 +80,7 @@ class RandomDishFragment : Fragment() {
                 }
             })
 
+        // 03 Load Result
         mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner, Observer { loadRandomDish ->
             loadRandomDish?.let {
                 Log.i("Random Dish Loading", "$loadRandomDish")
