@@ -32,7 +32,7 @@ class RandomDishViewModel : ViewModel() {
     val randomDishLoadingError = MutableLiveData<Boolean>()
 
     // This function will initialize all the instance and set the observers to it.
-    fun getRandomRecipeFromAPI() {
+    fun getRandomDishFromAPI() {
         // Define the value of the load random dish.
         loadRandomDish.value = true
 
