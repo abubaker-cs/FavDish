@@ -30,7 +30,7 @@ class RandomDishFragment : Fragment() {
 
     }
 
-    // TODO Step 2: Override the onViewCreated method and Initialize the ViewModel variable.
+    // Override the onViewCreated method and Initialize the ViewModel variable.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,8 +45,7 @@ class RandomDishFragment : Fragment() {
         randomDishViewModelObserver()
     }
 
-    // TODO Step 4: Create a function to get the data in the observer after the API is triggered.
-    // START
+    // Create a function to get the data in the observer after the API is triggered.
     /**
      * A function to get the data in the observer after the API is triggered.
      */
