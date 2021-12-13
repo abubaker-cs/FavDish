@@ -3,7 +3,7 @@
     package="org.abubaker.favdish">
 
     <!-- Permission: Internet Access -->
-    <uses-permission android:name="android.permission.Internet" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Permission: Read External Storage -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

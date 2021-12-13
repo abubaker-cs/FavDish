@@ -32,6 +32,8 @@ class RandomDishFragment : Fragment() {
 
     // Override the onViewCreated method and Initialize the ViewModel variable (mRandomDishViewModel)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        //
         super.onViewCreated(view, savedInstanceState)
 
         // ViewModelProvider will be used to initialize/create our ViewModel
@@ -45,8 +47,8 @@ class RandomDishFragment : Fragment() {
         // Execute the getRandomDishFromAPI inside the RandomDishViewModel.kt to get the RESPONSE from the API
         mRandomDishViewModel.getRandomDishFromAPI()
 
-        // Call the observer function defined below in the same RandomDishFragment.kt file
-        randomDishViewModelObserver()
+        // Call the observer function defined below in the same RandomDishFragment.kt file, to Load a Random Dish
+        // randomDishViewModelObserver()
     }
 
     /**
@@ -89,8 +91,8 @@ class RandomDishFragment : Fragment() {
     }
 
     // Override the onDestroy method and make the ViewBinding null when it is called.
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         binding = null
     }
 }
