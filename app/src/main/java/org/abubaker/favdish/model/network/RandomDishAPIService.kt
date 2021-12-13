@@ -15,26 +15,32 @@ class RandomDishApiService {
      * your interface to {create} to generate an implementation.
      */
     private val api = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL) // Set the API base URL.
-        // Add converter factory for serialization and deserialization of objects.
+
+        // Set the API base URL.
+        .baseUrl(Constants.BASE_URL)
+
         /**
          * A Converter.Factory converter which uses Gson for JSON.
+         * We are adding a converter factory for serialization and deserialization of objects.
          *
+         * GSON supports multiple data types:
          * Because Gson is so flexible in the types it supports, this converter assumes that it can handle
          * all types.
          */
         .addConverterFactory(GsonConverterFactory.create())
+
         /**
-         * **
-         * Add a call adapter factory for supporting service method return types other than.
-         *
+         * ***
          * A CallAdapter.Factory call adapter which uses RxJava 3 for creating observables.
          *
          * Adding this class to Retrofit allows you to return an Observable, Flowable, Single, Completable
          * or Maybe from service methods.
          */
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-        .build() // Create the Retrofit instance using the configured values.
+
+        // Create the Retrofit instance using the configured values.
+        .build()
+
         // Create an implementation of the API endpoints defined by the service interface in our case it is RandomDishAPI.
         .create(RandomDishAPI::class.java)
 
