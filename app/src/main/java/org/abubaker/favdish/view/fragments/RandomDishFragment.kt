@@ -32,7 +32,7 @@ class RandomDishFragment : Fragment() {
     // An instance of the ViewModel Class
     private lateinit var mRandomDishViewModel: RandomDishViewModel
 
-    // A global variable for Progress Dialog
+    // A global variable for our custom Progress Dialog
     private var mProgressDialog: Dialog? = null
 
     override fun onCreateView(
@@ -144,14 +144,21 @@ class RandomDishFragment : Fragment() {
         // 03 Load Result
         mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner, Observer { loadRandomDish ->
             loadRandomDish?.let {
+
+                // Log message
                 Log.i("Random Dish Loading", "$loadRandomDish")
 
                 // Show the progress dialog if the SwipeRefreshLayout is not visible and hide when the usage is completed.
-                // Show the progress dialog if the SwipeRefreshLayout is not visible and hide when the usage is completed.
                 if (loadRandomDish && !binding!!.srlRandomDish.isRefreshing) {
-                    showCustomProgressDialog() // Used to show the progress dialog
+
+                    // Used to show the progress dialog
+                    showCustomProgressDialog()
+
                 } else {
+
+                    // Hide the progress dialog
                     hideProgressDialog()
+
                 }
 
             }
@@ -340,32 +347,38 @@ class RandomDishFragment : Fragment() {
         binding = null
     }
 
-    // Create a function to show the Custom Progress Dialog.
-    /**
-     * A function is used to show the Custom Progress Dialog.
+    /*********************************************************************************************
+     * Custom Dialog (Show/Hide functions)
      */
+
+    // A function is used to show the Custom Progress Dialog.
     private fun showCustomProgressDialog() {
+
+        // Pass on the current context
         mProgressDialog = Dialog(requireActivity())
 
+        // If progress dialog is not empty, then:
         mProgressDialog?.let {
-            /*Set the screen content from a layout resource.
-        The resource will be inflated, adding all top-level views to the screen.*/
+
+            /*
+            * Set the screen content from a layout resource (i.e. dialog_custom_progress.xml).
+            * The resource will be inflated, adding all top-level views to the screen.
+            * */
             it.setContentView(R.layout.dialog_custom_progress)
 
-            //Start the dialog and display it on screen.
+            // Initialize the custom dialog and display it on screen.
             it.show()
-        }
-    }
-    // END
 
-    // Create a function to hide the custom progress dialog.
-    /**
-     * This function is used to dismiss the progress dialog if it is visible to user.
-     */
-    private fun hideProgressDialog() {
-        mProgressDialog?.let {
-            it.dismiss()
         }
+
+    }
+
+    // This function is used to dismiss the progress dialog if it is visible to user.
+    private fun hideProgressDialog() {
+
+        // Dismiss the custom dialog
+        mProgressDialog?.dismiss()
+
     }
 
 }
