@@ -51,10 +51,12 @@ class DishDetailsFragment : Fragment() {
     private var mFavDishDetails: FavDish? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         // Enable support for menu
         setHasOptionsMenu(true)
+
     }
 
     override fun onCreateView(
@@ -80,6 +82,9 @@ class DishDetailsFragment : Fragment() {
         val args: DishDetailsFragmentArgs by navArgs()
         // Log.i("Dish Title", args.dishDetails.title)
         // Log.i("Dish Type", args.dishDetails.type)
+
+        // We will use the args passed to us, so they can be used in the SHARE feature
+        mFavDishDetails = args.dishDetails
 
         // If arguments has data, then populate filed in the UI
         args.let {
@@ -267,8 +272,13 @@ class DishDetailsFragment : Fragment() {
 
     // Override the onCreateOptionsMenu and onOptionsItemSelected. Inflate the menu file that we have created.
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        // XML: Select menu_share.xml
         inflater.inflate(R.menu.menu_share, menu)
+
+        // Inflate our XML file
         super.onCreateOptionsMenu(menu, inflater)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -295,13 +305,17 @@ class DishDetailsFragment : Fragment() {
 
                     // The instruction or you can say the Cooking direction text is in the HTML format so we will you the fromHtml to populate it in the TextView.
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
                         cookingInstructions = Html.fromHtml(
                             it.directionToCook,
                             Html.FROM_HTML_MODE_COMPACT
                         ).toString()
+
                     } else {
+
                         @Suppress("DEPRECATION")
                         cookingInstructions = Html.fromHtml(it.directionToCook).toString()
+
                     }
 
                     extraText =
@@ -309,6 +323,7 @@ class DishDetailsFragment : Fragment() {
                                 "\n Title:  ${it.title} \n\n Type: ${it.type} \n\n Category: ${it.category}" +
                                 "\n\n Ingredients: \n ${it.ingredients} \n\n Instructions To Cook: \n $cookingInstructions" +
                                 "\n\n Time required to cook the dish approx ${it.cookingTime} minutes."
+
                 }
 
 
@@ -320,6 +335,7 @@ class DishDetailsFragment : Fragment() {
 
                 return true
             }
+
         }
 
         return super.onOptionsItemSelected(item)
