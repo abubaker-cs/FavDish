@@ -151,12 +151,12 @@ class RandomDishFragment : Fragment() {
                 // Show the progress dialog if the SwipeRefreshLayout is not visible and hide when the usage is completed.
                 if (loadRandomDish && !binding!!.srlRandomDish.isRefreshing) {
 
-                    // Used to show the progress dialog
+                    // Used to show the progress dialog.
                     showCustomProgressDialog()
 
                 } else {
 
-                    // Hide the progress dialog
+                    // Hide the progress dialog.
                     hideProgressDialog()
 
                 }
