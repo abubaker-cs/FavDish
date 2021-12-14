@@ -108,9 +108,12 @@ class RandomDishFragment : Fragment() {
                     // Log
                     Log.i("Random Dish Response", "$randomDishResponse.recipes[0]")
 
-                    // Hide the Loading ProgressBar of SwipeRefreshLayout once the response is success.
+                    // It will ensure that the "refreshing" icon is only appearing when the data is being fetched.
                     if (binding!!.srlRandomDish.isRefreshing) {
+
+                        // Hide the Loading ProgressBar of SwipeRefreshLayout once the response is success.
                         binding!!.srlRandomDish.isRefreshing = false
+
                     }
 
                     // Call the function to populate the response in the UI.
