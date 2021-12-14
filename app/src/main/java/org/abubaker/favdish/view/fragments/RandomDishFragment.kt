@@ -225,25 +225,33 @@ class RandomDishFragment : Fragment() {
 
         // By default load the favorite image button as unselected.
         binding!!.ivFavoriteDish.setImageDrawable(
+
+            // Setting the DEFAULT image = Unselected icon
             ContextCompat.getDrawable(
                 requireActivity(),
                 R.drawable.ic_favorite_unselected
             )
-        )
 
-        // Create a variable to avoid the duplication of items that is added by click on the Favorite image to add the dish details to local database.
-        var addedToFavorite = false
+        )
 
         /**
          * -----------------------------------------------------------------------------------------
          * 08 Favorite Icon (Click Event)
-         * Assign the click event to the Favorite Button and add the dish details to the local database if user click on it.
-         */
+         * */
+
+        // Avoiding Duplicating Entries for Favorite
+        // *****************************************
+        // Create a variable to avoid the duplication of items that is added by click on the
+        // Favorite image to add the dish details to local database.
+        var addedToFavorite = false
+
+        // Assign the click event to the Favorite Button and add the dish details to the local database if user click on it.
         binding!!.ivFavoriteDish.setOnClickListener {
 
             // Handle the condition based on the variable that we have defined and show the Toast message.
             if (addedToFavorite) {
 
+                // Inform the user that the entry is already saved in the Database.
                 Toast.makeText(
                     requireActivity(),
                     resources.getString(R.string.msg_already_added_to_favorites),
