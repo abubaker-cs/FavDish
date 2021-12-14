@@ -288,24 +288,29 @@ class DishDetailsFragment : Fragment() {
             // Handle Item click action and share the dish recipe details with others.
             R.id.action_share_dish -> {
 
+                // Base configuration
                 val type = "text/plain"
                 val subject = "Checkout this dish recipe"
                 var extraText = ""
                 val shareWith = "Share with"
 
+                // As defined in the onViewCreate(), if received args through mFavDishDetails
+                // are NOT EMPTY, then pass then prepare data and initialize the Intent
                 mFavDishDetails?.let {
 
+                    // Thumbnail: Default value, and checking if the "ImageSource = Online"
                     var image = ""
-
                     if (it.imageSource == Constants.DISH_IMAGE_SOURCE_ONLINE) {
                         image = it.image
                     }
 
+                    // Cooking Instructions: Default value
                     var cookingInstructions = ""
 
                     // The instruction or you can say the Cooking direction text is in the HTML format so we will you the fromHtml to populate it in the TextView.
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
+                        // SDK > 24
                         cookingInstructions = Html.fromHtml(
                             it.directionToCook,
                             Html.FROM_HTML_MODE_COMPACT
@@ -313,11 +318,13 @@ class DishDetailsFragment : Fragment() {
 
                     } else {
 
+                        // SDK < 24
                         @Suppress("DEPRECATION")
                         cookingInstructions = Html.fromHtml(it.directionToCook).toString()
 
                     }
 
+                    // extraText = It will be passed through bundle()
                     extraText =
                         "$image \n" +
                                 "\n Title:  ${it.title} \n\n Type: ${it.type} \n\n Category: ${it.category}" +
@@ -326,11 +333,19 @@ class DishDetailsFragment : Fragment() {
 
                 }
 
-
+                // Define Intent, that will carry on our extraText
                 val intent = Intent(Intent.ACTION_SEND)
+
+                // Intent: Type
                 intent.type = type
+
+                // Intent: Subject
                 intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+
+                // Intent: extraText
                 intent.putExtra(Intent.EXTRA_TEXT, extraText)
+
+                // Intent: Initialize with ShareWith (Allow user to chose sender method)
                 startActivity(Intent.createChooser(intent, shareWith))
 
                 return true
@@ -338,6 +353,7 @@ class DishDetailsFragment : Fragment() {
 
         }
 
+        //
         return super.onOptionsItemSelected(item)
     }
 
