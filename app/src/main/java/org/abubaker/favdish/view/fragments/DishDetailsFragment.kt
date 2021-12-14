@@ -186,7 +186,29 @@ class DishDetailsFragment : Fragment() {
             binding!!.tvIngredients.text = it.dishDetails.ingredients
 
             // Cooking Direction
-            binding!!.tvCookingDirection.text = it.dishDetails.directionToCook
+
+            // --------------------------
+            // This can store HTML Markup
+            // binding!!.tvCookingDirection.text = it.dishDetails.directionToCook
+
+            // So, we are using the filtered option to remove HTML Markup using Html.fromHtml().toString()
+            // The instruction or you can say the Cooking direction text is in the HTML format so we will you the fromHtml to populate it in the TextView.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                // SDK > 24
+                binding!!.tvCookingDirection.text = Html.fromHtml(
+                    it.dishDetails.directionToCook,
+                    Html.FROM_HTML_MODE_COMPACT
+                ).toString()
+
+            } else {
+
+                // SDK < 24
+                @Suppress("DEPRECATION")
+                binding!!.tvCookingDirection.text =
+                    Html.fromHtml(it.dishDetails.directionToCook).toString()
+
+            }
 
             // Cooking Duration
             binding!!.tvCookingTime.text =
