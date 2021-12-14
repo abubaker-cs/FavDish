@@ -32,7 +32,6 @@ class RandomDishFragment : Fragment() {
     // An instance of the ViewModel Class
     private lateinit var mRandomDishViewModel: RandomDishViewModel
 
-    // Create a global variable for Progress Dialog
     // A global variable for Progress Dialog
     private var mProgressDialog: Dialog? = null
 
@@ -68,18 +67,23 @@ class RandomDishFragment : Fragment() {
         // Call the observer function defined below in the same RandomDishFragment.kt file, to Load a Random Dish
         randomDishViewModelObserver()
 
-        // Set the setOnRefreshListener of SwipeRefreshLayout as below and call the getRandomDishFromAPI function to get the new dish details on the same screen.
         /**
-         * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
-         * performs a swipe-to-refresh gesture.
+         * We are setting up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
+         * performs a swipe-to-refresh gesture, it will be used for calling the getRandomDishFromAPI()
+         * function from the RandomDishViewModel.kt file to get the new dish details on the same screen.
+         *
+         * Note: srlRandomDish or srl_random_dish is the #id assigned to the root element in the
+         * fragment_random_dish.xml file
+         *
          */
         binding!!.srlRandomDish.setOnRefreshListener {
 
             // This method performs the actual data-refresh operation.
-            // The method calls setRefreshing(false) when it's finished.
+            // Auto - The method calls setRefreshing(false) when it's finished.
             mRandomDishViewModel.getRandomDishFromAPI()
 
         }
+
     }
 
     /**
