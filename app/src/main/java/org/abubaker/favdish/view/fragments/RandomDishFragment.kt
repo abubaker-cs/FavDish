@@ -301,7 +301,9 @@ class RandomDishFragment : Fragment() {
                 // 03 Tell the ViewModel to initialize the insert()
                 mFavDishViewModel.insert(randomDishDetails)
 
-                // Update the value of variable.
+                //  *******************************************************
+                // IMPORTANT: Update the value of addedToFavorite variable.
+                // ********************************************************
                 addedToFavorite = true
 
                 // 04 Update Fav Icon
