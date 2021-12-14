@@ -108,7 +108,7 @@ class RandomDishFragment : Fragment() {
                     // Log
                     Log.i("Random Dish Response", "$randomDishResponse.recipes[0]")
 
-                    // It will ensure that the "refreshing" icon is only appearing when the data is being fetched.
+
                     if (binding!!.srlRandomDish.isRefreshing) {
 
                         // Hide the Loading ProgressBar of SwipeRefreshLayout once the response is success.
@@ -131,9 +131,12 @@ class RandomDishFragment : Fragment() {
                 dataError?.let {
                     Log.i("Random Dish API Error", "$dataError")
 
-                    // Hide the Loading ProgressBar of SwipeRefreshLayout when there is an error from API.
+                    // It will ensure that the "refreshing" icon is only appearing when needed.
                     if (binding!!.srlRandomDish.isRefreshing) {
+
+                        // Hide the Loading ProgressBar of SwipeRefreshLayout when there is an error from API.
                         binding!!.srlRandomDish.isRefreshing = false
+
                     }
                 }
             })
