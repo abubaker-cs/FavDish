@@ -149,6 +149,7 @@ class RandomDishFragment : Fragment() {
                 Log.i("Random Dish Loading", "$loadRandomDish")
 
                 // Show the progress dialog if the SwipeRefreshLayout is not visible and hide when the usage is completed.
+                // If we are loading a random dish and if we are not refreshing (SwipeRefreshLayout)
                 if (loadRandomDish && !binding!!.srlRandomDish.isRefreshing) {
 
                     // Used to show the progress dialog.
