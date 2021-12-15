@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         // Setup NavController
         binding.navView.setupWithNavController(navController)
 
+        // Handle the Notification when user clicks on it.
         if (intent.hasExtra(Constants.NOTIFICATION_ID)) {
             val notificationId = intent.getIntExtra(Constants.NOTIFICATION_ID, 0)
             Log.i("Notification Id", "$notificationId")
