@@ -1,5 +1,6 @@
 package org.abubaker.favdish.view.adapters
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -84,7 +85,7 @@ class FavDishAdapter(private val fragment: Fragment) :
         holder.tvTitle.text = dish.title
 
         // onClick() Event for the Grid Items:
-        // Assign the click event to the itemview and perform the required action.
+        // Assign the click event to the itemView and perform the required action.
         holder.itemView.setOnClickListener {
 
             // Verify that the request is coming from correct source:
@@ -92,7 +93,7 @@ class FavDishAdapter(private val fragment: Fragment) :
 
                 // Ask the AllDishesFragment.kt file to execute the dishDetails() function,
                 // so the user can be navigated to the DishDetailsFragment
-                // dish: will be passed as a required parm value
+                // dish: will be passed as a required parameter value
                 fragment.dishDetails(dish)
 
             } else if (fragment is FavoriteDishesFragment) {
@@ -186,6 +187,7 @@ class FavDishAdapter(private val fragment: Fragment) :
     }
 
     // Create a function that will have the updated list of dishes that we will bind it to the adapter class.
+    @SuppressLint("NotifyDataSetChanged")
     fun dishesList(list: List<FavDish>) {
 
         // List of our dishes

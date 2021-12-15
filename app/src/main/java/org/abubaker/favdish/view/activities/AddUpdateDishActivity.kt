@@ -339,7 +339,7 @@ class AddUpdateDishActivity : AppCompatActivity(),
                             }
 
                             // Create an instance of the entity class and pass the required values to it. Remove the Toast Message.
-                            val favDishDetails: FavDish = FavDish(
+                            val favDishDetails = FavDish(
                                 mImagePath,
                                 imageSource,
                                 title,
@@ -903,8 +903,8 @@ class AddUpdateDishActivity : AppCompatActivity(),
 
     // Companion Objects
     companion object {
-        private const val CAMERA = 1
-        private const val GALLERY = 2
+        // private const val CAMERA = 1
+        // private const val GALLERY = 2
         private const val IMAGE_DIRECTORY = "FavDishImages"
     }
 

@@ -216,7 +216,7 @@ class DishDetailsFragment : Fragment() {
 
             // Important: Without adding following code, our Favorite icon will remain unchanged if
             // we will return back to the details page from the list. This code will ensure that
-            // correct updated state will be feteched from the database.
+            // correct updated state will be fetched from the database.
             if (args.dishDetails.favoriteDish) {
 
                 // State: Favorite
@@ -228,7 +228,7 @@ class DishDetailsFragment : Fragment() {
                 )
             } else {
 
-                // State: Unfavorite
+                // State: Un-favorite
                 binding!!.ivFavoriteDish.setImageDrawable(
                     ContextCompat.getDrawable(
                         requireActivity(),
@@ -327,7 +327,7 @@ class DishDetailsFragment : Fragment() {
                     }
 
                     // Cooking Instructions: Default value
-                    var cookingInstructions = ""
+                    val cookingInstructions: String
 
                     // The instruction or you can say the Cooking direction text is in the HTML format so we will you the fromHtml to populate it in the TextView.
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

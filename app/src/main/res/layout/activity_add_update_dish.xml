@@ -82,7 +82,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:textColor="@color/grey_900"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_15sdp"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Type -->
@@ -108,7 +109,8 @@
                     android:focusableInTouchMode="false"
                     android:inputType="text"
                     android:textColor="@color/grey_900"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_15sdp"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Category -->
@@ -134,7 +136,8 @@
                     android:focusableInTouchMode="false"
                     android:inputType="text"
                     android:textColor="@color/grey_900"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_15sdp"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Ingredients -->
@@ -160,7 +163,8 @@
                     android:inputType="textMultiLine"
                     android:minLines="5"
                     android:textColor="@color/grey_900"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_15sdp"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Cooking Time -->
@@ -187,7 +191,8 @@
                     android:gravity="top"
                     android:inputType="text"
                     android:textColor="@color/grey_900"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_15sdp"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Direction to Cook -->
@@ -212,7 +217,8 @@
                     android:gravity="top"
                     android:inputType="text"
                     android:textColor="@color/grey_900"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_15sdp"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button

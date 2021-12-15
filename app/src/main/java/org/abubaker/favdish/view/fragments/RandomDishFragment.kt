@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import org.abubaker.favdish.R
@@ -102,7 +101,7 @@ class RandomDishFragment : Fragment() {
         // 01 Get the Response
         mRandomDishViewModel.randomDishResponse.observe(
             viewLifecycleOwner,
-            Observer { randomDishResponse ->
+            { randomDishResponse ->
                 randomDishResponse?.let {
 
                     // Log
@@ -127,7 +126,7 @@ class RandomDishFragment : Fragment() {
         // 02 ERROR
         mRandomDishViewModel.randomDishLoadingError.observe(
             viewLifecycleOwner,
-            Observer { dataError ->
+            { dataError ->
                 dataError?.let {
                     Log.i("Random Dish API Error", "$dataError")
 
@@ -142,7 +141,7 @@ class RandomDishFragment : Fragment() {
             })
 
         // 03 Load Result
-        mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner, Observer { loadRandomDish ->
+        mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner, { loadRandomDish ->
             loadRandomDish?.let {
 
                 // Log message
@@ -185,7 +184,7 @@ class RandomDishFragment : Fragment() {
         // 03 Dish Type
         // Set the Default Dish Type = other, and then check if any "Dish Type" is already assigned
         // to the received dish, otherwise re-assign our "default value"
-        var dishType: String = "other"
+        var dishType = "other"
         if (recipe.dishTypes.isNotEmpty()) {
             dishType = recipe.dishTypes[0]
             binding!!.tvType.text = dishType
@@ -199,10 +198,10 @@ class RandomDishFragment : Fragment() {
         var ingredients = ""
         for (value in recipe.extendedIngredients) {
 
-            if (ingredients.isEmpty()) {
-                ingredients = value.original
+            ingredients = if (ingredients.isEmpty()) {
+                value.original
             } else {
-                ingredients = ingredients + ", \n" + value.original
+                ingredients + ", \n" + value.original
             }
         }
         binding!!.tvIngredients.text = ingredients
