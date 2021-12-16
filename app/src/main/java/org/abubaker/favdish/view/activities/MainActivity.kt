@@ -149,21 +149,35 @@ class MainActivity : AppCompatActivity() {
      *
      * You can also set the TimeUnit as per your requirement. for example SECONDS, MINUTES, or HOURS.
      */
-    private fun createWorkRequest() = PeriodicWorkRequestBuilder<NotifyWorker>(15, TimeUnit.MINUTES)
-        .setConstraints(createConstraints())
-        .build()
+    private fun createWorkRequest() =
+        PeriodicWorkRequestBuilder<NotifyWorker>(15, TimeUnit.MINUTES)
+
+            // Pass the recently defined constraints
+            .setConstraints(createConstraints())
+
+            // Build the work request
+            .build()
 
     // Create a function to startWork and pass the required params as below.
     private fun startWork() {
 
-        /* enqueue a work, ExistingPeriodicWorkPolicy.KEEP means that if this work already exists, it will be kept
-        if the value is ExistingPeriodicWorkPolicy.REPLACE, then the work will be replaced */
+        //Enqueue a work.
         WorkManager.getInstance(this)
             .enqueueUniquePeriodicWork(
+
+                // Assigning a unique name to our worker
                 "FavDish Notify Work",
+
+                // ExistingPeriodicWorkPolicy:
+                // 1 .KEEP = Previous work will be kept
+                // 2 .REPLACE = Previous work will be replaced
                 ExistingPeriodicWorkPolicy.KEEP,
-                createWorkRequest() // Pass the WorkRequest
+
+                // Pass the recently defined WorkRequest in the previous step
+                createWorkRequest()
+
             )
+
     }
 
 }
