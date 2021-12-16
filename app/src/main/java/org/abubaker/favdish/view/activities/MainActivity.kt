@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
      * A specification of the requirements that need to be met before a WorkRequest can run.
      * By default, WorkRequests do not have any requirements and can run immediately.
      * By adding requirements, you can make sure that work only runs in certain situations
-     * - for example, when you have an unmetered network and are charging.
+     * - for example, when you have an un-metered network and are charging.
      */
     // For more details visit the link https://medium.com/androiddevelopers/introducing-workmanager-2083bcfc4712
     private fun createConstraints() = Constraints.Builder()

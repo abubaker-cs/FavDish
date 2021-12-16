@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.work.ListenableWorker.Result.success
@@ -24,6 +25,8 @@ class NotifyWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
 
     override fun doWork(): Result {
+
+        Log.i("Notify Worker", "doWork function is called....")
 
         // Call the function to trigger the notification when the doWork is called.
         sendNotification()
@@ -87,20 +90,28 @@ class NotifyWorker(context: Context, workerParams: WorkerParameters) :
              *      NotificationChannel.
              */
             NotificationCompat.Builder(applicationContext, Constants.NOTIFICATION_CHANNEL)
+
                 // Set the Notification Title
                 .setContentTitle(titleNotification)
+
                 // Set the Notification SubTitle
                 .setContentText(subtitleNotification)
+
                 // Set the small icon also you can say as notification icon that we have generated.
                 .setSmallIcon(R.drawable.ic_stat_notification)
+
                 // Set the Large icon
                 .setLargeIcon(bitmap)
+
                 // Set the default notification options that will be used.
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
+
                 // Supply a PendingIntent to send when the notification is clicked.
                 .setContentIntent(pendingIntent)
+
                 // Add a rich notification style to be applied at build time.
                 .setStyle(bigPicStyle)
+
                 // Setting this flag will make it so the notification is automatically canceled when the user clicks it in the panel.
                 .setAutoCancel(true)
 
