@@ -20,7 +20,6 @@ import org.abubaker.favdish.R
 import org.abubaker.favdish.utils.Constants
 import org.abubaker.favdish.view.activities.MainActivity
 
-
 class NotifyWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
 
@@ -37,7 +36,7 @@ class NotifyWorker(context: Context, workerParams: WorkerParameters) :
      */
     private fun sendNotification() {
 
-        // TODO Step 2: Add the notification id.
+        // Add the notification id.
         // In our case the notification id is 0. If you are dealing with dynamic functionality then you can have it as unique for every notification.
         val notification_id = 0
 

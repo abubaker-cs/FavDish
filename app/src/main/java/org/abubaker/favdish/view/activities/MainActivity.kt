@@ -115,7 +115,6 @@ class MainActivity : AppCompatActivity() {
         binding.navView.visibility = View.VISIBLE
     }
 
-    // Create function to setup the Constraints as below.
     /**
      * Constraints ensure that work is deferred until optimal conditions are met.
      *
@@ -126,13 +125,22 @@ class MainActivity : AppCompatActivity() {
      */
     // For more details visit the link https://medium.com/androiddevelopers/introducing-workmanager-2083bcfc4712
     private fun createConstraints() = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.NOT_REQUIRED)  // if connected to WIFI
+
+        // Can work on any network type, i.e. Cellular/WiFi Network
+        .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+
+        // Can execute without the device being charged
         .setRequiresCharging(false)
-        .setRequiresBatteryNotLow(true)                 // if the battery is not low
+
+        // Battery Level must be > 20+
+        .setRequiresBatteryNotLow(true)
+
+        // Build constraints, so they can be reused
         .build()
 
-    //  Create function to setup the PeriodicWorkRequestBuilder as below.
     /**
+     * Periodic Work Request Builder (With 15min of delay)
+     *
      * You can use any of the work request builder that are available to use.
      * We will you the PeriodicWorkRequestBuilder as we want to execute the code periodically.
      *
@@ -141,7 +149,6 @@ class MainActivity : AppCompatActivity() {
      *
      * You can also set the TimeUnit as per your requirement. for example SECONDS, MINUTES, or HOURS.
      */
-    // setting period to 15 Minutes
     private fun createWorkRequest() = PeriodicWorkRequestBuilder<NotifyWorker>(15, TimeUnit.MINUTES)
         .setConstraints(createConstraints())
         .build()
